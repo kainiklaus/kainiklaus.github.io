@@ -822,30 +822,15 @@
 
 <script>
 
-
 /* ============================================================
-   SUPABASE KONFIGURATION
-============================================================= */
-
-/*
-  WICHTIG:
-
-  Bei SUPABASE_URL NICHT /rest/v1/ anhängen.
-
-  RICHTIG:
-  https://nakyyykewametdbrescz.supabase.co
-
-  FALSCH:
-  https://nakyyykewametdbrescz.supabase.co/rest/v1/
-*/
+   SUPABASE
+============================================================ */
 
 const SUPABASE_URL =
   "https://nakyyykewametdbrescz.supabase.co";
 
-
 const SUPABASE_ANON_KEY =
   "sb_publishable_VnJx4FA52i33hwOYdmvCFA_rOmTkTVp";
-
 
 const SUPABASE_TABLE =
   "quiz_results";
@@ -853,243 +838,208 @@ const SUPABASE_TABLE =
 
 /* ============================================================
    QUIZ-FRAGEN
-============================================================= */
+============================================================ */
 
 const questions = [
 
   {
     difficulty: "★☆☆☆☆",
-
     question:
       "Zu welchem der 13 deutschen Qualitätsweinbaugebiete gehört das Ahrtal?",
-
     answers: [
       "Ahr",
       "Mittelrhein",
       "Mosel",
       "Nahe"
     ],
-
     correct: 0,
-
     explanation:
-      "Das Ahrtal bildet tatsächlich das eigenständige deutsche Weinbaugebiet Ahr."
+      "Das Ahrtal bildet das eigenständige deutsche Weinbaugebiet Ahr."
   },
-
 
   {
     difficulty: "★☆☆☆☆",
-
     question:
       "Welche Rebsorte prägt den Weinbau an der Ahr besonders stark?",
-
     answers: [
       "Spätburgunder",
       "Dornfelder",
       "Trollinger",
       "Portugieser"
     ],
-
     correct: 0,
-
     explanation:
-      "Spätburgunder, international Pinot Noir genannt, ist die prägende Rebsorte der Ahr und macht einen besonders großen Teil der Rebfläche aus."
+      "Spätburgunder, international Pinot Noir genannt, ist die prägende Rebsorte der Ahr."
   },
-
 
   {
     difficulty: "★★☆☆☆",
-
     question:
       "Welche deutsche Weinregion ist besonders für Riesling bekannt und wird von der Mosel durchzogen?",
-
     answers: [
       "Mosel",
       "Ahr",
       "Württemberg",
       "Sachsen"
     ],
-
     correct: 0,
-
     explanation:
-      "Die Mosel gehört zu den bekanntesten deutschen Rieslingregionen. Steile Weinberge und das Flusstal prägen viele ihrer Weinlagen."
+      "Die Mosel gehört zu den bekanntesten deutschen Rieslingregionen."
   },
-
 
   {
     difficulty: "★★☆☆☆",
-
     question:
       "Warum sind viele Weinberge im Ahrtal in steilen Hanglagen angelegt?",
-
     answers: [
       "Bessere Sonneneinstrahlung und günstige Wärmeverhältnisse",
       "Damit die Reben möglichst wenig Wasser bekommen",
       "Weil Weinreben ausschließlich an Hängen wachsen können",
       "Damit die Trauben grundsätzlich weniger Zucker bilden"
     ],
-
     correct: 0,
-
     explanation:
-      "Steile, gut ausgerichtete Hänge können eine intensive Sonneneinstrahlung ermöglichen und die Reife der Trauben in der relativ nördlichen Lage unterstützen."
+      "Steile, gut ausgerichtete Hänge können eine intensive Sonneneinstrahlung ermöglichen und die Reife unterstützen."
   },
-
 
   {
     difficulty: "★★★☆☆",
-
     question:
       "Welche Rebsorte steckt hinter dem Namen „Pinot Noir“?",
-
     answers: [
       "Spätburgunder",
       "Grauburgunder",
       "Weißburgunder",
       "Frühburgunder"
     ],
-
     correct: 0,
-
     explanation:
-      "Spätburgunder ist die deutsche Bezeichnung für Pinot Noir beziehungsweise Pinot Nero."
+      "Spätburgunder ist die deutsche Bezeichnung für Pinot Noir."
   },
-
 
   {
     difficulty: "★★★☆☆",
-
     question:
       "Welches deutsche Weinbaugebiet ist flächenmäßig das größte?",
-
     answers: [
       "Rheinhessen",
       "Pfalz",
       "Mosel",
       "Ahr"
     ],
-
     correct: 0,
-
     explanation:
-      "Rheinhessen ist das flächenmäßig größte der 13 deutschen Qualitätsweinbaugebiete."
+      "Rheinhessen ist das flächenmäßig größte deutsche Qualitätsweinbaugebiet."
   },
-
 
   {
     difficulty: "★★★★☆",
-
     question:
       "Welche rote Rebsorte ist an der Ahr neben Spätburgunder besonders interessant, weil sie früher reift und eng mit ihm verwandt ist?",
-
     answers: [
       "Frühburgunder",
       "Silvaner",
       "Kerner",
       "Bacchus"
     ],
-
     correct: 0,
-
     explanation:
-      "Frühburgunder ist eng mit Spätburgunder verwandt und reift früher. Dadurch besitzt er an der Ahr eine besondere Bedeutung."
+      "Frühburgunder ist eng mit Spätburgunder verwandt und reift früher."
   },
-
 
   {
     difficulty: "★★★★☆",
-
     question:
       "Was unterscheidet Spätburgunder und Frühburgunder am deutlichsten?",
-
     answers: [
       "Frühburgunder reift früher als Spätburgunder",
       "Spätburgunder ist eine weiße Rebsorte",
       "Frühburgunder stammt ursprünglich aus Italien",
-      "Beide Sorten sind identisch und nur regional anders benannt"
+      "Beide Sorten sind identisch"
     ],
-
     correct: 0,
-
     explanation:
-      "Der entscheidende Unterschied liegt im Reifeverhalten: Frühburgunder reift früher und ist eine eigenständige, eng verwandte Rebsorte."
+      "Der entscheidende Unterschied liegt im Reifeverhalten: Frühburgunder reift früher."
   },
-
 
   {
     difficulty: "★★★★★",
-
     question:
       "Welche Kombination aus Weinbaugebiet und typischer Rebsorte passt am besten zusammen?",
-
     answers: [
       "Ahr – Spätburgunder",
       "Franken – Tempranillo",
       "Mosel – Sangiovese",
       "Württemberg – Nebbiolo"
     ],
-
     correct: 0,
-
     explanation:
       "Spätburgunder prägt das Weinbaugebiet Ahr und ist wesentlich für dessen Ruf als deutsche Rotweinregion."
   },
 
-
   {
     difficulty: "★★★★★",
-
     question:
       "Warum kann die Ahr trotz ihrer nördlichen Lage für den Anbau hochwertiger Rotweintrauben geeignet sein?",
-
     answers: [
       "Das enge Tal und günstige Hanglagen können Wärme und Sonneneinstrahlung begünstigen",
       "Das Ahrtal hat grundsätzlich das gleiche Klima wie die Toskana",
       "Rote Rebsorten benötigen weniger Sonne als weiße Rebsorten",
       "Die steilen Weinberge verhindern vollständig Frost"
     ],
-
     correct: 0,
-
     explanation:
-      "Die besondere Topografie mit steilen, gut ausgerichteten Hängen kann Sonneneinstrahlung und Wärme in den Weinlagen fördern und damit die Reife unterstützen."
+      "Die besondere Topografie mit steilen, gut ausgerichteten Hängen kann Sonneneinstrahlung und Wärme in den Weinlagen fördern."
   }
 
 ];
 
 
 /* ============================================================
-   VARIABLEN
-============================================================= */
+   SPIELVARIABLEN
+============================================================ */
 
 let currentQuestion = 0;
-
 let score = 0;
-
 let playerName = "";
-
 let answered = false;
 
 
 /* ============================================================
-   SUPABASE STATUS
-============================================================= */
+   SCREEN WECHSELN
+============================================================ */
 
-function supabaseConfigured() {
+function showScreen(id) {
 
-  return (
-    SUPABASE_URL &&
-    SUPABASE_ANON_KEY &&
-    SUPABASE_URL.includes("supabase.co") &&
-    SUPABASE_ANON_KEY.length > 20
-  );
+  document
+    .querySelectorAll(".screen")
+    .forEach(function(screen) {
+
+      screen.classList.remove("active");
+
+    });
+
+
+  const target =
+    document.getElementById(id);
+
+
+  if (target) {
+
+    target.classList.add("active");
+
+  }
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
 }
 
 
 /* ============================================================
-   START
-============================================================= */
+   QUIZ STARTEN
+============================================================ */
 
 function startQuiz() {
 
@@ -1100,14 +1050,28 @@ function startQuiz() {
     document.getElementById("name-error");
 
 
+  if (!input) {
+
+    console.error(
+      "Element #player-name wurde nicht gefunden."
+    );
+
+    return;
+  }
+
+
   playerName =
     input.value.trim();
 
 
-  if (!playerName) {
+  if (playerName.length === 0) {
 
-    error.textContent =
-      "Bitte gib zuerst deinen Namen ein.";
+    if (error) {
+
+      error.textContent =
+        "Bitte gib zuerst deinen Namen ein.";
+
+    }
 
     input.focus();
 
@@ -1115,12 +1079,16 @@ function startQuiz() {
   }
 
 
-  error.textContent = "";
+  if (error) {
+
+    error.textContent = "";
+
+  }
 
 
   currentQuestion = 0;
-
   score = 0;
+  answered = false;
 
 
   showScreen("quiz-screen");
@@ -1130,34 +1098,47 @@ function startQuiz() {
 
 
 /* ============================================================
-   FRAGE ANZEIGEN
-============================================================= */
+   FRAGE RENDERN
+============================================================ */
 
 function renderQuestion() {
-
-  answered = false;
-
 
   const q =
     questions[currentQuestion];
 
 
+  if (!q) {
+
+    finishQuiz();
+
+    return;
+  }
+
+
+  answered = false;
+
+
   document.getElementById(
     "progress-text"
   ).textContent =
-    `Frage ${currentQuestion + 1} von ${questions.length}`;
+    "Frage " +
+    (currentQuestion + 1) +
+    " von " +
+    questions.length;
 
 
   document.getElementById(
     "score"
   ).textContent =
-    `${score} ${score === 1 ? "Punkt" : "Punkte"}`;
+    score +
+    (score === 1 ? " Punkt" : " Punkte");
 
 
   document.getElementById(
     "progress-bar"
   ).style.width =
-    `${(currentQuestion / questions.length) * 100}%`;
+    ((currentQuestion / questions.length) * 100) +
+    "%";
 
 
   document.getElementById(
@@ -1180,7 +1161,7 @@ function renderQuestion() {
 
 
   q.answers.forEach(
-    (answer, index) => {
+    function(answer, index) {
 
       const button =
         document.createElement("button");
@@ -1190,45 +1171,60 @@ function renderQuestion() {
         "answer";
 
 
+      button.type =
+        "button";
+
+
       button.textContent =
-        `${String.fromCharCode(65 + index)}) ${answer}`;
+        String.fromCharCode(65 + index) +
+        ") " +
+        answer;
 
 
-      button.onclick =
-        () => selectAnswer(
-          index,
-          button
-        );
+      button.addEventListener(
+        "click",
+        function() {
+
+          selectAnswer(
+            index,
+            button
+          );
+
+        }
+      );
 
 
       answersContainer.appendChild(
         button
       );
+
     }
   );
 
 
-  document.getElementById(
-    "explanation"
-  ).classList.remove("show");
+  document
+    .getElementById("explanation")
+    .classList.remove("show");
 
 
-  document.getElementById(
-    "next-wrapper"
-  ).classList.remove("show");
+  document
+    .getElementById("next-wrapper")
+    .classList.remove("show");
 }
 
 
 /* ============================================================
-   ANTWORT
-============================================================= */
+   ANTWORT AUSWERTEN
+============================================================ */
 
 function selectAnswer(
   index,
   clickedButton
 ) {
 
-  if (answered) return;
+  if (answered) {
+    return;
+  }
 
 
   answered = true;
@@ -1239,14 +1235,14 @@ function selectAnswer(
 
 
   const buttons =
-    document.querySelectorAll(
-      ".answer"
-    );
+    document.querySelectorAll(".answer");
 
 
   buttons.forEach(
-    button => {
+    function(button) {
+
       button.disabled = true;
+
     }
   );
 
@@ -1265,16 +1261,22 @@ function selectAnswer(
       "wrong"
     );
 
-    buttons[q.correct].classList.add(
-      "correct"
-    );
+
+    if (buttons[q.correct]) {
+
+      buttons[q.correct].classList.add(
+        "correct"
+      );
+
+    }
   }
 
 
   document.getElementById(
     "score"
   ).textContent =
-    `${score} ${score === 1 ? "Punkt" : "Punkte"}`;
+    score +
+    (score === 1 ? " Punkt" : " Punkte");
 
 
   const explanation =
@@ -1284,7 +1286,8 @@ function selectAnswer(
 
 
   explanation.innerHTML =
-    `<strong>🍷 Wusstest du schon?</strong><br>${q.explanation}`;
+    "<strong>🍷 Wusstest du schon?</strong><br>" +
+    q.explanation;
 
 
   explanation.classList.add(
@@ -1292,23 +1295,22 @@ function selectAnswer(
   );
 
 
-  document.getElementById(
-    "next-wrapper"
-  ).classList.add(
-    "show"
-  );
+  document
+    .getElementById("next-wrapper")
+    .classList.add("show");
 
 
   document.getElementById(
     "progress-bar"
   ).style.width =
-    `${((currentQuestion + 1) / questions.length) * 100}%`;
+    (((currentQuestion + 1) / questions.length) * 100) +
+    "%";
 }
 
 
 /* ============================================================
    NÄCHSTE FRAGE
-============================================================= */
+============================================================ */
 
 function nextQuestion() {
 
@@ -1332,7 +1334,7 @@ function nextQuestion() {
 
 /* ============================================================
    QUIZ BEENDET
-============================================================= */
+============================================================ */
 
 async function finishQuiz() {
 
@@ -1362,8 +1364,7 @@ async function finishQuiz() {
 
   if (score === 10) {
 
-    trophy.textContent =
-      "👑";
+    trophy.textContent = "👑";
 
     title.textContent =
       "Ahrtal-Weinmeister!";
@@ -1371,12 +1372,9 @@ async function finishQuiz() {
     message.textContent =
       "Unglaublich! Du kennst dich mit deutschem Wein und dem Ahrtal hervorragend aus. Die nächste Runde geht auf dich! 🍷";
 
-  }
+  } else if (score >= 8) {
 
-  else if (score >= 8) {
-
-    trophy.textContent =
-      "🏆";
+    trophy.textContent = "🏆";
 
     title.textContent =
       "Weinexperte!";
@@ -1384,12 +1382,9 @@ async function finishQuiz() {
     message.textContent =
       "Starke Leistung! Du hast eindeutig mehr Weinwissen als der durchschnittliche Wanderer.";
 
-  }
+  } else if (score >= 5) {
 
-  else if (score >= 5) {
-
-    trophy.textContent =
-      "🍷";
+    trophy.textContent = "🍷";
 
     title.textContent =
       "Weinliebhaber!";
@@ -1397,12 +1392,9 @@ async function finishQuiz() {
     message.textContent =
       "Sehr ordentlich! Ein gutes Glas Wein kannst du definitiv von einer Traubensaftschorle unterscheiden.";
 
-  }
+  } else {
 
-  else {
-
-    trophy.textContent =
-      "🍇";
+    trophy.textContent = "🍇";
 
     title.textContent =
       "Weinwanderer!";
@@ -1412,27 +1404,17 @@ async function finishQuiz() {
   }
 
 
-  showScreen(
-    "result-screen"
-  );
+  showScreen("result-screen");
 
 
-  const leaderboard =
-    document.getElementById(
-      "leaderboard"
-    );
-
-
-  leaderboard.innerHTML = `
+  document.getElementById(
+    "leaderboard"
+  ).innerHTML = `
     <div class="leaderboard-status">
-      🍷 Dein Ergebnis wird gespeichert ...
+      🍷 Ergebnis wird gespeichert ...
     </div>
   `;
 
-
-  /*
-    Ergebnis speichern
-  */
 
   await uploadResultToSupabase(
     playerName,
@@ -1440,39 +1422,28 @@ async function finishQuiz() {
   );
 
 
-  /*
-    Rangliste laden
-  */
-
   await renderLeaderboard();
 }
 
 
 /* ============================================================
    SUPABASE: ERGEBNIS SPEICHERN
-============================================================= */
+============================================================ */
 
 async function uploadResultToSupabase(
   name,
   points
 ) {
 
-  if (!supabaseConfigured()) {
-
-    console.error(
-      "Supabase ist nicht korrekt konfiguriert."
-    );
-
-    return false;
-  }
-
-
   try {
 
     const response =
       await fetch(
-        `${SUPABASE_URL}/rest/v1/${SUPABASE_TABLE}`,
+        SUPABASE_URL +
+        "/rest/v1/" +
+        SUPABASE_TABLE,
         {
+
           method: "POST",
 
           headers: {
@@ -1481,13 +1452,15 @@ async function uploadResultToSupabase(
               SUPABASE_ANON_KEY,
 
             "Authorization":
-              `Bearer ${SUPABASE_ANON_KEY}`,
+              "Bearer " +
+              SUPABASE_ANON_KEY,
 
             "Content-Type":
               "application/json",
 
             "Prefer":
               "return=minimal"
+
           },
 
           body:
@@ -1495,34 +1468,25 @@ async function uploadResultToSupabase(
               name: name,
               score: points
             })
+
         }
       );
 
 
     if (!response.ok) {
 
-      const errorText =
-        await response.text();
-
       console.error(
         "Supabase Fehler:",
-        errorText
+        await response.text()
       );
 
       return false;
     }
 
 
-    console.log(
-      "🍷 Ergebnis erfolgreich gespeichert."
-    );
-
-
     return true;
 
-  }
-
-  catch (error) {
+  } catch (error) {
 
     console.error(
       "Supabase Verbindungsfehler:",
@@ -1535,30 +1499,27 @@ async function uploadResultToSupabase(
 
 
 /* ============================================================
-   SUPABASE: RANGLISTE LADEN
-============================================================= */
+   SUPABASE: RANGLISTE
+============================================================ */
 
 async function loadLeaderboardFromSupabase() {
-
-  if (!supabaseConfigured()) {
-
-    return null;
-  }
-
 
   try {
 
     const url =
-      `${SUPABASE_URL}/rest/v1/${SUPABASE_TABLE}` +
-      `?select=name,score,created_at` +
-      `&order=score.desc,created_at.asc` +
-      `&limit=20`;
+      SUPABASE_URL +
+      "/rest/v1/" +
+      SUPABASE_TABLE +
+      "?select=name,score,created_at" +
+      "&order=score.desc,created_at.asc" +
+      "&limit=20";
 
 
     const response =
       await fetch(
         url,
         {
+
           method: "GET",
 
           headers: {
@@ -1567,20 +1528,20 @@ async function loadLeaderboardFromSupabase() {
               SUPABASE_ANON_KEY,
 
             "Authorization":
-              `Bearer ${SUPABASE_ANON_KEY}`
+              "Bearer " +
+              SUPABASE_ANON_KEY
+
           }
+
         }
       );
 
 
     if (!response.ok) {
 
-      const errorText =
-        await response.text();
-
       console.error(
         "Ranglistenfehler:",
-        errorText
+        await response.text()
       );
 
       return null;
@@ -1589,12 +1550,10 @@ async function loadLeaderboardFromSupabase() {
 
     return await response.json();
 
-  }
-
-  catch (error) {
+  } catch (error) {
 
     console.error(
-      "Rangliste konnte nicht geladen werden:",
+      "Fehler beim Laden der Rangliste:",
       error
     );
 
@@ -1604,42 +1563,8 @@ async function loadLeaderboardFromSupabase() {
 
 
 /* ============================================================
-   RANGLISTE AKTUALISIEREN
-============================================================= */
-
-async function refreshLeaderboard() {
-
-  const button =
-    event?.currentTarget;
-
-
-  if (button) {
-
-    button.disabled = true;
-
-    button.classList.add(
-      "saving"
-    );
-  }
-
-
-  await renderLeaderboard();
-
-
-  if (button) {
-
-    button.disabled = false;
-
-    button.classList.remove(
-      "saving"
-    );
-  }
-}
-
-
-/* ============================================================
-   RANGLISTE DARSTELLEN
-============================================================= */
+   RANGLISTE RENDERN
+============================================================ */
 
 async function renderLeaderboard() {
 
@@ -1661,49 +1586,21 @@ async function renderLeaderboard() {
 
 
   if (
-    results &&
-    Array.isArray(results)
+    !results ||
+    !Array.isArray(results)
   ) {
 
-    renderResults(
-      results
-    );
+    container.innerHTML = `
+      <div class="leaderboard-status">
+        ⚠️ Die Online-Rangliste konnte nicht geladen werden.
+      </div>
+    `;
 
     return;
   }
 
 
-  /*
-    Falls die Online-Rangliste nicht erreichbar ist,
-    zeigen wir eine verständliche Fehlermeldung.
-  */
-
-  container.innerHTML = `
-    <div class="leaderboard-status">
-      ⚠️ Die Online-Rangliste konnte gerade nicht geladen werden.
-      <br>
-      Bitte prüfe deine Internetverbindung und versuche es erneut.
-    </div>
-  `;
-}
-
-
-/* ============================================================
-   ERGEBNISSE RENDERN
-============================================================= */
-
-function renderResults(results) {
-
-  const container =
-    document.getElementById(
-      "leaderboard"
-    );
-
-
-  container.innerHTML = "";
-
-
-  if (!results.length) {
+  if (results.length === 0) {
 
     container.innerHTML = `
       <div class="leaderboard-status">
@@ -1715,96 +1612,79 @@ function renderResults(results) {
   }
 
 
-  const status =
-    document.createElement(
-      "div"
-    );
-
-
-  status.className =
-    "leaderboard-status";
-
-
-  status.innerHTML = `
-    <span class="online-indicator">
-      <span class="online-dot"></span>
-      Live-Rangliste
-    </span>
+  container.innerHTML = `
+    <div class="leaderboard-status">
+      🟢 Live-Rangliste
+    </div>
   `;
 
 
-  container.appendChild(
-    status
-  );
+  results.forEach(
+    function(result, index) {
+
+      const row =
+        document.createElement("div");
 
 
-  results
-    .slice(0, 20)
-    .forEach(
-      (result, index) => {
-
-        const row =
-          document.createElement(
-            "div"
-          );
+      row.className =
+        "leaderboard-row";
 
 
-        row.className =
-          "leaderboard-row";
+      let medal = "";
 
 
-        let medal = "";
-
-
-        if (index === 0) {
-
-          medal = "🥇";
-
-        } else if (index === 1) {
-
-          medal = "🥈";
-
-        } else if (index === 2) {
-
-          medal = "🥉";
-        }
-
-
-        row.innerHTML = `
-
-          <div class="place">
-            ${medal || (index + 1) + "."}
-          </div>
-
-          <div class="player-name">
-            ${escapeHtml(result.name)}
-          </div>
-
-          <div class="points">
-            ${result.score}/10
-          </div>
-
-        `;
-
-
-        container.appendChild(
-          row
-        );
+      if (index === 0) {
+        medal = "🥇";
+      } else if (index === 1) {
+        medal = "🥈";
+      } else if (index === 2) {
+        medal = "🥉";
       }
-    );
+
+
+      row.innerHTML = `
+
+        <div class="place">
+          ${medal || (index + 1) + "."}
+        </div>
+
+        <div class="player-name">
+          ${escapeHtml(result.name)}
+        </div>
+
+        <div class="points">
+          ${result.score}/10
+        </div>
+
+      `;
+
+
+      container.appendChild(row);
+
+    }
+  );
 }
 
 
 /* ============================================================
-   HTML SICHER AUSGEBEN
-============================================================= */
+   RANGLISTE AKTUALISIEREN
+============================================================ */
+
+async function refreshLeaderboard() {
+
+  await renderLeaderboard();
+
+}
+
+
+/* ============================================================
+   HTML ABSICHERN
+============================================================ */
 
 function escapeHtml(text) {
 
   const div =
-    document.createElement(
-      "div"
-    );
+    document.createElement("div");
 
 
   div.textContent =
@@ -1816,43 +1696,14 @@ function escapeHtml(text) {
 
 
 /* ============================================================
-   NAVIGATION
-============================================================= */
-
-function showScreen(id) {
-
-  document
-    .querySelectorAll(
-      ".screen"
-    )
-    .forEach(
-      screen => {
-        screen.classList.remove(
-          "active"
-        );
-      }
-    );
-
-
-  document
-    .getElementById(id)
-    .classList.add(
-      "active"
-    );
-
-
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
-}
-
+   QUIZ NEU STARTEN
+============================================================ */
 
 function restartQuiz() {
 
   currentQuestion = 0;
-
   score = 0;
+  answered = false;
 
 
   showScreen(
@@ -1864,11 +1715,23 @@ function restartQuiz() {
 }
 
 
+/* ============================================================
+   ZUR STARTSEITE
+============================================================ */
+
 function showStart() {
 
-  document.getElementById(
-    "player-name"
-  ).value = "";
+  const input =
+    document.getElementById(
+      "player-name"
+    );
+
+
+  if (input) {
+
+    input.value = "";
+
+  }
 
 
   showScreen(
@@ -1878,15 +1741,47 @@ function showStart() {
 
 
 /* ============================================================
-   SUPABASE BEIM START TESTEN
-============================================================= */
+   ENTER = QUIZ STARTEN
+============================================================ */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function() {
+
+    const input =
+      document.getElementById(
+        "player-name"
+      );
+
+
+    if (input) {
+
+      input.addEventListener(
+        "keydown",
+        function(event) {
+
+          if (
+            event.key === "Enter"
+          ) {
+
+            startQuiz();
+
+          }
+
+        }
+      );
+
+    }
+
+  }
+);
+
+
+/* ============================================================
+   SUPABASE TEST
+============================================================ */
 
 async function testSupabaseConnection() {
-
-  if (!supabaseConfigured()) {
-    return;
-  }
-
 
   try {
 
@@ -1896,58 +1791,48 @@ async function testSupabaseConnection() {
 
     if (results !== null) {
 
-      document.getElementById(
-        "connection-status"
-      ).style.display =
-        "inline-flex";
+      const status =
+        document.getElementById(
+          "connection-status"
+        );
+
+
+      if (status) {
+
+        status.style.display =
+          "inline-flex";
+
+      }
 
       console.log(
-        "🍷 Supabase-Verbindung erfolgreich."
+        "🍷 Supabase-Verbindung funktioniert."
       );
 
-    } else {
-
-      console.warn(
-        "Supabase-Verbindung konnte nicht getestet werden."
-      );
     }
 
-  }
-
-  catch (error) {
+  } catch (error) {
 
     console.error(
+      "Supabase-Test fehlgeschlagen:",
       error
     );
+
   }
 }
 
 
 /* ============================================================
-   ENTER-TASTE AUF STARTSEITE
-============================================================= */
+   INITIALISIERUNG
+============================================================ */
 
-document
-  .getElementById("player-name")
-  .addEventListener(
-    "keydown",
-    function(event) {
+document.addEventListener(
+  "DOMContentLoaded",
+  function() {
 
-      if (
-        event.key === "Enter"
-      ) {
+    testSupabaseConnection();
 
-        startQuiz();
-      }
-    }
-  );
-
-
-/* ============================================================
-   START
-============================================================= */
-
-testSupabaseConnection();
+  }
+);
 
 </script>
 
