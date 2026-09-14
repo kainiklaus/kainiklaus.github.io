@@ -1,541 +1,1150 @@
 <!DOCTYPE html>
 <html lang="de">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#722f37">
 
-  <title>Ahrtal Wein-Wanderquiz 🍷</title>
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="theme-color"
+    content="#722f37"
+  >
+
+  <title>
+    Ahrtal Wein-Wanderquiz 🍷
+  </title>
+
 
   <style>
+
     :root {
+
       --wine: #722f37;
       --wine-dark: #4d1f25;
       --wine-light: #9f4f59;
+
       --cream: #fffaf2;
+
       --gold: #d4a84f;
+
       --green: #536b4d;
-      --text: #292323;
-      --muted: #756b68;
+
       --correct: #2e7d52;
       --wrong: #b84040;
+
+      --text: #292323;
+      --muted: #756b68;
+
       --white: #ffffff;
+
       --border: #e6ddd7;
-      --shadow: 0 15px 40px rgba(60, 30, 30, 0.15);
+
+      --shadow:
+        0 15px 40px
+        rgba(60, 30, 30, 0.15);
+
     }
+
 
     * {
       box-sizing: border-box;
     }
 
+
     html {
       scroll-behavior: smooth;
     }
 
+
     body {
+
       margin: 0;
+
       min-height: 100vh;
-      font-family: Georgia, "Times New Roman", serif;
+
+      font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
       color: var(--text);
 
       background:
+
         linear-gradient(
-          rgba(255,250,242,.90),
-          rgba(255,250,242,.96)
+          rgba(255,250,242,.93),
+          rgba(255,250,242,.97)
         ),
+
         radial-gradient(
           circle at 20% 20%,
           #ead7c5,
           transparent 35%
         ),
+
         radial-gradient(
           circle at 80% 80%,
           #dfc5c5,
           transparent 35%
         );
+
     }
+
 
     button,
     input {
       font: inherit;
     }
 
+
     button {
       -webkit-tap-highlight-color: transparent;
     }
 
+
     .container {
-      width: min(920px, calc(100% - 32px));
+
+      width:
+        min(
+          920px,
+          calc(100% - 32px)
+        );
+
       margin: auto;
+
     }
 
+
     .screen {
+
       min-height: 100vh;
+
       display: none;
+
       align-items: center;
+
       justify-content: center;
+
       padding: 30px 0;
+
     }
+
 
     .screen.active {
       display: flex;
     }
 
+
     .card {
+
       width: 100%;
-      background: rgba(255,255,255,.97);
+
+      background:
+        rgba(255,255,255,.97);
+
       border-radius: 28px;
+
       padding: 40px;
+
       box-shadow: var(--shadow);
-      border: 1px solid rgba(114,47,55,.08);
+
+      border:
+        1px solid
+        rgba(114,47,55,.08);
+
     }
+
+
+    /* =========================================
+       TYPOGRAFIE
+    ========================================= */
+
+
+    h1 {
+
+      margin: 0;
+
+      color: var(--wine);
+
+      font-size:
+        clamp(
+          2.2rem,
+          7vw,
+          4.2rem
+        );
+
+      line-height: 1.05;
+
+    }
+
+
+    h2 {
+
+      color: var(--wine);
+
+      font-size:
+        clamp(
+          1.6rem,
+          4vw,
+          2.3rem
+        );
+
+      margin-top: 0;
+
+    }
+
+
+    .small {
+
+      font-size: .88rem;
+
+      color: var(--muted);
+
+      line-height: 1.5;
+
+    }
+
 
     /* =========================================
        STARTSEITE
     ========================================= */
 
+
     .hero {
+
       text-align: center;
-      max-width: 720px;
+
+      max-width: 760px;
+
       margin: auto;
+
     }
+
 
     .vine {
+
       font-size: 48px;
+
       margin-bottom: 10px;
+
     }
 
-    h1 {
-      margin: 0;
-      color: var(--wine);
-      font-size: clamp(2.2rem, 7vw, 4.2rem);
-      line-height: 1.05;
-    }
-
-    h2 {
-      color: var(--wine);
-      font-size: clamp(1.6rem, 4vw, 2.3rem);
-      margin-top: 0;
-    }
-
-    .subtitle {
-      font-size: 1.25rem;
-      line-height: 1.6;
-      color: var(--muted);
-      margin: 22px auto 30px;
-      max-width: 650px;
-    }
 
     .badge {
+
       display: inline-block;
-      padding: 7px 14px;
+
+      padding:
+        7px 14px;
+
       border-radius: 99px;
-      background: #f4e5d0;
-      color: var(--wine-dark);
+
+      background:
+        #f4e5d0;
+
+      color:
+        var(--wine-dark);
+
       font-size: .9rem;
+
       font-weight: bold;
+
       margin-bottom: 18px;
+
     }
+
+
+    .subtitle {
+
+      font-size: 1.25rem;
+
+      line-height: 1.6;
+
+      color: var(--muted);
+
+      margin:
+        22px auto 30px;
+
+      max-width: 650px;
+
+    }
+
 
     .instructions {
+
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+
+      grid-template-columns:
+        repeat(3, 1fr);
+
       gap: 12px;
+
       margin: 28px 0;
+
     }
+
 
     .instruction {
-      background: #faf6f1;
+
+      background:
+        #faf6f1;
+
       border-radius: 15px;
+
       padding: 15px 10px;
+
       color: var(--muted);
+
       font-size: .9rem;
+
     }
+
 
     .instruction-icon {
+
       display: block;
+
       font-size: 25px;
+
       margin-bottom: 6px;
+
     }
+
 
     input[type="text"] {
+
       width: 100%;
+
       max-width: 420px;
-      padding: 17px 20px;
+
+      padding:
+        17px 20px;
+
       border-radius: 14px;
-      border: 2px solid #e2d6cf;
+
+      border:
+        2px solid
+        #e2d6cf;
+
       outline: none;
+
       font-size: 1.05rem;
+
       margin-bottom: 14px;
+
       transition: .2s;
+
     }
+
 
     input[type="text"]:focus {
-      border-color: var(--wine);
-      box-shadow: 0 0 0 4px rgba(114,47,55,.1);
+
+      border-color:
+        var(--wine);
+
+      box-shadow:
+        0 0 0 4px
+        rgba(114,47,55,.1);
+
     }
 
-    .btn {
-      border: none;
-      border-radius: 14px;
-      padding: 15px 25px;
-      background: var(--wine);
-      color: white;
-      cursor: pointer;
-      font-weight: bold;
-      font-size: 1rem;
-      transition: transform .15s, background .15s;
-      box-shadow: 0 7px 18px rgba(114,47,55,.2);
-    }
-
-    .btn:hover {
-      background: var(--wine-dark);
-      transform: translateY(-2px);
-    }
-
-    .btn:active {
-      transform: translateY(0);
-    }
-
-    .btn.secondary {
-      background: #eee4df;
-      color: var(--wine-dark);
-      box-shadow: none;
-    }
-
-    .btn.gold {
-      background: var(--gold);
-      color: #382714;
-    }
-
-    .btn:disabled {
-      opacity: .55;
-      cursor: not-allowed;
-      transform: none;
-    }
 
     .error {
-      color: var(--wrong);
+
+      color:
+        var(--wrong);
+
       font-weight: bold;
+
       min-height: 24px;
-      margin: 4px 0 12px;
+
+      margin:
+        4px 0 12px;
+
     }
+
+
+    /* =========================================
+       BUTTONS
+    ========================================= */
+
+
+    .btn {
+
+      border: none;
+
+      border-radius: 14px;
+
+      padding:
+        15px 25px;
+
+      background:
+        var(--wine);
+
+      color: white;
+
+      cursor: pointer;
+
+      font-weight: bold;
+
+      font-size: 1rem;
+
+      transition:
+        transform .15s,
+        background .15s;
+
+      box-shadow:
+        0 7px 18px
+        rgba(114,47,55,.2);
+
+    }
+
+
+    .btn:hover:not(:disabled) {
+
+      background:
+        var(--wine-dark);
+
+      transform:
+        translateY(-2px);
+
+    }
+
+
+    .btn:active {
+
+      transform:
+        translateY(0);
+
+    }
+
+
+    .btn.secondary {
+
+      background:
+        #eee4df;
+
+      color:
+        var(--wine-dark);
+
+      box-shadow: none;
+
+    }
+
+
+    .btn.gold {
+
+      background:
+        var(--gold);
+
+      color:
+        #382714;
+
+    }
+
+
+    .btn:disabled {
+
+      opacity: .55;
+
+      cursor:
+        not-allowed;
+
+      transform: none;
+
+    }
+
 
     /* =========================================
        QUIZ
     ========================================= */
 
+
     .quiz-card {
+
       max-width: 850px;
+
       margin: auto;
+
     }
+
 
     .topbar {
+
       display: flex;
-      justify-content: space-between;
+
+      justify-content:
+        space-between;
+
       align-items: center;
+
       gap: 15px;
+
       margin-bottom: 20px;
+
     }
+
 
     .progress-text {
-      color: var(--muted);
+
+      color:
+        var(--muted);
+
       font-weight: bold;
+
     }
+
 
     .score {
-      background: #f4e5d0;
-      color: var(--wine-dark);
-      padding: 8px 14px;
+
+      background:
+        #f4e5d0;
+
+      color:
+        var(--wine-dark);
+
+      padding:
+        8px 14px;
+
       border-radius: 99px;
+
       font-weight: bold;
+
       white-space: nowrap;
+
     }
+
 
     .progress {
+
       height: 9px;
-      background: #eee4df;
+
+      background:
+        #eee4df;
+
       border-radius: 99px;
+
       overflow: hidden;
+
       margin-bottom: 35px;
+
     }
+
 
     .progress-bar {
+
       height: 100%;
+
       width: 0;
-      background: linear-gradient(90deg, var(--wine), var(--gold));
-      transition: width .3s;
+
+      background:
+        linear-gradient(
+          90deg,
+          var(--wine),
+          var(--gold)
+        );
+
+      transition:
+        width .3s;
+
     }
+
 
     .difficulty {
-      color: var(--gold);
+
+      color:
+        var(--gold);
+
       font-weight: bold;
+
       letter-spacing: 2px;
+
       margin-bottom: 10px;
+
     }
+
 
     .question {
-      font-size: clamp(1.4rem, 4vw, 2rem);
+
+      font-size:
+        clamp(
+          1.4rem,
+          4vw,
+          2rem
+        );
+
       line-height: 1.35;
-      color: var(--wine-dark);
+
+      color:
+        var(--wine-dark);
+
       margin-bottom: 25px;
+
     }
+
 
     .answers {
+
       display: grid;
+
       gap: 13px;
+
     }
+
 
     .answer {
-      border: 2px solid var(--border);
-      background: #fff;
+
+      border:
+        2px solid
+        var(--border);
+
+      background:
+        #fff;
+
       border-radius: 15px;
-      padding: 17px 18px;
+
+      padding:
+        17px 18px;
+
       cursor: pointer;
+
       text-align: left;
+
       transition: .15s;
-      color: var(--text);
+
+      color:
+        var(--text);
+
       font-size: 1rem;
+
     }
+
 
     .answer:hover:not(:disabled) {
-      border-color: var(--wine);
-      background: #fff8f6;
-      transform: translateX(3px);
+
+      border-color:
+        var(--wine);
+
+      background:
+        #fff8f6;
+
+      transform:
+        translateX(3px);
+
     }
+
 
     .answer.correct {
-      border-color: var(--correct);
-      background: #edf8f1;
-      color: #185738;
+
+      border-color:
+        var(--correct);
+
+      background:
+        #edf8f1;
+
+      color:
+        #185738;
+
     }
+
 
     .answer.wrong {
-      border-color: var(--wrong);
-      background: #fff0f0;
-      color: #7b2525;
+
+      border-color:
+        var(--wrong);
+
+      background:
+        #fff0f0;
+
+      color:
+        #7b2525;
+
     }
+
 
     .answer:disabled {
-      cursor: default;
+
+      cursor:
+        default;
+
     }
 
+
     .explanation {
+
       display: none;
+
       margin-top: 22px;
+
       padding: 20px;
+
       border-radius: 15px;
-      background: #f8f1e8;
-      border-left: 5px solid var(--gold);
+
+      background:
+        #f8f1e8;
+
+      border-left:
+        5px solid
+        var(--gold);
+
       line-height: 1.55;
+
     }
+
 
     .explanation.show {
       display: block;
     }
 
+
     .explanation strong {
-      color: var(--wine);
+      color:
+        var(--wine);
     }
 
-    .next-wrapper {
-      display: none;
-      justify-content: flex-end;
-      margin-top: 22px;
-    }
-
-    .next-wrapper.show {
-      display: flex;
-    }
 
     /* =========================================
-       ERGEBNIS
+       TIMER
     ========================================= */
 
-    .result {
+
+    .timer-box {
+
+      display: none;
+
+      margin-top: 20px;
+
+      padding: 22px;
+
+      border-radius: 18px;
+
+      background:
+        #f5eee5;
+
       text-align: center;
-      max-width: 750px;
-      margin: auto;
+
+      border:
+        1px solid
+        #eadbd0;
+
     }
+
+
+    .timer-label {
+
+      color:
+        var(--muted);
+
+      font-size: .9rem;
+
+    }
+
+
+    .countdown {
+
+      font-size:
+        clamp(
+          2.3rem,
+          8vw,
+          3.5rem
+        );
+
+      font-weight: bold;
+
+      color:
+        var(--wine);
+
+      margin:
+        5px 0;
+
+      font-variant-numeric:
+        tabular-nums;
+
+    }
+
+
+    .timer-message {
+
+      color:
+        var(--muted);
+
+      line-height: 1.5;
+
+    }
+
+
+    .timer-unlocked {
+
+      background:
+        #edf8f1;
+
+      border-color:
+        #c8e6d3;
+
+    }
+
+
+    .timer-unlocked .countdown {
+
+      color:
+        var(--correct);
+
+    }
+
+
+    .next-wrapper {
+
+      display: flex;
+
+      justify-content:
+        flex-end;
+
+      margin-top: 22px;
+
+    }
+
+
+    /* =========================================
+       RESULTAT
+    ========================================= */
+
+
+    .result {
+
+      text-align: center;
+
+      max-width: 780px;
+
+      margin: auto;
+
+    }
+
 
     .trophy {
+
       font-size: 70px;
+
       margin-bottom: 10px;
+
     }
+
 
     .result-score {
-      font-size: clamp(3rem, 10vw, 5rem);
-      color: var(--wine);
+
+      font-size:
+        clamp(
+          3rem,
+          10vw,
+          5rem
+        );
+
+      color:
+        var(--wine);
+
       font-weight: bold;
-      margin: 15px 0;
+
+      margin:
+        15px 0;
+
     }
+
 
     .result-title {
+
       font-size: 1.8rem;
-      color: var(--gold);
+
+      color:
+        var(--gold);
+
       margin-bottom: 12px;
+
       font-weight: bold;
+
     }
 
+
     .result-message {
-      color: var(--muted);
+
+      color:
+        var(--muted);
+
       line-height: 1.6;
+
       font-size: 1.1rem;
+
       margin-bottom: 30px;
+
     }
+
 
     /* =========================================
        RANGLISTE
     ========================================= */
 
+
     .leaderboard {
+
       max-width: 700px;
-      margin: 25px auto 0;
+
+      margin:
+        25px auto 0;
+
       text-align: left;
+
     }
+
 
     .leaderboard-status {
+
       text-align: center;
-      color: var(--muted);
+
+      color:
+        var(--muted);
+
       font-size: .9rem;
+
       margin-bottom: 12px;
+
+      line-height: 1.6;
+
     }
+
 
     .leaderboard-row {
+
       display: grid;
-      grid-template-columns: 55px 1fr 80px;
+
+      grid-template-columns:
+        55px 1fr 80px;
+
       align-items: center;
+
       gap: 10px;
-      padding: 14px 16px;
-      border-bottom: 1px solid #eee4df;
+
+      padding:
+        14px 16px;
+
+      border-bottom:
+        1px solid
+        #eee4df;
+
     }
 
-    .leaderboard-row:first-child {
-      background: #fff8e9;
+
+    .leaderboard-row:first-of-type {
+
+      background:
+        #fff8e9;
+
       border-radius: 14px;
+
     }
+
 
     .place {
+
       font-weight: bold;
+
       font-size: 1.2rem;
+
     }
+
 
     .player-name {
+
       text-align: left;
+
       font-weight: bold;
+
       overflow: hidden;
+
       text-overflow: ellipsis;
+
       white-space: nowrap;
+
     }
+
 
     .points {
+
       text-align: right;
+
       font-weight: bold;
-      color: var(--wine);
+
+      color:
+        var(--wine);
+
     }
 
-    .online-indicator {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      color: var(--correct);
-      font-size: .85rem;
-      margin-top: 8px;
-    }
-
-    .online-dot {
-      width: 8px;
-      height: 8px;
-      background: var(--correct);
-      border-radius: 50%;
-    }
-
-    .winner {
-      font-size: 1.1rem;
-      color: var(--wine-dark);
-      margin: 15px 0;
-    }
-
-    .small {
-      font-size: .88rem;
-      color: var(--muted);
-      line-height: 1.5;
-    }
 
     .actions {
+
       display: flex;
+
       justify-content: center;
+
       gap: 12px;
+
       flex-wrap: wrap;
+
       margin-top: 25px;
+
     }
+
+
+    .online-indicator {
+
+      display: inline-flex;
+
+      align-items: center;
+
+      gap: 6px;
+
+      color:
+        var(--correct);
+
+      font-size: .85rem;
+
+      margin-top: 8px;
+
+    }
+
+
+    .online-dot {
+
+      width: 8px;
+
+      height: 8px;
+
+      background:
+        var(--correct);
+
+      border-radius: 50%;
+
+    }
+
 
     .footer {
+
       text-align: center;
+
       margin-top: 35px;
-      color: var(--muted);
+
+      color:
+        var(--muted);
+
       font-size: .85rem;
+
     }
 
-    .saving {
-      opacity: .7;
-    }
 
     /* =========================================
        MOBILE
     ========================================= */
 
+
     @media (max-width: 600px) {
 
       .container {
-        width: min(100% - 18px, 920px);
+
+        width:
+          min(
+            100% - 18px,
+            920px
+          );
+
       }
+
 
       .screen {
-        padding: 10px 0;
+
+        padding:
+          10px 0;
+
       }
+
 
       .card {
-        padding: 25px 18px;
-        border-radius: 20px;
+
+        padding:
+          25px 18px;
+
+        border-radius:
+          20px;
+
       }
+
 
       .instructions {
-        grid-template-columns: 1fr;
+
+        grid-template-columns:
+          1fr;
+
       }
+
 
       .instruction {
-        padding: 10px;
+
+        padding:
+          10px;
+
       }
+
 
       .topbar {
-        align-items: flex-start;
+
+        align-items:
+          flex-start;
+
       }
+
 
       .question {
-        font-size: 1.35rem;
+
+        font-size:
+          1.35rem;
+
       }
+
 
       .answer {
-        padding: 15px;
+
+        padding:
+          15px;
+
       }
 
+
       .leaderboard-row {
-        grid-template-columns: 42px 1fr 65px;
+
+        grid-template-columns:
+          42px 1fr 65px;
+
       }
+
     }
+
   </style>
+
 </head>
 
 
 <body>
 
 
-<!-- ============================================================
+<!-- =========================================================
      STARTSEITE
-============================================================= -->
+========================================================== -->
 
-<section id="start-screen" class="screen active">
+<section
+  id="start-screen"
+  class="screen active"
+>
 
   <div class="container">
 
@@ -545,35 +1154,58 @@
         🍇🍷
       </div>
 
+
       <div class="badge">
         DAS AHR-TAL WEINQUIZ
       </div>
+
 
       <h1>
         Wein-Wanderquiz
       </h1>
 
+
       <p class="subtitle">
-        Wie gut kennt ihr die Weine, Rebsorten und
-        Weinbaugebiete Deutschlands – und natürlich das Ahrtal?
+
+        Wie gut kennt ihr die Weine,
+        Rebsorten und Weinbaugebiete Deutschlands –
+        und natürlich das Ahrtal?
+
       </p>
 
 
       <div class="instructions">
 
         <div class="instruction">
-          <span class="instruction-icon">❓</span>
-          10 Fragen
+
+          <span class="instruction-icon">
+            ❓
+          </span>
+
+          10 Weinfragen
+
         </div>
 
-        <div class="instruction">
-          <span class="instruction-icon">🍷</span>
-          1 Punkt pro richtige Antwort
-        </div>
 
         <div class="instruction">
-          <span class="instruction-icon">🏆</span>
+
+          <span class="instruction-icon">
+            ⏱️
+          </span>
+
+          15 Minuten zwischen den Fragen
+
+        </div>
+
+
+        <div class="instruction">
+
+          <span class="instruction-icon">
+            🏆
+          </span>
+
           Gemeinsame Rangliste
+
         </div>
 
       </div>
@@ -583,6 +1215,16 @@
         <strong>
           Steigender Schwierigkeitsgrad
         </strong>
+      </p>
+
+
+      <p class="small">
+
+        Nach jeder beantworteten Frage habt ihr
+        15 Minuten Zeit für den nächsten Wanderabschnitt.
+        Der Countdown läuft auch weiter,
+        wenn ihr euer Handy sperrt.
+
       </p>
 
 
@@ -596,14 +1238,17 @@
           autocomplete="off"
         >
 
+
         <div
           id="name-error"
           class="error"
         ></div>
 
+
         <button
+          id="start-button"
           class="btn"
-          onclick="startQuiz()"
+          type="button"
         >
           🍷 Quiz starten
         </button>
@@ -616,13 +1261,19 @@
         class="online-indicator"
         style="display:none;"
       >
+
         <span class="online-dot"></span>
+
         Online-Rangliste aktiv
+
       </div>
 
 
       <div class="footer">
-        Viel Erfolg – und immer schön auf dem Wanderweg bleiben! 🥾
+
+        Viel Erfolg –
+        und immer schön auf dem Wanderweg bleiben! 🥾
+
       </div>
 
     </div>
@@ -633,15 +1284,19 @@
 
 
 
-<!-- ============================================================
+<!-- =========================================================
      QUIZ
-============================================================= -->
+========================================================== -->
 
-<section id="quiz-screen" class="screen">
+<section
+  id="quiz-screen"
+  class="screen"
+>
 
   <div class="container">
 
     <div class="card quiz-card">
+
 
       <div class="topbar">
 
@@ -651,6 +1306,7 @@
         >
           Frage 1 von 10
         </div>
+
 
         <div
           class="score"
@@ -701,15 +1357,49 @@
 
 
       <div
-        class="next-wrapper"
-        id="next-wrapper"
+        class="timer-box"
+        id="timer-box"
       >
+
+        <div class="timer-label">
+
+          Nächste Frage verfügbar in
+
+        </div>
+
+
+        <div
+          class="countdown"
+          id="countdown"
+        >
+          15:00
+        </div>
+
+
+        <div
+          class="timer-message"
+          id="timer-message"
+        >
+
+          Zeit für einen schönen
+          Ahrtal-Wanderabschnitt! 🥾🍷
+
+        </div>
+
+      </div>
+
+
+      <div class="next-wrapper">
 
         <button
           class="btn"
-          onclick="nextQuestion()"
+          id="next-button"
+          type="button"
+          disabled
         >
-          Weiter →
+
+          🔒 Wartezeit läuft ...
+
         </button>
 
       </div>
@@ -722,15 +1412,19 @@
 
 
 
-<!-- ============================================================
+<!-- =========================================================
      ERGEBNIS
-============================================================= -->
+========================================================== -->
 
-<section id="result-screen" class="screen">
+<section
+  id="result-screen"
+  class="screen"
+>
 
   <div class="container">
 
     <div class="card result">
+
 
       <div
         class="trophy"
@@ -783,21 +1477,17 @@
 
         <button
           class="btn gold"
-          onclick="refreshLeaderboard()"
+          id="refresh-button"
+          type="button"
         >
           🔄 Rangliste aktualisieren
         </button>
 
-        <button
-          class="btn"
-          onclick="restartQuiz()"
-        >
-          🔄 Nochmal spielen
-        </button>
 
         <button
           class="btn secondary"
-          onclick="showStart()"
+          id="new-player-button"
+          type="button"
         >
           Neuer Spieler
         </button>
@@ -805,7 +1495,7 @@
       </div>
 
 
-      <p class="small" style="margin-top:25px;">
+      <p class="small">
 
         Die Rangliste wird zentral gespeichert.
         Alle Teilnehmer sehen dieselben Ergebnisse.
@@ -822,172 +1512,259 @@
 
 <script>
 
-/* ============================================================
-   SUPABASE
-============================================================ */
+
+/* =========================================================
+   SUPABASE KONFIGURATION
+========================================================= */
+
+
+/*
+  WICHTIG:
+
+  Hier KEIN /rest/v1/ anhängen.
+
+  Die URL lautet:
+
+  https://nakyyykewametdbrescz.supabase.co
+*/
+
 
 const SUPABASE_URL =
   "https://nakyyykewametdbrescz.supabase.co";
 
+
 const SUPABASE_ANON_KEY =
   "sb_publishable_VnJx4FA52i33hwOYdmvCFA_rOmTkTVp";
+
 
 const SUPABASE_TABLE =
   "quiz_results";
 
 
-/* ============================================================
+/* =========================================================
+   QUIZ-EINSTELLUNGEN
+========================================================= */
+
+
+/*
+  15 Minuten zwischen den Fragen.
+
+  Für einen Test kannst du hier vorübergehend
+  beispielsweise 30 * 1000 setzen.
+
+  Das wären dann 30 Sekunden.
+
+  VOR DER WANDERUNG wieder auf 15 Minuten stellen!
+*/
+
+
+const QUESTION_DELAY =
+  15 * 60 * 1000;
+
+
+/* =========================================================
    QUIZ-FRAGEN
-============================================================ */
+========================================================= */
+
 
 const questions = [
 
+
   {
     difficulty: "★☆☆☆☆",
+
     question:
       "Zu welchem der 13 deutschen Qualitätsweinbaugebiete gehört das Ahrtal?",
+
     answers: [
       "Ahr",
       "Mittelrhein",
       "Mosel",
       "Nahe"
     ],
+
     correct: 0,
+
     explanation:
       "Das Ahrtal bildet das eigenständige deutsche Weinbaugebiet Ahr."
   },
 
+
   {
     difficulty: "★☆☆☆☆",
+
     question:
       "Welche Rebsorte prägt den Weinbau an der Ahr besonders stark?",
+
     answers: [
       "Spätburgunder",
       "Dornfelder",
       "Trollinger",
       "Portugieser"
     ],
+
     correct: 0,
+
     explanation:
       "Spätburgunder, international Pinot Noir genannt, ist die prägende Rebsorte der Ahr."
   },
 
+
   {
     difficulty: "★★☆☆☆",
+
     question:
       "Welche deutsche Weinregion ist besonders für Riesling bekannt und wird von der Mosel durchzogen?",
+
     answers: [
       "Mosel",
       "Ahr",
       "Württemberg",
       "Sachsen"
     ],
+
     correct: 0,
+
     explanation:
       "Die Mosel gehört zu den bekanntesten deutschen Rieslingregionen."
   },
 
+
   {
     difficulty: "★★☆☆☆",
+
     question:
       "Warum sind viele Weinberge im Ahrtal in steilen Hanglagen angelegt?",
+
     answers: [
       "Bessere Sonneneinstrahlung und günstige Wärmeverhältnisse",
       "Damit die Reben möglichst wenig Wasser bekommen",
       "Weil Weinreben ausschließlich an Hängen wachsen können",
       "Damit die Trauben grundsätzlich weniger Zucker bilden"
     ],
+
     correct: 0,
+
     explanation:
       "Steile, gut ausgerichtete Hänge können eine intensive Sonneneinstrahlung ermöglichen und die Reife unterstützen."
   },
 
+
   {
     difficulty: "★★★☆☆",
+
     question:
       "Welche Rebsorte steckt hinter dem Namen „Pinot Noir“?",
+
     answers: [
       "Spätburgunder",
       "Grauburgunder",
       "Weißburgunder",
       "Frühburgunder"
     ],
+
     correct: 0,
+
     explanation:
       "Spätburgunder ist die deutsche Bezeichnung für Pinot Noir."
   },
 
+
   {
     difficulty: "★★★☆☆",
+
     question:
       "Welches deutsche Weinbaugebiet ist flächenmäßig das größte?",
+
     answers: [
       "Rheinhessen",
       "Pfalz",
       "Mosel",
       "Ahr"
     ],
+
     correct: 0,
+
     explanation:
       "Rheinhessen ist das flächenmäßig größte deutsche Qualitätsweinbaugebiet."
   },
 
+
   {
     difficulty: "★★★★☆",
+
     question:
       "Welche rote Rebsorte ist an der Ahr neben Spätburgunder besonders interessant, weil sie früher reift und eng mit ihm verwandt ist?",
+
     answers: [
       "Frühburgunder",
       "Silvaner",
       "Kerner",
       "Bacchus"
     ],
+
     correct: 0,
+
     explanation:
       "Frühburgunder ist eng mit Spätburgunder verwandt und reift früher."
   },
 
+
   {
     difficulty: "★★★★☆",
+
     question:
       "Was unterscheidet Spätburgunder und Frühburgunder am deutlichsten?",
+
     answers: [
       "Frühburgunder reift früher als Spätburgunder",
       "Spätburgunder ist eine weiße Rebsorte",
       "Frühburgunder stammt ursprünglich aus Italien",
       "Beide Sorten sind identisch"
     ],
+
     correct: 0,
+
     explanation:
       "Der entscheidende Unterschied liegt im Reifeverhalten: Frühburgunder reift früher."
   },
 
+
   {
     difficulty: "★★★★★",
+
     question:
       "Welche Kombination aus Weinbaugebiet und typischer Rebsorte passt am besten zusammen?",
+
     answers: [
       "Ahr – Spätburgunder",
       "Franken – Tempranillo",
       "Mosel – Sangiovese",
       "Württemberg – Nebbiolo"
     ],
+
     correct: 0,
+
     explanation:
       "Spätburgunder prägt das Weinbaugebiet Ahr und ist wesentlich für dessen Ruf als deutsche Rotweinregion."
   },
 
+
   {
     difficulty: "★★★★★",
+
     question:
       "Warum kann die Ahr trotz ihrer nördlichen Lage für den Anbau hochwertiger Rotweintrauben geeignet sein?",
+
     answers: [
       "Das enge Tal und günstige Hanglagen können Wärme und Sonneneinstrahlung begünstigen",
       "Das Ahrtal hat grundsätzlich das gleiche Klima wie die Toskana",
       "Rote Rebsorten benötigen weniger Sonne als weiße Rebsorten",
       "Die steilen Weinberge verhindern vollständig Frost"
     ],
+
     correct: 0,
+
     explanation:
       "Die besondere Topografie mit steilen, gut ausgerichteten Hängen kann Sonneneinstrahlung und Wärme in den Weinlagen fördern."
   }
@@ -995,29 +1772,143 @@ const questions = [
 ];
 
 
-/* ============================================================
-   SPIELVARIABLEN
-============================================================ */
+/* =========================================================
+   LOKALER QUIZ-STATUS
+========================================================= */
+
+
+const STORAGE_KEY =
+  "ahrtalWeinquizState_v1";
+
 
 let currentQuestion = 0;
+
 let score = 0;
+
 let playerName = "";
+
 let answered = false;
 
+let selectedAnswer = null;
 
-/* ============================================================
-   SCREEN WECHSELN
-============================================================ */
+let nextQuestionAvailableAt = null;
+
+let countdownInterval = null;
+
+
+/* =========================================================
+   HILFSFUNKTIONEN
+========================================================= */
+
+
+function saveQuizState() {
+
+  const state = {
+
+    playerName:
+      playerName,
+
+    currentQuestion:
+      currentQuestion,
+
+    score:
+      score,
+
+    answered:
+      answered,
+
+    selectedAnswer:
+      selectedAnswer,
+
+    nextQuestionAvailableAt:
+      nextQuestionAvailableAt,
+
+    completed:
+      false
+
+  };
+
+
+  localStorage.setItem(
+
+    STORAGE_KEY,
+
+    JSON.stringify(state)
+
+  );
+
+}
+
+
+function loadQuizState() {
+
+  try {
+
+    const raw =
+      localStorage.getItem(
+        STORAGE_KEY
+      );
+
+
+    if (!raw) {
+
+      return null;
+
+    }
+
+
+    return JSON.parse(raw);
+
+  } catch (error) {
+
+    console.error(
+      "Quizstatus konnte nicht geladen werden:",
+      error
+    );
+
+    return null;
+
+  }
+
+}
+
+
+function clearQuizState() {
+
+  localStorage.removeItem(
+    STORAGE_KEY
+  );
+
+
+  nextQuestionAvailableAt =
+    null;
+
+
+  clearInterval(
+    countdownInterval
+  );
+
+}
+
+
+/* =========================================================
+   SCREEN WECHSEL
+========================================================= */
+
 
 function showScreen(id) {
 
   document
     .querySelectorAll(".screen")
-    .forEach(function(screen) {
+    .forEach(
+      function(screen) {
 
-      screen.classList.remove("active");
+        screen.classList.remove(
+          "active"
+        );
 
-    });
+      }
+    );
 
 
   const target =
@@ -1026,80 +1917,98 @@ function showScreen(id) {
 
   if (target) {
 
-    target.classList.add("active");
+    target.classList.add(
+      "active"
+    );
 
   }
 
+
   window.scrollTo({
+
     top: 0,
+
     behavior: "smooth"
+
   });
+
 }
 
 
-/* ============================================================
+/* =========================================================
    QUIZ STARTEN
-============================================================ */
+========================================================= */
+
 
 function startQuiz() {
 
   const input =
-    document.getElementById("player-name");
-
-  const error =
-    document.getElementById("name-error");
-
-
-  if (!input) {
-
-    console.error(
-      "Element #player-name wurde nicht gefunden."
+    document.getElementById(
+      "player-name"
     );
 
-    return;
-  }
+
+  const error =
+    document.getElementById(
+      "name-error"
+    );
 
 
   playerName =
     input.value.trim();
 
 
-  if (playerName.length === 0) {
+  if (
+    playerName.length === 0
+  ) {
 
-    if (error) {
-
-      error.textContent =
-        "Bitte gib zuerst deinen Namen ein.";
-
-    }
+    error.textContent =
+      "Bitte gib zuerst deinen Namen ein.";
 
     input.focus();
 
     return;
-  }
-
-
-  if (error) {
-
-    error.textContent = "";
 
   }
+
+
+  /*
+    Neues Quiz starten.
+
+    Ein eventuell vorhandener alter
+    Test wird dadurch bewusst gelöscht.
+  */
+
+
+  clearQuizState();
 
 
   currentQuestion = 0;
+
   score = 0;
+
   answered = false;
 
+  selectedAnswer = null;
 
-  showScreen("quiz-screen");
+
+  saveQuizState();
+
+
+  showScreen(
+    "quiz-screen"
+  );
+
 
   renderQuestion();
+
 }
 
 
-/* ============================================================
+/* =========================================================
    FRAGE RENDERN
-============================================================ */
+========================================================= */
+
 
 function renderQuestion() {
 
@@ -1112,15 +2021,19 @@ function renderQuestion() {
     finishQuiz();
 
     return;
+
   }
 
 
   answered = false;
 
+  selectedAnswer = null;
+
 
   document.getElementById(
     "progress-text"
   ).textContent =
+
     "Frage " +
     (currentQuestion + 1) +
     " von " +
@@ -1130,15 +2043,24 @@ function renderQuestion() {
   document.getElementById(
     "score"
   ).textContent =
+
     score +
-    (score === 1 ? " Punkt" : " Punkte");
+    (
+      score === 1
+        ? " Punkt"
+        : " Punkte"
+    );
 
 
   document.getElementById(
     "progress-bar"
   ).style.width =
-    ((currentQuestion / questions.length) * 100) +
-    "%";
+
+    (
+      (currentQuestion /
+      questions.length) *
+      100
+    ) + "%";
 
 
   document.getElementById(
@@ -1154,35 +2076,45 @@ function renderQuestion() {
 
 
   const answersContainer =
-    document.getElementById("answers");
+    document.getElementById(
+      "answers"
+    );
 
 
   answersContainer.innerHTML = "";
 
 
   q.answers.forEach(
+
     function(answer, index) {
 
       const button =
-        document.createElement("button");
-
-
-      button.className =
-        "answer";
+        document.createElement(
+          "button"
+        );
 
 
       button.type =
         "button";
 
 
+      button.className =
+        "answer";
+
+
       button.textContent =
-        String.fromCharCode(65 + index) +
+
+        String.fromCharCode(
+          65 + index
+        ) +
         ") " +
         answer;
 
 
       button.addEventListener(
+
         "click",
+
         function() {
 
           selectAnswer(
@@ -1191,6 +2123,7 @@ function renderQuestion() {
           );
 
         }
+
       );
 
 
@@ -1199,84 +2132,113 @@ function renderQuestion() {
       );
 
     }
+
   );
 
 
   document
-    .getElementById("explanation")
-    .classList.remove("show");
+    .getElementById(
+      "explanation"
+    )
+    .classList.remove(
+      "show"
+    );
 
 
-  document
-    .getElementById("next-wrapper")
-    .classList.remove("show");
+  resetTimerUI();
+
+
+  document.getElementById(
+    "next-button"
+  ).disabled = true;
+
+
+  document.getElementById(
+    "next-button"
+  ).textContent =
+
+    "🔒 Nächste Frage noch nicht verfügbar";
+
+
+  /*
+    Wenn für diese Frage bereits
+    ein Timer existiert, wiederherstellen.
+  */
+
+
+  const saved =
+    loadQuizState();
+
+
+  if (
+    saved &&
+    saved.currentQuestion ===
+    currentQuestion &&
+    saved.answered &&
+    saved.nextQuestionAvailableAt
+  ) {
+
+    answered = true;
+
+    selectedAnswer =
+      saved.selectedAnswer;
+
+    restoreAnsweredQuestion();
+
+  }
+
 }
 
 
-/* ============================================================
-   ANTWORT AUSWERTEN
-============================================================ */
-
-function selectAnswer(
-  index,
-  clickedButton
-) {
-
-  if (answered) {
-    return;
-  }
+/* =========================================================
+   BEREITS BEANTWORTETE FRAGE WIEDERHERSTELLEN
+========================================================= */
 
 
-  answered = true;
-
+function restoreAnsweredQuestion() {
 
   const q =
     questions[currentQuestion];
 
 
   const buttons =
-    document.querySelectorAll(".answer");
+    document.querySelectorAll(
+      ".answer"
+    );
 
 
   buttons.forEach(
-    function(button) {
+
+    function(button, index) {
 
       button.disabled = true;
 
+
+      if (
+        index === q.correct
+      ) {
+
+        button.classList.add(
+          "correct"
+        );
+
+      }
+
+
+      if (
+        index === selectedAnswer &&
+        selectedAnswer !== q.correct
+      ) {
+
+        button.classList.add(
+          "wrong"
+        );
+
+      }
+
     }
+
   );
-
-
-  if (index === q.correct) {
-
-    score++;
-
-    clickedButton.classList.add(
-      "correct"
-    );
-
-  } else {
-
-    clickedButton.classList.add(
-      "wrong"
-    );
-
-
-    if (buttons[q.correct]) {
-
-      buttons[q.correct].classList.add(
-        "correct"
-      );
-
-    }
-  }
-
-
-  document.getElementById(
-    "score"
-  ).textContent =
-    score +
-    (score === 1 ? " Punkt" : " Punkte");
 
 
   const explanation =
@@ -1286,6 +2248,7 @@ function selectAnswer(
 
 
   explanation.innerHTML =
+
     "<strong>🍷 Wusstest du schon?</strong><br>" +
     q.explanation;
 
@@ -1295,24 +2258,464 @@ function selectAnswer(
   );
 
 
-  document
-    .getElementById("next-wrapper")
-    .classList.add("show");
+  nextQuestionAvailableAt =
+
+    loadQuizState()
+      .nextQuestionAvailableAt;
 
 
-  document.getElementById(
-    "progress-bar"
-  ).style.width =
-    (((currentQuestion + 1) / questions.length) * 100) +
-    "%";
+  showTimer();
+
+
+  updateCountdown();
+
 }
 
 
-/* ============================================================
+/* =========================================================
+   ANTWORT AUSWERTEN
+========================================================= */
+
+
+function selectAnswer(
+  index,
+  clickedButton
+) {
+
+  if (answered) {
+
+    return;
+
+  }
+
+
+  answered = true;
+
+  selectedAnswer =
+    index;
+
+
+  const q =
+    questions[currentQuestion];
+
+
+  const buttons =
+    document.querySelectorAll(
+      ".answer"
+    );
+
+
+  buttons.forEach(
+
+    function(button) {
+
+      button.disabled =
+        true;
+
+    }
+
+  );
+
+
+  if (
+    index === q.correct
+  ) {
+
+    score++;
+
+
+    clickedButton.classList.add(
+      "correct"
+    );
+
+  }
+
+  else {
+
+    clickedButton.classList.add(
+      "wrong"
+    );
+
+
+    if (
+      buttons[q.correct]
+    ) {
+
+      buttons[q.correct]
+        .classList.add(
+          "correct"
+        );
+
+    }
+
+  }
+
+
+  document.getElementById(
+    "score"
+  ).textContent =
+
+    score +
+    (
+      score === 1
+        ? " Punkt"
+        : " Punkte"
+    );
+
+
+  const explanation =
+    document.getElementById(
+      "explanation"
+    );
+
+
+  explanation.innerHTML =
+
+    "<strong>🍷 Wusstest du schon?</strong><br>" +
+    q.explanation;
+
+
+  explanation.classList.add(
+    "show"
+  );
+
+
+  /*
+    Die letzte Frage braucht keine
+    15 Minuten Wartezeit.
+  */
+
+
+  if (
+    currentQuestion ===
+    questions.length - 1
+  ) {
+
+    nextQuestionAvailableAt =
+      Date.now();
+
+
+    document.getElementById(
+      "next-button"
+    ).disabled = false;
+
+
+    document.getElementById(
+      "next-button"
+    ).textContent =
+      "🏆 Ergebnis anzeigen";
+
+
+    document.getElementById(
+      "progress-bar"
+    ).style.width =
+      "100%";
+
+
+    saveQuizState();
+
+    return;
+
+  }
+
+
+  /*
+    Für alle anderen Fragen:
+    15 Minuten starten.
+  */
+
+
+  startQuestionTimer();
+
+
+  saveQuizState();
+
+}
+
+
+/* =========================================================
+   TIMER STARTEN
+========================================================= */
+
+
+function startQuestionTimer() {
+
+  nextQuestionAvailableAt =
+
+    Date.now() +
+    QUESTION_DELAY;
+
+
+  saveQuizState();
+
+
+  showTimer();
+
+
+  updateCountdown();
+
+
+  clearInterval(
+    countdownInterval
+  );
+
+
+  countdownInterval =
+
+    setInterval(
+
+      updateCountdown,
+
+      1000
+
+    );
+
+}
+
+
+/* =========================================================
+   TIMER ANZEIGEN
+========================================================= */
+
+
+function showTimer() {
+
+  const timerBox =
+    document.getElementById(
+      "timer-box"
+    );
+
+
+  timerBox.style.display =
+    "block";
+
+
+  timerBox.classList.remove(
+    "timer-unlocked"
+  );
+
+
+  document.getElementById(
+    "next-button"
+  ).disabled = true;
+
+}
+
+
+/* =========================================================
+   TIMER UI ZURÜCKSETZEN
+========================================================= */
+
+
+function resetTimerUI() {
+
+  const timerBox =
+    document.getElementById(
+      "timer-box"
+    );
+
+
+  const countdown =
+    document.getElementById(
+      "countdown"
+    );
+
+
+  const message =
+    document.getElementById(
+      "timer-message"
+    );
+
+
+  timerBox.style.display =
+    "none";
+
+
+  timerBox.classList.remove(
+    "timer-unlocked"
+  );
+
+
+  countdown.textContent =
+    "15:00";
+
+
+  message.textContent =
+
+    "Zeit für einen schönen " +
+    "Ahrtal-Wanderabschnitt! 🥾🍷";
+
+}
+
+
+/* =========================================================
+   COUNTDOWN
+========================================================= */
+
+
+function updateCountdown() {
+
+  if (
+    !nextQuestionAvailableAt
+  ) {
+
+    return;
+
+  }
+
+
+  const remaining =
+
+    nextQuestionAvailableAt -
+    Date.now();
+
+
+  if (
+    remaining <= 0
+  ) {
+
+    unlockNextQuestion();
+
+    return;
+
+  }
+
+
+  const totalSeconds =
+
+    Math.ceil(
+      remaining / 1000
+    );
+
+
+  const minutes =
+
+    Math.floor(
+      totalSeconds / 60
+    );
+
+
+  const seconds =
+
+    totalSeconds % 60;
+
+
+  const countdown =
+    document.getElementById(
+      "countdown"
+    );
+
+
+  countdown.textContent =
+
+    String(minutes)
+      .padStart(2, "0") +
+
+    ":" +
+
+    String(seconds)
+      .padStart(2, "0");
+
+}
+
+
+/* =========================================================
+   FRAGE FREISCHALTEN
+========================================================= */
+
+
+function unlockNextQuestion() {
+
+  clearInterval(
+    countdownInterval
+  );
+
+
+  const timerBox =
+    document.getElementById(
+      "timer-box"
+    );
+
+
+  const countdown =
+    document.getElementById(
+      "countdown"
+    );
+
+
+  const message =
+    document.getElementById(
+      "timer-message"
+    );
+
+
+  const nextButton =
+    document.getElementById(
+      "next-button"
+    );
+
+
+  timerBox.classList.add(
+    "timer-unlocked"
+  );
+
+
+  countdown.textContent =
+    "00:00";
+
+
+  message.textContent =
+
+    "Die nächste Weinfrage ist jetzt freigeschaltet! 🍷";
+
+
+  nextButton.disabled =
+    false;
+
+
+  nextButton.textContent =
+
+    currentQuestion ===
+    questions.length - 1
+
+      ? "🏆 Ergebnis anzeigen"
+
+      : "🍷 Nächste Frage";
+
+
+  nextQuestionAvailableAt =
+    Date.now();
+
+
+  saveQuizState();
+
+}
+
+
+/* =========================================================
    NÄCHSTE FRAGE
-============================================================ */
+========================================================= */
+
 
 function nextQuestion() {
+
+  /*
+    Sicherheit:
+    Der Teilnehmer darf die Frage nicht
+    vor Ablauf der Wartezeit überspringen.
+  */
+
+
+  if (
+    nextQuestionAvailableAt &&
+    Date.now() <
+    nextQuestionAvailableAt
+  ) {
+
+    return;
+
+  }
+
 
   currentQuestion++;
 
@@ -1325,23 +2728,106 @@ function nextQuestion() {
     finishQuiz();
 
     return;
+
   }
 
 
+  nextQuestionAvailableAt =
+    null;
+
+
+  answered = false;
+
+  selectedAnswer = null;
+
+
+  saveQuizState();
+
+
   renderQuestion();
+
 }
 
 
-/* ============================================================
+/* =========================================================
+   QUIZ FORTSETZEN
+========================================================= */
+
+
+function resumeQuiz() {
+
+  const state =
+    loadQuizState();
+
+
+  if (
+    !state ||
+    !state.playerName ||
+    state.completed
+  ) {
+
+    return false;
+
+  }
+
+
+  playerName =
+    state.playerName;
+
+
+  currentQuestion =
+    state.currentQuestion || 0;
+
+
+  score =
+    state.score || 0;
+
+
+  answered =
+    state.answered || false;
+
+
+  selectedAnswer =
+    state.selectedAnswer;
+
+
+  nextQuestionAvailableAt =
+    state.nextQuestionAvailableAt;
+
+
+  showScreen(
+    "quiz-screen"
+  );
+
+
+  renderQuestion();
+
+
+  return true;
+
+}
+
+
+/* =========================================================
    QUIZ BEENDET
-============================================================ */
+========================================================= */
+
 
 async function finishQuiz() {
+
+  clearInterval(
+    countdownInterval
+  );
+
+
+  const finalScore =
+    score;
+
 
   document.getElementById(
     "final-score"
   ).textContent =
-    score;
+    finalScore;
 
 
   const title =
@@ -1362,73 +2848,158 @@ async function finishQuiz() {
     );
 
 
-  if (score === 10) {
+  if (
+    finalScore === 10
+  ) {
 
-    trophy.textContent = "👑";
+    trophy.textContent =
+      "👑";
+
 
     title.textContent =
       "Ahrtal-Weinmeister!";
 
+
     message.textContent =
-      "Unglaublich! Du kennst dich mit deutschem Wein und dem Ahrtal hervorragend aus. Die nächste Runde geht auf dich! 🍷";
 
-  } else if (score >= 8) {
+      "Unglaublich! Du kennst dich " +
+      "mit deutschem Wein und dem Ahrtal " +
+      "hervorragend aus. Die nächste Runde " +
+      "geht auf dich! 🍷";
 
-    trophy.textContent = "🏆";
+  }
+
+  else if (
+    finalScore >= 8
+  ) {
+
+    trophy.textContent =
+      "🏆";
+
 
     title.textContent =
       "Weinexperte!";
 
+
     message.textContent =
-      "Starke Leistung! Du hast eindeutig mehr Weinwissen als der durchschnittliche Wanderer.";
 
-  } else if (score >= 5) {
+      "Starke Leistung! Du hast eindeutig " +
+      "mehr Weinwissen als der durchschnittliche Wanderer.";
 
-    trophy.textContent = "🍷";
+  }
+
+  else if (
+    finalScore >= 5
+  ) {
+
+    trophy.textContent =
+      "🍷";
+
 
     title.textContent =
       "Weinliebhaber!";
 
+
     message.textContent =
-      "Sehr ordentlich! Ein gutes Glas Wein kannst du definitiv von einer Traubensaftschorle unterscheiden.";
 
-  } else {
+      "Sehr ordentlich! Ein gutes Glas Wein " +
+      "kannst du definitiv von einer " +
+      "Traubensaftschorle unterscheiden.";
 
-    trophy.textContent = "🍇";
+  }
+
+  else {
+
+    trophy.textContent =
+      "🍇";
+
 
     title.textContent =
       "Weinwanderer!";
 
+
     message.textContent =
-      "Noch etwas Luft nach oben – aber keine Sorge: Bei einer Wanderung durchs Ahrtal gibt es reichlich Gelegenheit zum Lernen.";
+
+      "Noch etwas Luft nach oben – aber " +
+      "keine Sorge: Bei einer Wanderung " +
+      "durchs Ahrtal gibt es reichlich " +
+      "Gelegenheit zum Lernen.";
+
   }
 
 
-  showScreen("result-screen");
+  showScreen(
+    "result-screen"
+  );
 
 
   document.getElementById(
     "leaderboard"
-  ).innerHTML = `
-    <div class="leaderboard-status">
+  ).innerHTML =
+
+    `<div class="leaderboard-status">
       🍷 Ergebnis wird gespeichert ...
-    </div>
-  `;
+    </div>`;
+
+
+  /*
+    Ergebnis online speichern.
+  */
 
 
   await uploadResultToSupabase(
+
     playerName,
-    score
+
+    finalScore
+
   );
 
 
+  /*
+    Quiz lokal als abgeschlossen markieren.
+  */
+
+
+  const state =
+    loadQuizState() || {};
+
+
+  state.completed =
+    true;
+
+
+  state.score =
+    finalScore;
+
+
+  state.playerName =
+    playerName;
+
+
+  localStorage.setItem(
+
+    STORAGE_KEY,
+
+    JSON.stringify(state)
+
+  );
+
+
+  /*
+    Rangliste laden.
+  */
+
+
   await renderLeaderboard();
+
 }
 
 
-/* ============================================================
-   SUPABASE: ERGEBNIS SPEICHERN
-============================================================ */
+/* =========================================================
+   SUPABASE ERGEBNIS SPEICHERN
+========================================================= */
+
 
 async function uploadResultToSupabase(
   name,
@@ -1438,13 +3009,17 @@ async function uploadResultToSupabase(
   try {
 
     const response =
+
       await fetch(
+
         SUPABASE_URL +
         "/rest/v1/" +
         SUPABASE_TABLE,
+
         {
 
-          method: "POST",
+          method:
+            "POST",
 
           headers: {
 
@@ -1464,63 +3039,95 @@ async function uploadResultToSupabase(
           },
 
           body:
+
             JSON.stringify({
-              name: name,
-              score: points
+
+              name:
+                name,
+
+              score:
+                points
+
             })
 
         }
+
       );
 
 
-    if (!response.ok) {
+    if (
+      !response.ok
+    ) {
 
       console.error(
+
         "Supabase Fehler:",
+
         await response.text()
+
       );
 
+
       return false;
+
     }
+
+
+    console.log(
+      "🍷 Ergebnis gespeichert."
+    );
 
 
     return true;
 
+
   } catch (error) {
 
     console.error(
+
       "Supabase Verbindungsfehler:",
+
       error
+
     );
 
+
     return false;
+
   }
+
 }
 
 
-/* ============================================================
-   SUPABASE: RANGLISTE
-============================================================ */
+/* =========================================================
+   SUPABASE RANGLISTE LADEN
+========================================================= */
+
 
 async function loadLeaderboardFromSupabase() {
 
   try {
 
     const url =
+
       SUPABASE_URL +
       "/rest/v1/" +
       SUPABASE_TABLE +
       "?select=name,score,created_at" +
       "&order=score.desc,created_at.asc" +
-      "&limit=20";
+      "&limit=50";
 
 
     const response =
+
       await fetch(
+
         url,
+
         {
 
-          method: "GET",
+          method:
+            "GET",
 
           headers: {
 
@@ -1534,37 +3141,53 @@ async function loadLeaderboardFromSupabase() {
           }
 
         }
+
       );
 
 
-    if (!response.ok) {
+    if (
+      !response.ok
+    ) {
 
       console.error(
+
         "Ranglistenfehler:",
+
         await response.text()
+
       );
 
+
       return null;
+
     }
 
 
     return await response.json();
 
+
   } catch (error) {
 
     console.error(
-      "Fehler beim Laden der Rangliste:",
+
+      "Rangliste konnte nicht geladen werden:",
+
       error
+
     );
 
+
     return null;
+
   }
+
 }
 
 
-/* ============================================================
-   RANGLISTE RENDERN
-============================================================ */
+/* =========================================================
+   RANGLISTE DARSTELLEN
+========================================================= */
+
 
 async function renderLeaderboard() {
 
@@ -1574,11 +3197,11 @@ async function renderLeaderboard() {
     );
 
 
-  container.innerHTML = `
-    <div class="leaderboard-status">
+  container.innerHTML =
+
+    `<div class="leaderboard-status">
       🍷 Rangliste wird geladen ...
-    </div>
-  `;
+    </div>`;
 
 
   const results =
@@ -1590,40 +3213,55 @@ async function renderLeaderboard() {
     !Array.isArray(results)
   ) {
 
-    container.innerHTML = `
-      <div class="leaderboard-status">
-        ⚠️ Die Online-Rangliste konnte nicht geladen werden.
-      </div>
-    `;
+    container.innerHTML =
+
+      `<div class="leaderboard-status">
+
+        ⚠️ Die Online-Rangliste konnte
+        gerade nicht geladen werden.
+
+        <br><br>
+
+        Bitte prüfe die Internetverbindung
+        und versuche es erneut.
+
+      </div>`;
 
     return;
+
   }
 
 
-  if (results.length === 0) {
+  if (
+    results.length === 0
+  ) {
 
-    container.innerHTML = `
-      <div class="leaderboard-status">
+    container.innerHTML =
+
+      `<div class="leaderboard-status">
         Noch keine Ergebnisse vorhanden.
-      </div>
-    `;
+      </div>`;
 
     return;
+
   }
 
 
-  container.innerHTML = `
-    <div class="leaderboard-status">
+  container.innerHTML =
+
+    `<div class="leaderboard-status">
       🟢 Live-Rangliste
-    </div>
-  `;
+    </div>`;
 
 
   results.forEach(
+
     function(result, index) {
 
       const row =
-        document.createElement("div");
+        document.createElement(
+          "div"
+        );
 
 
       row.className =
@@ -1633,19 +3271,41 @@ async function renderLeaderboard() {
       let medal = "";
 
 
-      if (index === 0) {
-        medal = "🥇";
-      } else if (index === 1) {
-        medal = "🥈";
-      } else if (index === 2) {
-        medal = "🥉";
+      if (
+        index === 0
+      ) {
+
+        medal =
+          "🥇";
+
+      }
+
+      else if (
+        index === 1
+      ) {
+
+        medal =
+          "🥈";
+
+      }
+
+      else if (
+        index === 2
+      ) {
+
+        medal =
+          "🥉";
+
       }
 
 
       row.innerHTML = `
 
         <div class="place">
-          ${medal || (index + 1) + "."}
+          ${
+            medal ||
+            (index + 1) + "."
+          }
         </div>
 
         <div class="player-name">
@@ -1659,32 +3319,62 @@ async function renderLeaderboard() {
       `;
 
 
-      container.appendChild(row);
+      container.appendChild(
+        row
+      );
 
     }
+
   );
+
 }
 
 
-/* ============================================================
+/* =========================================================
    RANGLISTE AKTUALISIEREN
-============================================================ */
+========================================================= */
+
 
 async function refreshLeaderboard() {
 
+  const button =
+    document.getElementById(
+      "refresh-button"
+    );
+
+
+  button.disabled =
+    true;
+
+
+  button.textContent =
+    "⏳ Wird geladen ...";
+
+
   await renderLeaderboard();
+
+
+  button.disabled =
+    false;
+
+
+  button.textContent =
+    "🔄 Rangliste aktualisieren";
 
 }
 
 
-/* ============================================================
-   HTML ABSICHERN
-============================================================ */
+/* =========================================================
+   HTML SICHER AUSGEBEN
+========================================================= */
+
 
 function escapeHtml(text) {
 
   const div =
-    document.createElement("div");
+    document.createElement(
+      "div"
+    );
 
 
   div.textContent =
@@ -1692,94 +3382,59 @@ function escapeHtml(text) {
 
 
   return div.innerHTML;
+
 }
 
 
-/* ============================================================
-   QUIZ NEU STARTEN
-============================================================ */
-
-function restartQuiz() {
-
-  currentQuestion = 0;
-  score = 0;
-  answered = false;
+/* =========================================================
+   NEUES QUIZ / NEUER SPIELER
+========================================================= */
 
 
-  showScreen(
-    "quiz-screen"
-  );
+function newPlayer() {
+
+  clearQuizState();
 
 
-  renderQuestion();
-}
+  playerName =
+    "";
+
+  currentQuestion =
+    0;
+
+  score =
+    0;
+
+  answered =
+    false;
+
+  selectedAnswer =
+    null;
 
 
-/* ============================================================
-   ZUR STARTSEITE
-============================================================ */
-
-function showStart() {
-
-  const input =
-    document.getElementById(
-      "player-name"
-    );
+  document.getElementById(
+    "player-name"
+  ).value =
+    "";
 
 
-  if (input) {
-
-    input.value = "";
-
-  }
+  document.getElementById(
+    "name-error"
+  ).textContent =
+    "";
 
 
   showScreen(
     "start-screen"
   );
+
 }
 
 
-/* ============================================================
-   ENTER = QUIZ STARTEN
-============================================================ */
+/* =========================================================
+   SUPABASE VERBINDUNG TESTEN
+========================================================= */
 
-document.addEventListener(
-  "DOMContentLoaded",
-  function() {
-
-    const input =
-      document.getElementById(
-        "player-name"
-      );
-
-
-    if (input) {
-
-      input.addEventListener(
-        "keydown",
-        function(event) {
-
-          if (
-            event.key === "Enter"
-          ) {
-
-            startQuiz();
-
-          }
-
-        }
-      );
-
-    }
-
-  }
-);
-
-
-/* ============================================================
-   SUPABASE TEST
-============================================================ */
 
 async function testSupabaseConnection() {
 
@@ -1789,7 +3444,9 @@ async function testSupabaseConnection() {
       await loadLeaderboardFromSupabase();
 
 
-    if (results !== null) {
+    if (
+      results !== null
+    ) {
 
       const status =
         document.getElementById(
@@ -1803,6 +3460,7 @@ async function testSupabaseConnection() {
           "inline-flex";
 
       }
+
 
       console.log(
         "🍷 Supabase-Verbindung funktioniert."
@@ -1818,23 +3476,183 @@ async function testSupabaseConnection() {
     );
 
   }
+
 }
 
 
-/* ============================================================
+/* =========================================================
    INITIALISIERUNG
-============================================================ */
+========================================================= */
+
 
 document.addEventListener(
+
   "DOMContentLoaded",
+
   function() {
+
+
+    /*
+      Startbutton
+    */
+
+
+    document
+      .getElementById(
+        "start-button"
+      )
+      .addEventListener(
+
+        "click",
+
+        startQuiz
+
+      );
+
+
+    /*
+      Nächste Frage
+    */
+
+
+    document
+      .getElementById(
+        "next-button"
+      )
+      .addEventListener(
+
+        "click",
+
+        nextQuestion
+
+      );
+
+
+    /*
+      Rangliste aktualisieren
+    */
+
+
+    document
+      .getElementById(
+        "refresh-button"
+      )
+      .addEventListener(
+
+        "click",
+
+        refreshLeaderboard
+
+      );
+
+
+    /*
+      Neuer Spieler
+    */
+
+
+    document
+      .getElementById(
+        "new-player-button"
+      )
+      .addEventListener(
+
+        "click",
+
+        newPlayer
+
+      );
+
+
+    /*
+      Enter-Taste im Namensfeld
+    */
+
+
+    document
+      .getElementById(
+        "player-name"
+      )
+      .addEventListener(
+
+        "keydown",
+
+        function(event) {
+
+          if (
+            event.key === "Enter"
+          ) {
+
+            startQuiz();
+
+          }
+
+        }
+
+      );
+
+
+    /*
+      Prüfen, ob ein Quiz
+      bereits begonnen wurde.
+    */
+
+
+    const state =
+      loadQuizState();
+
+
+    if (
+      state &&
+      state.playerName &&
+      !state.completed
+    ) {
+
+      /*
+        Vorhandenes Quiz fortsetzen.
+      */
+
+
+      const resume =
+        confirm(
+
+          "Du hast bereits ein begonnenes " +
+          "Ahrtal-Weinquiz. Möchtest du " +
+          "dort weitermachen?"
+
+        );
+
+
+      if (resume) {
+
+        resumeQuiz();
+
+      }
+
+      else {
+
+        clearQuizState();
+
+      }
+
+    }
+
+
+    /*
+      Supabase testen.
+    */
+
 
     testSupabaseConnection();
 
+
   }
+
 );
+
 
 </script>
 
 </body>
+
 </html>
