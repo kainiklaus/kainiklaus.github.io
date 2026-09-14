@@ -1,0 +1,1958 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Ahrtal Wein-Wanderquiz 🍷</title>
+
+  <meta
+    name="description"
+    content="Das Ahrtal Wein-Wanderquiz – wie gut kennst du Wein, Rebsorten und deutsche Weinbaugebiete?"
+  >
+
+  <style>
+    :root {
+      --wine: #722f37;
+      --wine-dark: #4d1f25;
+      --wine-light: #9f4f59;
+      --cream: #fffaf2;
+      --gold: #d4a84f;
+      --gold-light: #f5e6bd;
+      --green: #536b4d;
+      --text: #292323;
+      --muted: #756b68;
+      --correct: #2e7d52;
+      --correct-bg: #edf8f1;
+      --wrong: #b84040;
+      --wrong-bg: #fff0f0;
+      --white: #ffffff;
+      --border: #e6ddd7;
+      --shadow: 0 15px 40px rgba(60, 30, 30, 0.15);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--text);
+
+      background:
+        linear-gradient(
+          rgba(255,250,242,.90),
+          rgba(255,250,242,.97)
+        ),
+        radial-gradient(
+          circle at 20% 20%,
+          #ead7c5,
+          transparent 35%
+        ),
+        radial-gradient(
+          circle at 80% 80%,
+          #dfc5c5,
+          transparent 35%
+        );
+
+      background-attachment: fixed;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .container {
+      width: min(920px, calc(100% - 32px));
+      margin: auto;
+    }
+
+    .screen {
+      min-height: 100vh;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 30px 0;
+    }
+
+    .screen.active {
+      display: flex;
+    }
+
+    .card {
+      width: 100%;
+      background: rgba(255,255,255,.97);
+      border-radius: 28px;
+      padding: 40px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(114,47,55,.08);
+    }
+
+    /* =========================
+       STARTSEITE
+    ========================== */
+
+    .hero {
+      text-align: center;
+      max-width: 760px;
+      margin: auto;
+    }
+
+    .vine {
+      font-size: 52px;
+      margin-bottom: 10px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 7px 15px;
+      border-radius: 99px;
+      background: #f4e5d0;
+      color: var(--wine-dark);
+      font-size: .9rem;
+      font-weight: bold;
+      letter-spacing: .5px;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0;
+      color: var(--wine);
+      font-size: clamp(2.3rem, 7vw, 4.5rem);
+      line-height: 1.05;
+    }
+
+    h2 {
+      color: var(--wine);
+      font-size: clamp(1.6rem, 4vw, 2.3rem);
+      margin-top: 0;
+    }
+
+    .subtitle {
+      font-size: 1.25rem;
+      line-height: 1.6;
+      color: var(--muted);
+      margin: 22px auto 28px;
+      max-width: 650px;
+    }
+
+    .intro-info {
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+
+    .name-area {
+      margin-top: 30px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      max-width: 420px;
+      padding: 17px 20px;
+      border-radius: 14px;
+      border: 2px solid var(--border);
+      outline: none;
+      font-size: 1.05rem;
+      margin-bottom: 10px;
+      transition: .2s;
+      background: #fff;
+    }
+
+    input[type="text"]:focus {
+      border-color: var(--wine);
+      box-shadow: 0 0 0 4px rgba(114,47,55,.1);
+    }
+
+    .error {
+      color: var(--wrong);
+      font-weight: bold;
+      min-height: 24px;
+      margin: 4px 0 12px;
+    }
+
+    /* =========================
+       BUTTONS
+    ========================== */
+
+    .btn {
+      border: none;
+      border-radius: 14px;
+      padding: 15px 25px;
+      background: var(--wine);
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 1rem;
+      transition:
+        transform .15s,
+        background .15s,
+        box-shadow .15s;
+
+      box-shadow:
+        0 7px 18px rgba(114,47,55,.2);
+    }
+
+    .btn:hover {
+      background: var(--wine-dark);
+      transform: translateY(-2px);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .btn.secondary {
+      background: #eee4df;
+      color: var(--wine-dark);
+      box-shadow: none;
+    }
+
+    .btn.secondary:hover {
+      background: #e2d5cf;
+    }
+
+    .btn.gold {
+      background: var(--gold);
+      color: #382714;
+    }
+
+    .btn.gold:hover {
+      background: #c5983e;
+    }
+
+    /* =========================
+       QUIZ
+    ========================== */
+
+    .quiz-card {
+      max-width: 850px;
+      margin: auto;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .progress-text {
+      color: var(--muted);
+      font-weight: bold;
+    }
+
+    .score {
+      background: #f4e5d0;
+      color: var(--wine-dark);
+      padding: 8px 14px;
+      border-radius: 99px;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    .progress {
+      height: 9px;
+      background: #eee4df;
+      border-radius: 99px;
+      overflow: hidden;
+      margin-bottom: 35px;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0;
+      background:
+        linear-gradient(
+          90deg,
+          var(--wine),
+          var(--gold)
+        );
+      transition: width .3s;
+    }
+
+    .difficulty {
+      color: var(--gold);
+      font-weight: bold;
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+      font-size: 1.05rem;
+    }
+
+    .question {
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      line-height: 1.35;
+      color: var(--wine-dark);
+      margin-bottom: 25px;
+    }
+
+    .answers {
+      display: grid;
+      gap: 13px;
+    }
+
+    .answer {
+      width: 100%;
+      border: 2px solid var(--border);
+      background: #fff;
+      border-radius: 15px;
+      padding: 17px 18px;
+      cursor: pointer;
+      text-align: left;
+      transition: .15s;
+      color: var(--text);
+      font-size: 1rem;
+      line-height: 1.45;
+    }
+
+    .answer:hover:not(:disabled) {
+      border-color: var(--wine);
+      background: #fff8f6;
+      transform: translateX(3px);
+    }
+
+    .answer.correct {
+      border-color: var(--correct);
+      background: var(--correct-bg);
+      color: #185738;
+    }
+
+    .answer.wrong {
+      border-color: var(--wrong);
+      background: var(--wrong-bg);
+      color: #7b2525;
+    }
+
+    .answer:disabled {
+      cursor: default;
+    }
+
+    .explanation {
+      display: none;
+      margin-top: 22px;
+      padding: 20px;
+      border-radius: 15px;
+      background: #f8f1e8;
+      border-left: 5px solid var(--gold);
+      line-height: 1.55;
+    }
+
+    .explanation.show {
+      display: block;
+    }
+
+    .explanation strong {
+      color: var(--wine);
+    }
+
+    .next-wrapper {
+      display: none;
+      justify-content: flex-end;
+      margin-top: 22px;
+    }
+
+    .next-wrapper.show {
+      display: flex;
+    }
+
+    /* =========================
+       RESULT
+    ========================== */
+
+    .result {
+      text-align: center;
+      max-width: 760px;
+      margin: auto;
+    }
+
+    .trophy {
+      font-size: 70px;
+      margin-bottom: 10px;
+    }
+
+    .result-score {
+      font-size: clamp(3rem, 10vw, 5rem);
+      color: var(--wine);
+      font-weight: bold;
+      margin: 15px 0;
+    }
+
+    .result-title {
+      font-size: 1.8rem;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+
+    .result-message {
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+    }
+
+    /* =========================
+       RANGLISTE
+    ========================== */
+
+    .leaderboard {
+      max-width: 700px;
+      margin: 25px auto 0;
+      text-align: left;
+    }
+
+    .leaderboard-row {
+      display: grid;
+      grid-template-columns: 55px 1fr 80px;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 16px;
+      border-bottom: 1px solid #eee4df;
+      transition: background .2s;
+    }
+
+    .leaderboard-row:first-child {
+      background: #fff8e9;
+      border-radius: 14px;
+    }
+
+    .leaderboard-row.current-player {
+      background: #f8eef0;
+      border-radius: 12px;
+    }
+
+    .place {
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .player-name {
+      text-align: left;
+      font-weight: bold;
+      overflow-wrap: anywhere;
+    }
+
+    .points {
+      text-align: right;
+      font-weight: bold;
+      color: var(--wine);
+    }
+
+    .winner {
+      font-size: 1.1rem;
+      color: var(--wine-dark);
+      margin: 15px 0;
+    }
+
+    .loading {
+      color: var(--muted);
+      padding: 20px;
+      text-align: center;
+    }
+
+    .online-status {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 7px 12px;
+      border-radius: 99px;
+      font-size: .82rem;
+      background: #edf8f1;
+      color: #185738;
+    }
+
+    .offline-status {
+      background: #f7eee7;
+      color: #80582f;
+    }
+
+    .small {
+      font-size: .88rem;
+      color: var(--muted);
+    }
+
+    .actions {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 25px;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 35px;
+      color: var(--muted);
+      font-size: .85rem;
+      line-height: 1.5;
+    }
+
+    /* =========================
+       MOBILE
+    ========================== */
+
+    @media (max-width: 600px) {
+
+      .container {
+        width: min(100% - 18px, 920px);
+      }
+
+      .card {
+        padding: 25px 18px;
+        border-radius: 20px;
+      }
+
+      .screen {
+        padding: 12px 0;
+      }
+
+      .topbar {
+        align-items: flex-start;
+      }
+
+      .score {
+        padding: 7px 11px;
+      }
+
+      .answer {
+        padding: 15px;
+      }
+
+      .leaderboard-row {
+        grid-template-columns: 42px 1fr 65px;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      .actions .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+
+<body>
+
+
+<!-- ============================================================
+     STARTSEITE
+============================================================= -->
+
+<section id="start-screen" class="screen active">
+
+  <div class="container">
+
+    <div class="card hero">
+
+      <div class="vine">
+        🍇🍷
+      </div>
+
+      <div class="badge">
+        DAS AHR-TAL WEINQUIZ
+      </div>
+
+      <h1>
+        Wein-Wanderquiz
+      </h1>
+
+      <p class="subtitle">
+        Wie gut kennt ihr die Weine, Rebsorten und
+        Weinbaugebiete Deutschlands – und natürlich das Ahrtal?
+      </p>
+
+      <p class="intro-info">
+        <strong>10 Fragen</strong>
+        ·
+        steigender Schwierigkeitsgrad
+        ·
+        1 Punkt pro richtige Antwort
+      </p>
+
+      <div class="name-area">
+
+        <input
+          id="player-name"
+          type="text"
+          maxlength="30"
+          placeholder="Dein Name / Spitzname"
+          autocomplete="off"
+        >
+
+        <div
+          id="name-error"
+          class="error"
+        ></div>
+
+        <button
+          class="btn"
+          onclick="startQuiz()"
+        >
+          🍷 Quiz starten
+        </button>
+
+      </div>
+
+      <div class="footer">
+
+        Wer wird der
+        <strong>Ahrtal-Weinmeister?</strong>
+
+        <br>
+
+        Viel Erfolg – und immer schön auf dem Wanderweg bleiben! 🥾
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- ============================================================
+     QUIZ
+============================================================= -->
+
+<section id="quiz-screen" class="screen">
+
+  <div class="container">
+
+    <div class="card quiz-card">
+
+      <div class="topbar">
+
+        <div
+          class="progress-text"
+          id="progress-text"
+        >
+          Frage 1 von 10
+        </div>
+
+        <div
+          class="score"
+          id="score"
+        >
+          0 Punkte
+        </div>
+
+      </div>
+
+
+      <div class="progress">
+
+        <div
+          class="progress-bar"
+          id="progress-bar"
+        ></div>
+
+      </div>
+
+
+      <div
+        class="difficulty"
+        id="difficulty"
+      >
+        ★☆☆☆☆
+      </div>
+
+
+      <div
+        class="question"
+        id="question"
+      >
+        Frage
+      </div>
+
+
+      <div
+        class="answers"
+        id="answers"
+      ></div>
+
+
+      <div
+        class="explanation"
+        id="explanation"
+      ></div>
+
+
+      <div
+        class="next-wrapper"
+        id="next-wrapper"
+      >
+
+        <button
+          class="btn"
+          onclick="nextQuestion()"
+        >
+          Weiter →
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- ============================================================
+     ERGEBNIS
+============================================================= -->
+
+<section id="result-screen" class="screen">
+
+  <div class="container">
+
+    <div class="card result">
+
+      <div
+        class="trophy"
+        id="trophy"
+      >
+        🏆
+      </div>
+
+
+      <h1>
+        Geschafft!
+      </h1>
+
+
+      <div class="result-score">
+
+        <span id="final-score">
+          0
+        </span>/10
+
+      </div>
+
+
+      <div
+        class="result-title"
+        id="result-title"
+      >
+        Weinliebhaber
+      </div>
+
+
+      <div
+        class="result-message"
+        id="result-message"
+      ></div>
+
+
+      <div
+        id="winner-message"
+        class="winner"
+      ></div>
+
+
+      <h2>
+        🏆 Ahrtal-Weinrangliste
+      </h2>
+
+
+      <div
+        id="leaderboard"
+        class="leaderboard"
+      >
+        <div class="loading">
+          🍷 Rangliste wird geladen ...
+        </div>
+      </div>
+
+
+      <div
+        id="online-status"
+        class="online-status"
+      >
+        Online-Rangliste
+      </div>
+
+
+      <div class="actions">
+
+        <button
+          class="btn gold"
+          onclick="renderLeaderboard()"
+        >
+          🔄 Rangliste aktualisieren
+        </button>
+
+        <button
+          class="btn"
+          onclick="restartQuiz()"
+        >
+          🔄 Nochmal spielen
+        </button>
+
+        <button
+          class="btn secondary"
+          onclick="showStart()"
+        >
+          Neuer Spieler
+        </button>
+
+      </div>
+
+
+      <p class="small" style="margin-top:25px;">
+        Die Rangliste wird gemeinsam mit den anderen
+        Teilnehmern geteilt, sobald Supabase eingerichtet ist.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<script>
+
+
+/* ============================================================
+   SUPABASE KONFIGURATION
+   ============================================================
+
+   1. Erstelle ein Projekt bei Supabase.
+   2. Kopiere die Project URL hier hinein.
+   3. Kopiere den öffentlichen "anon/public" Key hier hinein.
+
+   BEISPIEL:
+
+   const SUPABASE_URL =
+     "https://abcdefgh.supabase.co";
+
+   const SUPABASE_ANON_KEY =
+     "eyJhbGciOiJIUzI1NiIsInR5cCI6...";
+
+   WICHTIG:
+   NIEMALS den "service_role" Key hier eintragen.
+
+============================================================= */
+
+
+const SUPABASE_URL =
+  "https://DEIN-PROJEKT.supabase.co";
+
+
+const SUPABASE_ANON_KEY =
+  "DEIN-ANON-KEY";
+
+
+const TABLE_NAME =
+  "quiz_results";
+
+
+/* ============================================================
+   QUIZ-FRAGEN
+============================================================= */
+
+
+const questions = [
+
+  {
+    difficulty: "★☆☆☆☆",
+
+    question:
+      "Zu welchem der 13 deutschen Qualitätsweinbaugebiete gehört das Ahrtal?",
+
+    answers: [
+      "Ahr",
+      "Mittelrhein",
+      "Mosel",
+      "Nahe"
+    ],
+
+    correct: 0,
+
+    explanation:
+      "Das Ahrtal bildet das eigenständige deutsche Weinbaugebiet Ahr."
+  },
+
+
+  {
+    difficulty: "★☆☆☆☆",
+
+    question:
+      "Welche Rebsorte prägt den Weinbau an der Ahr besonders stark?",
+
+    answers: [
+      "Spätburgunder",
+      "Dornfelder",
+      "Trollinger",
+      "Portugieser"
+    ],
+
+    correct: 0,
+
+    explanation:
+      "Spätburgunder, international Pinot Noir genannt, ist die prägende Rebsorte der Ahr und macht einen besonders großen Teil der Rebfläche aus."
+  },
+
+
+  {
+    difficulty: "★★☆☆☆",
+
+    question:
+      "Welche deutsche Weinregion ist besonders für Riesling bekannt und wird von der Mosel durchzogen?",
+
+    answers: [
+      "Mosel",
+      "Ahr",
+      "Württemberg",
+      "Sachsen"
+    ],
+
+    correct: 0,
+
+    explanation:
+      "Die Mosel gehört zu den bekanntesten deutschen Rieslingregionen. Steile Weinberge und das Flusstal prägen viele ihrer Weinlagen."
+  },
+
+
+  {
+    difficulty: "★★☆☆☆",
+
+    question:
+      "Warum sind viele Weinberge im Ahrtal in steilen Hanglagen angelegt?",
+
+    answers: [
+      "Bessere Sonneneinstrahlung und günstige Wärmeverhältnisse",
+      "Damit die Reben möglichst wenig Wasser bekommen",
+      "Weil Weinreben ausschließlich an Hängen wachsen können",
+      "Damit die Trauben grundsätzlich weniger Zucker bilden"
+    ],
+
+    correct: 0,
+
+    explanation:
+      "Steile, gut ausgerichtete Hänge können eine intensive Sonneneinstrahlung ermöglichen und die Reife der Trauben in der relativ nördlichen Lage unterstützen."
+  },
+
+
+  {
+    difficulty: "★★★☆☆",
+
+    question:
+      "Welche Rebsorte steckt hinter dem Namen „Pinot Noir“?",
+
+    answers: [
+      "Spätburgunder",
+      "Grauburgunder",
+      "Weißburgunder",
+      "Frühburgunder"
+    ],
+
+    correct: 0,
+
+    explanation:
+      "Spätburgunder ist die deutsche Bezeichnung für Pinot Noir beziehungsweise Pinot Nero."
+  },
+
+
+  {
+    difficulty: "★★★☆☆",
+
+    question:
+      "Welches deutsche Weinbaugebiet ist flächenmäßig das größte?",
+
+    answers: [
+      "Rheinhessen",
+      "Pfalz",
+      "Mosel",
+      "Ahr"
+    ],
+
+    correct: 0,
+
+    explanation:
+      "Rheinhessen ist das flächenmäßig größte der 13 deutschen Qualitätsweinbaugebiete."
+  },
+
+
+  {
+    difficulty: "★★★★☆",
+
+    question:
+      "Welche rote Rebsorte ist an der Ahr neben Spätburgunder besonders interessant, weil sie früher reift und eng mit ihm verwandt ist?",
+
+    answers: [
+      "Frühburgunder",
+      "Silvaner",
+      "Kerner",
+      "Bacchus"
+    ],
+
+    correct: 0,
+
+    explanation:
+      "Frühburgunder ist eng mit Spätburgunder verwandt und reift früher. Dadurch besitzt er an der Ahr eine besondere Bedeutung."
+  },
+
+
+  {
+    difficulty: "★★★★☆",
+
+    question:
+      "Was unterscheidet Spätburgunder und Frühburgunder am deutlichsten?",
+
+    answers: [
+      "Frühburgunder reift früher als Spätburgunder",
+      "Spätburgunder ist eine weiße Rebsorte",
+      "Frühburgunder stammt ursprünglich aus Italien",
+      "Beide Sorten sind identisch und nur regional anders benannt"
+    ],
+
+    correct: 0,
+
+    explanation:
+      "Der entscheidende Unterschied liegt im Reifeverhalten: Frühburgunder reift früher und ist eine eigenständige, eng verwandte Rebsorte."
+  },
+
+
+  {
+    difficulty: "★★★★★",
+
+    question:
+      "Welche Kombination aus Weinbaugebiet und typischer Rebsorte passt am besten zusammen?",
+
+    answers: [
+      "Ahr – Spätburgunder",
+      "Franken – Tempranillo",
+      "Mosel – Sangiovese",
+      "Württemberg – Nebbiolo"
+    ],
+
+    correct: 0,
+
+    explanation:
+      "Spätburgunder prägt das Weinbaugebiet Ahr und ist wesentlich für dessen Ruf als deutsche Rotweinregion."
+  },
+
+
+  {
+    difficulty: "★★★★★",
+
+    question:
+      "Warum kann die Ahr trotz ihrer nördlichen Lage für den Anbau hochwertiger Rotweintrauben geeignet sein?",
+
+    answers: [
+      "Das enge Tal und günstige Hanglagen können Wärme und Sonneneinstrahlung begünstigen",
+      "Das Ahrtal hat grundsätzlich das gleiche Klima wie die Toskana",
+      "Rote Rebsorten benötigen weniger Sonne als weiße Rebsorten",
+      "Die steilen Weinberge verhindern vollständig Frost"
+    ],
+
+    correct: 0,
+
+    explanation:
+      "Die besondere Topografie mit steilen, gut ausgerichteten Hängen kann Sonneneinstrahlung und Wärme in den Weinlagen fördern und damit die Reife unterstützen."
+  }
+
+];
+
+
+/* ============================================================
+   QUIZ-VARIABLEN
+============================================================= */
+
+
+let currentQuestion = 0;
+
+let score = 0;
+
+let playerName = "";
+
+let answered = false;
+
+
+/* ============================================================
+   SCREEN WECHSELN
+============================================================= */
+
+
+function showScreen(id) {
+
+  document
+    .querySelectorAll(".screen")
+    .forEach(screen => {
+
+      screen.classList.remove("active");
+
+    });
+
+
+  document
+    .getElementById(id)
+    .classList.add("active");
+
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+
+
+/* ============================================================
+   QUIZ STARTEN
+============================================================= */
+
+
+function startQuiz() {
+
+  const input =
+    document.getElementById("player-name");
+
+
+  const error =
+    document.getElementById("name-error");
+
+
+  playerName =
+    input.value.trim();
+
+
+  if (!playerName) {
+
+    error.textContent =
+      "Bitte gib zuerst deinen Namen ein.";
+
+    input.focus();
+
+    return;
+  }
+
+
+  if (playerName.length < 2) {
+
+    error.textContent =
+      "Der Name sollte mindestens 2 Zeichen haben.";
+
+    input.focus();
+
+    return;
+  }
+
+
+  error.textContent = "";
+
+
+  currentQuestion = 0;
+
+  score = 0;
+
+
+  showScreen(
+    "quiz-screen"
+  );
+
+
+  renderQuestion();
+}
+
+
+/* ============================================================
+   FRAGE ANZEIGEN
+============================================================= */
+
+
+function renderQuestion() {
+
+  answered = false;
+
+
+  const q =
+    questions[currentQuestion];
+
+
+  document
+    .getElementById("progress-text")
+    .textContent =
+      `Frage ${currentQuestion + 1} von ${questions.length}`;
+
+
+  document
+    .getElementById("score")
+    .textContent =
+      `${score} ${score === 1 ? "Punkt" : "Punkte"}`;
+
+
+  document
+    .getElementById("progress-bar")
+    .style.width =
+      `${((currentQuestion) / questions.length) * 100}%`;
+
+
+  document
+    .getElementById("difficulty")
+    .textContent =
+      q.difficulty;
+
+
+  document
+    .getElementById("question")
+    .textContent =
+      q.question;
+
+
+  const answersContainer =
+    document.getElementById("answers");
+
+
+  answersContainer.innerHTML = "";
+
+
+  q.answers.forEach(
+    (answer, index) => {
+
+      const button =
+        document.createElement("button");
+
+
+      button.className =
+        "answer";
+
+
+      button.textContent =
+        `${String.fromCharCode(65 + index)}) ${answer}`;
+
+
+      button.onclick =
+        () => selectAnswer(
+          index,
+          button
+        );
+
+
+      answersContainer
+        .appendChild(button);
+
+    }
+  );
+
+
+  document
+    .getElementById("explanation")
+    .classList
+    .remove("show");
+
+
+  document
+    .getElementById("next-wrapper")
+    .classList
+    .remove("show");
+}
+
+
+/* ============================================================
+   ANTWORT AUSWÄHLEN
+============================================================= */
+
+
+function selectAnswer(
+  index,
+  clickedButton
+) {
+
+  if (answered) {
+    return;
+  }
+
+
+  answered = true;
+
+
+  const q =
+    questions[currentQuestion];
+
+
+  const buttons =
+    document.querySelectorAll(".answer");
+
+
+  buttons.forEach(
+    button => {
+
+      button.disabled = true;
+
+    }
+  );
+
+
+  if (index === q.correct) {
+
+    score++;
+
+    clickedButton
+      .classList
+      .add("correct");
+
+  }
+
+  else {
+
+    clickedButton
+      .classList
+      .add("wrong");
+
+
+    buttons[q.correct]
+      .classList
+      .add("correct");
+  }
+
+
+  document
+    .getElementById("score")
+    .textContent =
+      `${score} ${score === 1 ? "Punkt" : "Punkte"}`;
+
+
+  document
+    .getElementById("explanation")
+    .innerHTML =
+      `<strong>🍷 Weinwissen:</strong><br>${q.explanation}`;
+
+
+  document
+    .getElementById("explanation")
+    .classList
+    .add("show");
+
+
+  document
+    .getElementById("next-wrapper")
+    .classList
+    .add("show");
+
+
+  document
+    .getElementById("progress-bar")
+    .style.width =
+      `${((currentQuestion + 1) / questions.length) * 100}%`;
+}
+
+
+/* ============================================================
+   NÄCHSTE FRAGE
+============================================================= */
+
+
+function nextQuestion() {
+
+  currentQuestion++;
+
+
+  if (
+    currentQuestion >=
+    questions.length
+  ) {
+
+    finishQuiz();
+
+    return;
+  }
+
+
+  renderQuestion();
+}
+
+
+/* ============================================================
+   ERGEBNIS
+============================================================= */
+
+
+async function finishQuiz() {
+
+  document
+    .getElementById("final-score")
+    .textContent =
+      score;
+
+
+  const title =
+    document.getElementById(
+      "result-title"
+    );
+
+
+  const message =
+    document.getElementById(
+      "result-message"
+    );
+
+
+  const trophy =
+    document.getElementById(
+      "trophy"
+    );
+
+
+  if (score === 10) {
+
+    trophy.textContent =
+      "👑";
+
+    title.textContent =
+      "Ahrtal-Weinmeister!";
+
+    message.textContent =
+      "Unglaublich! Du kennst dich mit deutschem Wein und dem Ahrtal hervorragend aus. Die nächste Runde geht auf dich! 🍷";
+
+  }
+
+  else if (score >= 8) {
+
+    trophy.textContent =
+      "🏆";
+
+    title.textContent =
+      "Weinexperte!";
+
+    message.textContent =
+      "Starke Leistung! Du hast eindeutig mehr Weinwissen als der durchschnittliche Wanderer.";
+
+  }
+
+  else if (score >= 5) {
+
+    trophy.textContent =
+      "🍷";
+
+    title.textContent =
+      "Weinliebhaber!";
+
+    message.textContent =
+      "Sehr ordentlich! Ein gutes Glas Wein kannst du definitiv von einer Traubensaftschorle unterscheiden.";
+
+  }
+
+  else {
+
+    trophy.textContent =
+      "🍇";
+
+    title.textContent =
+      "Weinwanderer!";
+
+    message.textContent =
+      "Noch etwas Luft nach oben – aber keine Sorge: Bei einer Wanderung durchs Ahrtal gibt es reichlich Gelegenheit zum Lernen.";
+
+  }
+
+
+  showScreen(
+    "result-screen"
+  );
+
+
+  await saveResult(
+    playerName,
+    score
+  );
+
+
+  await renderLeaderboard();
+}
+
+
+/* ============================================================
+   SUPABASE STATUS
+============================================================= */
+
+
+function isSupabaseConfigured() {
+
+  return (
+
+    SUPABASE_URL &&
+
+    !SUPABASE_URL.includes(
+      "DEIN-PROJEKT"
+    ) &&
+
+    SUPABASE_ANON_KEY &&
+
+    !SUPABASE_ANON_KEY.includes(
+      "DEIN-ANON-KEY"
+    )
+
+  );
+}
+
+
+/* ============================================================
+   ONLINE ERGEBNIS SPEICHERN
+============================================================= */
+
+
+async function uploadResultToSupabase(
+  name,
+  points
+) {
+
+  if (
+    !isSupabaseConfigured()
+  ) {
+
+    return false;
+  }
+
+
+  try {
+
+    const response =
+      await fetch(
+
+        `${SUPABASE_URL}/rest/v1/${TABLE_NAME}`,
+
+        {
+
+          method: "POST",
+
+          headers: {
+
+            "apikey":
+              SUPABASE_ANON_KEY,
+
+            "Authorization":
+              `Bearer ${SUPABASE_ANON_KEY}`,
+
+            "Content-Type":
+              "application/json",
+
+            "Prefer":
+              "return=minimal"
+
+          },
+
+          body:
+            JSON.stringify({
+
+              name: name,
+
+              score: points
+
+            })
+
+        }
+
+      );
+
+
+    if (!response.ok) {
+
+      console.error(
+        "Supabase Fehler:",
+        await response.text()
+      );
+
+      return false;
+    }
+
+
+    return true;
+
+  }
+
+  catch (error) {
+
+    console.error(
+      "Supabase Verbindungsfehler:",
+      error
+    );
+
+    return false;
+  }
+}
+
+
+/* ============================================================
+   ONLINE RANGLISTE LADEN
+============================================================= */
+
+
+async function loadLeaderboardFromSupabase() {
+
+  if (
+    !isSupabaseConfigured()
+  ) {
+
+    return null;
+  }
+
+
+  try {
+
+    const url =
+
+      `${SUPABASE_URL}/rest/v1/${TABLE_NAME}` +
+
+      `?select=name,score,created_at` +
+
+      `&order=score.desc,created_at.asc` +
+
+      `&limit=20`;
+
+
+    const response =
+      await fetch(
+
+        url,
+
+        {
+
+          method: "GET",
+
+          headers: {
+
+            "apikey":
+              SUPABASE_ANON_KEY,
+
+            "Authorization":
+              `Bearer ${SUPABASE_ANON_KEY}`
+
+          }
+
+        }
+
+      );
+
+
+    if (!response.ok) {
+
+      console.error(
+        "Ranglistenfehler:",
+        await response.text()
+      );
+
+      return null;
+    }
+
+
+    return await response.json();
+
+  }
+
+  catch (error) {
+
+    console.error(
+      "Rangliste konnte nicht geladen werden:",
+      error
+    );
+
+    return null;
+  }
+}
+
+
+/* ============================================================
+   ERGEBNIS LOKAL SPEICHERN
+============================================================= */
+
+
+function saveLocalResult(
+  name,
+  points
+) {
+
+  const results =
+    getLocalResults();
+
+
+  results.push({
+
+    name: name,
+
+    score: points,
+
+    date:
+      new Date().toISOString()
+
+  });
+
+
+  results.sort(
+    (a, b) => {
+
+      if (
+        b.score !== a.score
+      ) {
+
+        return b.score -
+               a.score;
+      }
+
+
+      return (
+        new Date(a.date) -
+        new Date(b.date)
+      );
+
+    }
+  );
+
+
+  localStorage.setItem(
+
+    "ahrtalWeinquizResults",
+
+    JSON.stringify(
+      results.slice(0, 100)
+    )
+
+  );
+}
+
+
+/* ============================================================
+   ERGEBNIS ONLINE + LOKAL SPEICHERN
+============================================================= */
+
+
+async function saveResult(
+  name,
+  points
+) {
+
+  saveLocalResult(
+    name,
+    points
+  );
+
+
+  const onlineSaved =
+    await uploadResultToSupabase(
+      name,
+      points
+    );
+
+
+  updateOnlineStatus(
+    onlineSaved
+  );
+
+
+  return onlineSaved;
+}
+
+
+/* ============================================================
+   ONLINE STATUS
+============================================================= */
+
+
+function updateOnlineStatus(
+  online
+) {
+
+  const status =
+    document.getElementById(
+      "online-status"
+    );
+
+
+  if (online) {
+
+    status.textContent =
+      "🟢 Online-Rangliste aktiv";
+
+
+    status.classList
+      .remove(
+        "offline-status"
+      );
+
+  }
+
+  else if (
+    isSupabaseConfigured()
+  ) {
+
+    status.textContent =
+      "🟠 Offline – lokale Rangliste";
+
+
+    status.classList
+      .add(
+        "offline-status"
+      );
+
+  }
+
+  else {
+
+    status.textContent =
+      "🔵 Lokale Rangliste – Supabase noch nicht eingerichtet";
+
+
+    status.classList
+      .add(
+        "offline-status"
+      );
+  }
+}
+
+
+/* ============================================================
+   RANGLISTE DARSTELLEN
+============================================================= */
+
+
+async function renderLeaderboard() {
+
+  const container =
+    document.getElementById(
+      "leaderboard"
+    );
+
+
+  container.innerHTML = `
+    <div class="loading">
+      🍷 Rangliste wird geladen ...
+    </div>
+  `;
+
+
+  const onlineResults =
+    await loadLeaderboardFromSupabase();
+
+
+  if (
+    onlineResults &&
+    Array.isArray(
+      onlineResults
+    )
+  ) {
+
+    renderResults(
+      onlineResults
+    );
+
+
+    updateOnlineStatus(
+      true
+    );
+
+
+    updateWinner(
+      onlineResults
+    );
+
+
+    return;
+  }
+
+
+  /* Fallback:
+     lokale Ergebnisse */
+
+
+  const localResults =
+    getLocalResults();
+
+
+  renderResults(
+    localResults
+  );
+
+
+  updateOnlineStatus(
+    false
+  );
+
+
+  updateWinner(
+    localResults
+  );
+}
+
+
+/* ============================================================
+   ERGEBNISSE RENDERN
+============================================================= */
+
+
+function renderResults(
+  results
+) {
+
+  const container =
+    document.getElementById(
+      "leaderboard"
+    );
+
+
+  container.innerHTML = "";
+
+
+  if (
+    !results ||
+    !results.length
+  ) {
+
+    container.innerHTML = `
+      <div class="loading">
+        Noch keine Ergebnisse vorhanden.
+        <br>
+        Sei der Erste! 🍷
+      </div>
+    `;
+
+    return;
+  }
+
+
+  results
+    .slice(0, 20)
+    .forEach(
+      (result, index) => {
+
+        const row =
+          document.createElement(
+            "div"
+          );
+
+
+        row.className =
+          "leaderboard-row";
+
+
+        if (
+          result.name ===
+          playerName &&
+          Number(result.score) ===
+          score
+        ) {
+
+          row.classList.add(
+            "current-player"
+          );
+        }
