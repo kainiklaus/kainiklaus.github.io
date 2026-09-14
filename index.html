@@ -3,13 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#722f37">
 
   <title>Ahrtal Wein-Wanderquiz 🍷</title>
-
-  <meta
-    name="description"
-    content="Das Ahrtal Wein-Wanderquiz – wie gut kennst du Wein, Rebsorten und deutsche Weinbaugebiete?"
-  >
 
   <style>
     :root {
@@ -18,14 +14,11 @@
       --wine-light: #9f4f59;
       --cream: #fffaf2;
       --gold: #d4a84f;
-      --gold-light: #f5e6bd;
       --green: #536b4d;
       --text: #292323;
       --muted: #756b68;
       --correct: #2e7d52;
-      --correct-bg: #edf8f1;
       --wrong: #b84040;
-      --wrong-bg: #fff0f0;
       --white: #ffffff;
       --border: #e6ddd7;
       --shadow: 0 15px 40px rgba(60, 30, 30, 0.15);
@@ -48,7 +41,7 @@
       background:
         linear-gradient(
           rgba(255,250,242,.90),
-          rgba(255,250,242,.97)
+          rgba(255,250,242,.96)
         ),
         radial-gradient(
           circle at 20% 20%,
@@ -60,8 +53,6 @@
           #dfc5c5,
           transparent 35%
         );
-
-      background-attachment: fixed;
     }
 
     button,
@@ -99,37 +90,25 @@
       border: 1px solid rgba(114,47,55,.08);
     }
 
-    /* =========================
+    /* =========================================
        STARTSEITE
-    ========================== */
+    ========================================= */
 
     .hero {
       text-align: center;
-      max-width: 760px;
+      max-width: 720px;
       margin: auto;
     }
 
     .vine {
-      font-size: 52px;
+      font-size: 48px;
       margin-bottom: 10px;
-    }
-
-    .badge {
-      display: inline-block;
-      padding: 7px 15px;
-      border-radius: 99px;
-      background: #f4e5d0;
-      color: var(--wine-dark);
-      font-size: .9rem;
-      font-weight: bold;
-      letter-spacing: .5px;
-      margin-bottom: 18px;
     }
 
     h1 {
       margin: 0;
       color: var(--wine);
-      font-size: clamp(2.3rem, 7vw, 4.5rem);
+      font-size: clamp(2.2rem, 7vw, 4.2rem);
       line-height: 1.05;
     }
 
@@ -143,17 +122,40 @@
       font-size: 1.25rem;
       line-height: 1.6;
       color: var(--muted);
-      margin: 22px auto 28px;
+      margin: 22px auto 30px;
       max-width: 650px;
     }
 
-    .intro-info {
-      color: var(--muted);
-      margin-bottom: 28px;
+    .badge {
+      display: inline-block;
+      padding: 7px 14px;
+      border-radius: 99px;
+      background: #f4e5d0;
+      color: var(--wine-dark);
+      font-size: .9rem;
+      font-weight: bold;
+      margin-bottom: 18px;
     }
 
-    .name-area {
-      margin-top: 30px;
+    .instructions {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 28px 0;
+    }
+
+    .instruction {
+      background: #faf6f1;
+      border-radius: 15px;
+      padding: 15px 10px;
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    .instruction-icon {
+      display: block;
+      font-size: 25px;
+      margin-bottom: 6px;
     }
 
     input[type="text"] {
@@ -161,29 +163,17 @@
       max-width: 420px;
       padding: 17px 20px;
       border-radius: 14px;
-      border: 2px solid var(--border);
+      border: 2px solid #e2d6cf;
       outline: none;
       font-size: 1.05rem;
-      margin-bottom: 10px;
+      margin-bottom: 14px;
       transition: .2s;
-      background: #fff;
     }
 
     input[type="text"]:focus {
       border-color: var(--wine);
       box-shadow: 0 0 0 4px rgba(114,47,55,.1);
     }
-
-    .error {
-      color: var(--wrong);
-      font-weight: bold;
-      min-height: 24px;
-      margin: 4px 0 12px;
-    }
-
-    /* =========================
-       BUTTONS
-    ========================== */
 
     .btn {
       border: none;
@@ -194,13 +184,8 @@
       cursor: pointer;
       font-weight: bold;
       font-size: 1rem;
-      transition:
-        transform .15s,
-        background .15s,
-        box-shadow .15s;
-
-      box-shadow:
-        0 7px 18px rgba(114,47,55,.2);
+      transition: transform .15s, background .15s;
+      box-shadow: 0 7px 18px rgba(114,47,55,.2);
     }
 
     .btn:hover {
@@ -218,22 +203,27 @@
       box-shadow: none;
     }
 
-    .btn.secondary:hover {
-      background: #e2d5cf;
-    }
-
     .btn.gold {
       background: var(--gold);
       color: #382714;
     }
 
-    .btn.gold:hover {
-      background: #c5983e;
+    .btn:disabled {
+      opacity: .55;
+      cursor: not-allowed;
+      transform: none;
     }
 
-    /* =========================
+    .error {
+      color: var(--wrong);
+      font-weight: bold;
+      min-height: 24px;
+      margin: 4px 0 12px;
+    }
+
+    /* =========================================
        QUIZ
-    ========================== */
+    ========================================= */
 
     .quiz-card {
       max-width: 850px;
@@ -273,12 +263,7 @@
     .progress-bar {
       height: 100%;
       width: 0;
-      background:
-        linear-gradient(
-          90deg,
-          var(--wine),
-          var(--gold)
-        );
+      background: linear-gradient(90deg, var(--wine), var(--gold));
       transition: width .3s;
     }
 
@@ -287,7 +272,6 @@
       font-weight: bold;
       letter-spacing: 2px;
       margin-bottom: 10px;
-      font-size: 1.05rem;
     }
 
     .question {
@@ -303,7 +287,6 @@
     }
 
     .answer {
-      width: 100%;
       border: 2px solid var(--border);
       background: #fff;
       border-radius: 15px;
@@ -313,7 +296,6 @@
       transition: .15s;
       color: var(--text);
       font-size: 1rem;
-      line-height: 1.45;
     }
 
     .answer:hover:not(:disabled) {
@@ -324,13 +306,13 @@
 
     .answer.correct {
       border-color: var(--correct);
-      background: var(--correct-bg);
+      background: #edf8f1;
       color: #185738;
     }
 
     .answer.wrong {
       border-color: var(--wrong);
-      background: var(--wrong-bg);
+      background: #fff0f0;
       color: #7b2525;
     }
 
@@ -366,13 +348,13 @@
       display: flex;
     }
 
-    /* =========================
-       RESULT
-    ========================== */
+    /* =========================================
+       ERGEBNIS
+    ========================================= */
 
     .result {
       text-align: center;
-      max-width: 760px;
+      max-width: 750px;
       margin: auto;
     }
 
@@ -392,6 +374,7 @@
       font-size: 1.8rem;
       color: var(--gold);
       margin-bottom: 12px;
+      font-weight: bold;
     }
 
     .result-message {
@@ -401,14 +384,21 @@
       margin-bottom: 30px;
     }
 
-    /* =========================
+    /* =========================================
        RANGLISTE
-    ========================== */
+    ========================================= */
 
     .leaderboard {
       max-width: 700px;
       margin: 25px auto 0;
       text-align: left;
+    }
+
+    .leaderboard-status {
+      text-align: center;
+      color: var(--muted);
+      font-size: .9rem;
+      margin-bottom: 12px;
     }
 
     .leaderboard-row {
@@ -418,17 +408,11 @@
       gap: 10px;
       padding: 14px 16px;
       border-bottom: 1px solid #eee4df;
-      transition: background .2s;
     }
 
     .leaderboard-row:first-child {
       background: #fff8e9;
       border-radius: 14px;
-    }
-
-    .leaderboard-row.current-player {
-      background: #f8eef0;
-      border-radius: 12px;
     }
 
     .place {
@@ -439,7 +423,9 @@
     .player-name {
       text-align: left;
       font-weight: bold;
-      overflow-wrap: anywhere;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .points {
@@ -448,36 +434,32 @@
       color: var(--wine);
     }
 
+    .online-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--correct);
+      font-size: .85rem;
+      margin-top: 8px;
+    }
+
+    .online-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--correct);
+      border-radius: 50%;
+    }
+
     .winner {
       font-size: 1.1rem;
       color: var(--wine-dark);
       margin: 15px 0;
     }
 
-    .loading {
-      color: var(--muted);
-      padding: 20px;
-      text-align: center;
-    }
-
-    .online-status {
-      display: inline-block;
-      margin-top: 15px;
-      padding: 7px 12px;
-      border-radius: 99px;
-      font-size: .82rem;
-      background: #edf8f1;
-      color: #185738;
-    }
-
-    .offline-status {
-      background: #f7eee7;
-      color: #80582f;
-    }
-
     .small {
       font-size: .88rem;
       color: var(--muted);
+      line-height: 1.5;
     }
 
     .actions {
@@ -493,12 +475,15 @@
       margin-top: 35px;
       color: var(--muted);
       font-size: .85rem;
-      line-height: 1.5;
     }
 
-    /* =========================
+    .saving {
+      opacity: .7;
+    }
+
+    /* =========================================
        MOBILE
-    ========================== */
+    ========================================= */
 
     @media (max-width: 600px) {
 
@@ -506,21 +491,29 @@
         width: min(100% - 18px, 920px);
       }
 
+      .screen {
+        padding: 10px 0;
+      }
+
       .card {
         padding: 25px 18px;
         border-radius: 20px;
       }
 
-      .screen {
-        padding: 12px 0;
+      .instructions {
+        grid-template-columns: 1fr;
+      }
+
+      .instruction {
+        padding: 10px;
       }
 
       .topbar {
         align-items: flex-start;
       }
 
-      .score {
-        padding: 7px 11px;
+      .question {
+        font-size: 1.35rem;
       }
 
       .answer {
@@ -529,18 +522,6 @@
 
       .leaderboard-row {
         grid-template-columns: 42px 1fr 65px;
-      }
-
-      .btn {
-        width: 100%;
-      }
-
-      .actions {
-        flex-direction: column;
-      }
-
-      .actions .btn {
-        width: 100%;
       }
     }
   </style>
@@ -577,15 +558,35 @@
         Weinbaugebiete Deutschlands – und natürlich das Ahrtal?
       </p>
 
-      <p class="intro-info">
-        <strong>10 Fragen</strong>
-        ·
-        steigender Schwierigkeitsgrad
-        ·
-        1 Punkt pro richtige Antwort
+
+      <div class="instructions">
+
+        <div class="instruction">
+          <span class="instruction-icon">❓</span>
+          10 Fragen
+        </div>
+
+        <div class="instruction">
+          <span class="instruction-icon">🍷</span>
+          1 Punkt pro richtige Antwort
+        </div>
+
+        <div class="instruction">
+          <span class="instruction-icon">🏆</span>
+          Gemeinsame Rangliste
+        </div>
+
+      </div>
+
+
+      <p>
+        <strong>
+          Steigender Schwierigkeitsgrad
+        </strong>
       </p>
 
-      <div class="name-area">
+
+      <div style="margin-top:30px;">
 
         <input
           id="player-name"
@@ -609,15 +610,19 @@
 
       </div>
 
+
+      <div
+        id="connection-status"
+        class="online-indicator"
+        style="display:none;"
+      >
+        <span class="online-dot"></span>
+        Online-Rangliste aktiv
+      </div>
+
+
       <div class="footer">
-
-        Wer wird der
-        <strong>Ahrtal-Weinmeister?</strong>
-
-        <br>
-
         Viel Erfolg – und immer schön auf dem Wanderweg bleiben! 🥾
-
       </div>
 
     </div>
@@ -763,12 +768,6 @@
       ></div>
 
 
-      <div
-        id="winner-message"
-        class="winner"
-      ></div>
-
-
       <h2>
         🏆 Ahrtal-Weinrangliste
       </h2>
@@ -777,26 +776,14 @@
       <div
         id="leaderboard"
         class="leaderboard"
-      >
-        <div class="loading">
-          🍷 Rangliste wird geladen ...
-        </div>
-      </div>
-
-
-      <div
-        id="online-status"
-        class="online-status"
-      >
-        Online-Rangliste
-      </div>
+      ></div>
 
 
       <div class="actions">
 
         <button
           class="btn gold"
-          onclick="renderLeaderboard()"
+          onclick="refreshLeaderboard()"
         >
           🔄 Rangliste aktualisieren
         </button>
@@ -819,8 +806,10 @@
 
 
       <p class="small" style="margin-top:25px;">
-        Die Rangliste wird gemeinsam mit den anderen
-        Teilnehmern geteilt, sobald Supabase eingerichtet ist.
+
+        Die Rangliste wird zentral gespeichert.
+        Alle Teilnehmer sehen dieselben Ergebnisse.
+
       </p>
 
     </div>
@@ -836,42 +825,35 @@
 
 /* ============================================================
    SUPABASE KONFIGURATION
-   ============================================================
-
-   1. Erstelle ein Projekt bei Supabase.
-   2. Kopiere die Project URL hier hinein.
-   3. Kopiere den öffentlichen "anon/public" Key hier hinein.
-
-   BEISPIEL:
-
-   const SUPABASE_URL =
-     "https://abcdefgh.supabase.co";
-
-   const SUPABASE_ANON_KEY =
-     "eyJhbGciOiJIUzI1NiIsInR5cCI6...";
-
-   WICHTIG:
-   NIEMALS den "service_role" Key hier eintragen.
-
 ============================================================= */
 
+/*
+  WICHTIG:
+
+  Bei SUPABASE_URL NICHT /rest/v1/ anhängen.
+
+  RICHTIG:
+  https://nakyyykewametdbrescz.supabase.co
+
+  FALSCH:
+  https://nakyyykewametdbrescz.supabase.co/rest/v1/
+*/
 
 const SUPABASE_URL =
-  "https://nakyyykewametdbrescz.supabase.co/rest/v1/";
+  "https://nakyyykewametdbrescz.supabase.co";
 
 
 const SUPABASE_ANON_KEY =
   "sb_publishable_VnJx4FA52i33hwOYdmvCFA_rOmTkTVp";
 
 
-const TABLE_NAME =
-  "Ergebnis";
+const SUPABASE_TABLE =
+  "quiz_results";
 
 
 /* ============================================================
    QUIZ-FRAGEN
 ============================================================= */
-
 
 const questions = [
 
@@ -891,7 +873,7 @@ const questions = [
     correct: 0,
 
     explanation:
-      "Das Ahrtal bildet das eigenständige deutsche Weinbaugebiet Ahr."
+      "Das Ahrtal bildet tatsächlich das eigenständige deutsche Weinbaugebiet Ahr."
   },
 
 
@@ -1078,9 +1060,8 @@ const questions = [
 
 
 /* ============================================================
-   QUIZ-VARIABLEN
+   VARIABLEN
 ============================================================= */
-
 
 let currentQuestion = 0;
 
@@ -1092,43 +1073,28 @@ let answered = false;
 
 
 /* ============================================================
-   SCREEN WECHSELN
+   SUPABASE STATUS
 ============================================================= */
 
+function supabaseConfigured() {
 
-function showScreen(id) {
-
-  document
-    .querySelectorAll(".screen")
-    .forEach(screen => {
-
-      screen.classList.remove("active");
-
-    });
-
-
-  document
-    .getElementById(id)
-    .classList.add("active");
-
-
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
+  return (
+    SUPABASE_URL &&
+    SUPABASE_ANON_KEY &&
+    SUPABASE_URL.includes("supabase.co") &&
+    SUPABASE_ANON_KEY.length > 20
+  );
 }
 
 
 /* ============================================================
-   QUIZ STARTEN
+   START
 ============================================================= */
-
 
 function startQuiz() {
 
   const input =
     document.getElementById("player-name");
-
 
   const error =
     document.getElementById("name-error");
@@ -1149,17 +1115,6 @@ function startQuiz() {
   }
 
 
-  if (playerName.length < 2) {
-
-    error.textContent =
-      "Der Name sollte mindestens 2 Zeichen haben.";
-
-    input.focus();
-
-    return;
-  }
-
-
   error.textContent = "";
 
 
@@ -1168,10 +1123,7 @@ function startQuiz() {
   score = 0;
 
 
-  showScreen(
-    "quiz-screen"
-  );
-
+  showScreen("quiz-screen");
 
   renderQuestion();
 }
@@ -1180,7 +1132,6 @@ function startQuiz() {
 /* ============================================================
    FRAGE ANZEIGEN
 ============================================================= */
-
 
 function renderQuestion() {
 
@@ -1191,34 +1142,34 @@ function renderQuestion() {
     questions[currentQuestion];
 
 
-  document
-    .getElementById("progress-text")
-    .textContent =
-      `Frage ${currentQuestion + 1} von ${questions.length}`;
+  document.getElementById(
+    "progress-text"
+  ).textContent =
+    `Frage ${currentQuestion + 1} von ${questions.length}`;
 
 
-  document
-    .getElementById("score")
-    .textContent =
-      `${score} ${score === 1 ? "Punkt" : "Punkte"}`;
+  document.getElementById(
+    "score"
+  ).textContent =
+    `${score} ${score === 1 ? "Punkt" : "Punkte"}`;
 
 
-  document
-    .getElementById("progress-bar")
-    .style.width =
-      `${((currentQuestion) / questions.length) * 100}%`;
+  document.getElementById(
+    "progress-bar"
+  ).style.width =
+    `${(currentQuestion / questions.length) * 100}%`;
 
 
-  document
-    .getElementById("difficulty")
-    .textContent =
-      q.difficulty;
+  document.getElementById(
+    "difficulty"
+  ).textContent =
+    q.difficulty;
 
 
-  document
-    .getElementById("question")
-    .textContent =
-      q.question;
+  document.getElementById(
+    "question"
+  ).textContent =
+    q.question;
 
 
   const answersContainer =
@@ -1250,39 +1201,34 @@ function renderQuestion() {
         );
 
 
-      answersContainer
-        .appendChild(button);
-
+      answersContainer.appendChild(
+        button
+      );
     }
   );
 
 
-  document
-    .getElementById("explanation")
-    .classList
-    .remove("show");
+  document.getElementById(
+    "explanation"
+  ).classList.remove("show");
 
 
-  document
-    .getElementById("next-wrapper")
-    .classList
-    .remove("show");
+  document.getElementById(
+    "next-wrapper"
+  ).classList.remove("show");
 }
 
 
 /* ============================================================
-   ANTWORT AUSWÄHLEN
+   ANTWORT
 ============================================================= */
-
 
 function selectAnswer(
   index,
   clickedButton
 ) {
 
-  if (answered) {
-    return;
-  }
+  if (answered) return;
 
 
   answered = true;
@@ -1293,14 +1239,14 @@ function selectAnswer(
 
 
   const buttons =
-    document.querySelectorAll(".answer");
+    document.querySelectorAll(
+      ".answer"
+    );
 
 
   buttons.forEach(
     button => {
-
       button.disabled = true;
-
     }
   );
 
@@ -1309,60 +1255,60 @@ function selectAnswer(
 
     score++;
 
-    clickedButton
-      .classList
-      .add("correct");
+    clickedButton.classList.add(
+      "correct"
+    );
 
-  }
+  } else {
 
-  else {
+    clickedButton.classList.add(
+      "wrong"
+    );
 
-    clickedButton
-      .classList
-      .add("wrong");
-
-
-    buttons[q.correct]
-      .classList
-      .add("correct");
+    buttons[q.correct].classList.add(
+      "correct"
+    );
   }
 
 
-  document
-    .getElementById("score")
-    .textContent =
-      `${score} ${score === 1 ? "Punkt" : "Punkte"}`;
+  document.getElementById(
+    "score"
+  ).textContent =
+    `${score} ${score === 1 ? "Punkt" : "Punkte"}`;
 
 
-  document
-    .getElementById("explanation")
-    .innerHTML =
-      `<strong>🍷 Weinwissen:</strong><br>${q.explanation}`;
+  const explanation =
+    document.getElementById(
+      "explanation"
+    );
 
 
-  document
-    .getElementById("explanation")
-    .classList
-    .add("show");
+  explanation.innerHTML =
+    `<strong>🍷 Wusstest du schon?</strong><br>${q.explanation}`;
 
 
-  document
-    .getElementById("next-wrapper")
-    .classList
-    .add("show");
+  explanation.classList.add(
+    "show"
+  );
 
 
-  document
-    .getElementById("progress-bar")
-    .style.width =
-      `${((currentQuestion + 1) / questions.length) * 100}%`;
+  document.getElementById(
+    "next-wrapper"
+  ).classList.add(
+    "show"
+  );
+
+
+  document.getElementById(
+    "progress-bar"
+  ).style.width =
+    `${((currentQuestion + 1) / questions.length) * 100}%`;
 }
 
 
 /* ============================================================
    NÄCHSTE FRAGE
 ============================================================= */
-
 
 function nextQuestion() {
 
@@ -1385,16 +1331,15 @@ function nextQuestion() {
 
 
 /* ============================================================
-   ERGEBNIS
+   QUIZ BEENDET
 ============================================================= */
-
 
 async function finishQuiz() {
 
-  document
-    .getElementById("final-score")
-    .textContent =
-      score;
+  document.getElementById(
+    "final-score"
+  ).textContent =
+    score;
 
 
   const title =
@@ -1464,7 +1409,6 @@ async function finishQuiz() {
 
     message.textContent =
       "Noch etwas Luft nach oben – aber keine Sorge: Bei einer Wanderung durchs Ahrtal gibt es reichlich Gelegenheit zum Lernen.";
-
   }
 
 
@@ -1473,54 +1417,51 @@ async function finishQuiz() {
   );
 
 
-  await saveResult(
+  const leaderboard =
+    document.getElementById(
+      "leaderboard"
+    );
+
+
+  leaderboard.innerHTML = `
+    <div class="leaderboard-status">
+      🍷 Dein Ergebnis wird gespeichert ...
+    </div>
+  `;
+
+
+  /*
+    Ergebnis speichern
+  */
+
+  await uploadResultToSupabase(
     playerName,
     score
   );
 
+
+  /*
+    Rangliste laden
+  */
 
   await renderLeaderboard();
 }
 
 
 /* ============================================================
-   SUPABASE STATUS
+   SUPABASE: ERGEBNIS SPEICHERN
 ============================================================= */
-
-
-function isSupabaseConfigured() {
-
-  return (
-
-    SUPABASE_URL &&
-
-    !SUPABASE_URL.includes(
-      "DEIN-PROJEKT"
-    ) &&
-
-    SUPABASE_ANON_KEY &&
-
-    !SUPABASE_ANON_KEY.includes(
-      "DEIN-ANON-KEY"
-    )
-
-  );
-}
-
-
-/* ============================================================
-   ONLINE ERGEBNIS SPEICHERN
-============================================================= */
-
 
 async function uploadResultToSupabase(
   name,
   points
 ) {
 
-  if (
-    !isSupabaseConfigured()
-  ) {
+  if (!supabaseConfigured()) {
+
+    console.error(
+      "Supabase ist nicht korrekt konfiguriert."
+    );
 
     return false;
   }
@@ -1530,11 +1471,8 @@ async function uploadResultToSupabase(
 
     const response =
       await fetch(
-
-        `${SUPABASE_URL}/rest/v1/${TABLE_NAME}`,
-
+        `${SUPABASE_URL}/rest/v1/${SUPABASE_TABLE}`,
         {
-
           method: "POST",
 
           headers: {
@@ -1550,32 +1488,34 @@ async function uploadResultToSupabase(
 
             "Prefer":
               "return=minimal"
-
           },
 
           body:
             JSON.stringify({
-
               name: name,
-
               score: points
-
             })
-
         }
-
       );
 
 
     if (!response.ok) {
 
+      const errorText =
+        await response.text();
+
       console.error(
         "Supabase Fehler:",
-        await response.text()
+        errorText
       );
 
       return false;
     }
+
+
+    console.log(
+      "🍷 Ergebnis erfolgreich gespeichert."
+    );
 
 
     return true;
@@ -1595,15 +1535,12 @@ async function uploadResultToSupabase(
 
 
 /* ============================================================
-   ONLINE RANGLISTE LADEN
+   SUPABASE: RANGLISTE LADEN
 ============================================================= */
-
 
 async function loadLeaderboardFromSupabase() {
 
-  if (
-    !isSupabaseConfigured()
-  ) {
+  if (!supabaseConfigured()) {
 
     return null;
   }
@@ -1612,23 +1549,16 @@ async function loadLeaderboardFromSupabase() {
   try {
 
     const url =
-
-      `${SUPABASE_URL}/rest/v1/${TABLE_NAME}` +
-
+      `${SUPABASE_URL}/rest/v1/${SUPABASE_TABLE}` +
       `?select=name,score,created_at` +
-
       `&order=score.desc,created_at.asc` +
-
       `&limit=20`;
 
 
     const response =
       await fetch(
-
         url,
-
         {
-
           method: "GET",
 
           headers: {
@@ -1638,19 +1568,19 @@ async function loadLeaderboardFromSupabase() {
 
             "Authorization":
               `Bearer ${SUPABASE_ANON_KEY}`
-
           }
-
         }
-
       );
 
 
     if (!response.ok) {
 
+      const errorText =
+        await response.text();
+
       console.error(
         "Ranglistenfehler:",
-        await response.text()
+        errorText
       );
 
       return null;
@@ -1674,149 +1604,35 @@ async function loadLeaderboardFromSupabase() {
 
 
 /* ============================================================
-   ERGEBNIS LOKAL SPEICHERN
+   RANGLISTE AKTUALISIEREN
 ============================================================= */
 
+async function refreshLeaderboard() {
 
-function saveLocalResult(
-  name,
-  points
-) {
-
-  const results =
-    getLocalResults();
+  const button =
+    event?.currentTarget;
 
 
-  results.push({
+  if (button) {
 
-    name: name,
+    button.disabled = true;
 
-    score: points,
-
-    date:
-      new Date().toISOString()
-
-  });
-
-
-  results.sort(
-    (a, b) => {
-
-      if (
-        b.score !== a.score
-      ) {
-
-        return b.score -
-               a.score;
-      }
-
-
-      return (
-        new Date(a.date) -
-        new Date(b.date)
-      );
-
-    }
-  );
-
-
-  localStorage.setItem(
-
-    "ahrtalWeinquizResults",
-
-    JSON.stringify(
-      results.slice(0, 100)
-    )
-
-  );
-}
-
-
-/* ============================================================
-   ERGEBNIS ONLINE + LOKAL SPEICHERN
-============================================================= */
-
-
-async function saveResult(
-  name,
-  points
-) {
-
-  saveLocalResult(
-    name,
-    points
-  );
-
-
-  const onlineSaved =
-    await uploadResultToSupabase(
-      name,
-      points
+    button.classList.add(
+      "saving"
     );
-
-
-  updateOnlineStatus(
-    onlineSaved
-  );
-
-
-  return onlineSaved;
-}
-
-
-/* ============================================================
-   ONLINE STATUS
-============================================================= */
-
-
-function updateOnlineStatus(
-  online
-) {
-
-  const status =
-    document.getElementById(
-      "online-status"
-    );
-
-
-  if (online) {
-
-    status.textContent =
-      "🟢 Online-Rangliste aktiv";
-
-
-    status.classList
-      .remove(
-        "offline-status"
-      );
-
   }
 
-  else if (
-    isSupabaseConfigured()
-  ) {
 
-    status.textContent =
-      "🟠 Offline – lokale Rangliste";
+  await renderLeaderboard();
 
 
-    status.classList
-      .add(
-        "offline-status"
-      );
+  if (button) {
 
-  }
+    button.disabled = false;
 
-  else {
-
-    status.textContent =
-      "🔵 Lokale Rangliste – Supabase noch nicht eingerichtet";
-
-
-    status.classList
-      .add(
-        "offline-status"
-      );
+    button.classList.remove(
+      "saving"
+    );
   }
 }
 
@@ -1824,7 +1640,6 @@ function updateOnlineStatus(
 /* ============================================================
    RANGLISTE DARSTELLEN
 ============================================================= */
-
 
 async function renderLeaderboard() {
 
@@ -1835,63 +1650,41 @@ async function renderLeaderboard() {
 
 
   container.innerHTML = `
-    <div class="loading">
+    <div class="leaderboard-status">
       🍷 Rangliste wird geladen ...
     </div>
   `;
 
 
-  const onlineResults =
+  const results =
     await loadLeaderboardFromSupabase();
 
 
   if (
-    onlineResults &&
-    Array.isArray(
-      onlineResults
-    )
+    results &&
+    Array.isArray(results)
   ) {
 
     renderResults(
-      onlineResults
+      results
     );
-
-
-    updateOnlineStatus(
-      true
-    );
-
-
-    updateWinner(
-      onlineResults
-    );
-
 
     return;
   }
 
 
-  /* Fallback:
-     lokale Ergebnisse */
+  /*
+    Falls die Online-Rangliste nicht erreichbar ist,
+    zeigen wir eine verständliche Fehlermeldung.
+  */
 
-
-  const localResults =
-    getLocalResults();
-
-
-  renderResults(
-    localResults
-  );
-
-
-  updateOnlineStatus(
-    false
-  );
-
-
-  updateWinner(
-    localResults
-  );
+  container.innerHTML = `
+    <div class="leaderboard-status">
+      ⚠️ Die Online-Rangliste konnte gerade nicht geladen werden.
+      <br>
+      Bitte prüfe deine Internetverbindung und versuche es erneut.
+    </div>
+  `;
 }
 
 
@@ -1899,10 +1692,7 @@ async function renderLeaderboard() {
    ERGEBNISSE RENDERN
 ============================================================= */
 
-
-function renderResults(
-  results
-) {
+function renderResults(results) {
 
   const container =
     document.getElementById(
@@ -1913,21 +1703,39 @@ function renderResults(
   container.innerHTML = "";
 
 
-  if (
-    !results ||
-    !results.length
-  ) {
+  if (!results.length) {
 
     container.innerHTML = `
-      <div class="loading">
+      <div class="leaderboard-status">
         Noch keine Ergebnisse vorhanden.
-        <br>
-        Sei der Erste! 🍷
       </div>
     `;
 
     return;
   }
+
+
+  const status =
+    document.createElement(
+      "div"
+    );
+
+
+  status.className =
+    "leaderboard-status";
+
+
+  status.innerHTML = `
+    <span class="online-indicator">
+      <span class="online-dot"></span>
+      Live-Rangliste
+    </span>
+  `;
+
+
+  container.appendChild(
+    status
+  );
 
 
   results
@@ -1945,14 +1753,203 @@ function renderResults(
           "leaderboard-row";
 
 
-        if (
-          result.name ===
-          playerName &&
-          Number(result.score) ===
-          score
-        ) {
+        let medal = "";
 
-          row.classList.add(
-            "current-player"
-          );
+
+        if (index === 0) {
+
+          medal = "🥇";
+
+        } else if (index === 1) {
+
+          medal = "🥈";
+
+        } else if (index === 2) {
+
+          medal = "🥉";
         }
+
+
+        row.innerHTML = `
+
+          <div class="place">
+            ${medal || (index + 1) + "."}
+          </div>
+
+          <div class="player-name">
+            ${escapeHtml(result.name)}
+          </div>
+
+          <div class="points">
+            ${result.score}/10
+          </div>
+
+        `;
+
+
+        container.appendChild(
+          row
+        );
+      }
+    );
+}
+
+
+/* ============================================================
+   HTML SICHER AUSGEBEN
+============================================================= */
+
+function escapeHtml(text) {
+
+  const div =
+    document.createElement(
+      "div"
+    );
+
+
+  div.textContent =
+    text;
+
+
+  return div.innerHTML;
+}
+
+
+/* ============================================================
+   NAVIGATION
+============================================================= */
+
+function showScreen(id) {
+
+  document
+    .querySelectorAll(
+      ".screen"
+    )
+    .forEach(
+      screen => {
+        screen.classList.remove(
+          "active"
+        );
+      }
+    );
+
+
+  document
+    .getElementById(id)
+    .classList.add(
+      "active"
+    );
+
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+
+
+function restartQuiz() {
+
+  currentQuestion = 0;
+
+  score = 0;
+
+
+  showScreen(
+    "quiz-screen"
+  );
+
+
+  renderQuestion();
+}
+
+
+function showStart() {
+
+  document.getElementById(
+    "player-name"
+  ).value = "";
+
+
+  showScreen(
+    "start-screen"
+  );
+}
+
+
+/* ============================================================
+   SUPABASE BEIM START TESTEN
+============================================================= */
+
+async function testSupabaseConnection() {
+
+  if (!supabaseConfigured()) {
+    return;
+  }
+
+
+  try {
+
+    const results =
+      await loadLeaderboardFromSupabase();
+
+
+    if (results !== null) {
+
+      document.getElementById(
+        "connection-status"
+      ).style.display =
+        "inline-flex";
+
+      console.log(
+        "🍷 Supabase-Verbindung erfolgreich."
+      );
+
+    } else {
+
+      console.warn(
+        "Supabase-Verbindung konnte nicht getestet werden."
+      );
+    }
+
+  }
+
+  catch (error) {
+
+    console.error(
+      error
+    );
+  }
+}
+
+
+/* ============================================================
+   ENTER-TASTE AUF STARTSEITE
+============================================================= */
+
+document
+  .getElementById("player-name")
+  .addEventListener(
+    "keydown",
+    function(event) {
+
+      if (
+        event.key === "Enter"
+      ) {
+
+        startQuiz();
+      }
+    }
+  );
+
+
+/* ============================================================
+   START
+============================================================= */
+
+testSupabaseConnection();
+
+</script>
+
+</body>
+</html>
