@@ -1253,6 +1253,15 @@
           🍷 Quiz starten
         </button>
 
+	<button
+	  id="leaderboard-button"
+	  class="btn secondary"
+	  type="button"
+	  style="margin-top:10px;"
+	>
+	  🏆 Zur Rangliste
+	</button>
+
       </div>
 
 
@@ -3508,7 +3517,30 @@ document.addEventListener(
         startQuiz
 
       );
+     /*
+	Rangliste von der Startseite öffnen
+     */
 
+
+     document	
+       .getElementById(
+         "leaderboard-button"
+       )
+      .addEventListener(
+
+         "click",
+
+         async function() {
+
+           showScreen(
+             "result-screen"
+           );
+
+           await renderLeaderboard();
+
+         }
+
+      );
 
     /*
       Nächste Frage
