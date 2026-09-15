@@ -1156,7 +1156,7 @@
 
 
       <div class="badge">
-        DAS AHR-TAL WEINQUIZ
+        DAS MANNSCHAFTSTOUR-WEINQUIZ
       </div>
 
 
@@ -1168,8 +1168,8 @@
       <p class="subtitle">
 
         Wie gut kennt ihr die Weine,
-        Rebsorten und Weinbaugebiete Deutschlands –
-        und natürlich das Ahrtal?
+        Rebsorten und Weinbaugebiete Deutschlands -
+		und natürlich das Ahrtal?
 
       </p>
 
@@ -1182,7 +1182,7 @@
             ❓
           </span>
 
-          10 Weinfragen
+          15 Weinfragen
 
         </div>
 
@@ -1313,7 +1313,7 @@
           class="progress-text"
           id="progress-text"
         >
-          Frage 1 von 10
+          Frage 1 von 15
         </div>
 
 
@@ -1452,7 +1452,7 @@
 
         <span id="final-score">
           0
-        </span>/10
+        </span>/15
 
       </div>
 
@@ -1568,7 +1568,7 @@ const SUPABASE_TABLE =
 
 
 const QUESTION_DELAY =
-  15 * 60 * 1000;
+  1 * 1 * 1000;
 
 
 /* =========================================================
@@ -1618,7 +1618,27 @@ const questions = [
       "Spätburgunder, international Pinot Noir genannt, ist die prägende Rebsorte der Ahr."
   },
 
+	
+  {
+    difficulty: "★★☆☆☆",
 
+    question:
+      "Was versteht man im Weinbau unter der „Lese“?",
+
+    answers: [
+      "Das Beschneiden der Reben",
+      "Das Einsetzen neuer Rebstöcke",
+	  "Die Ernte der Weintrauben",
+      "Die Lagerung des fertigen Weins"
+    ],
+
+    correct: 2,
+
+    explanation:
+      "Als Lese bezeichnet man die Ernte der reifen Weintrauben, die anschließend zu Wein verarbeitet werden."
+  },
+
+	
   {
     difficulty: "★★☆☆☆",
 
@@ -1626,13 +1646,13 @@ const questions = [
       "Welche deutsche Weinregion ist besonders für Riesling bekannt und wird von der Mosel durchzogen?",
 
     answers: [
+	  "Ahr",
       "Mosel",
-      "Ahr",
       "Württemberg",
       "Sachsen"
     ],
 
-    correct: 0,
+    correct: 1,
 
     explanation:
       "Die Mosel gehört zu den bekanntesten deutschen Rieslingregionen."
@@ -1643,16 +1663,36 @@ const questions = [
     difficulty: "★★☆☆☆",
 
     question:
-      "Warum sind viele Weinberge im Ahrtal in steilen Hanglagen angelegt?",
+      "Welche Aufgabe hat der Winzer beim Rebschnitt im Winter hauptsächlich?",
 
     answers: [
-      "Bessere Sonneneinstrahlung und günstige Wärmeverhältnisse",
-      "Damit die Reben möglichst wenig Wasser bekommen",
-      "Weil Weinreben ausschließlich an Hängen wachsen können",
-      "Damit die Trauben grundsätzlich weniger Zucker bilden"
+      "Er steuert Wachstum und Ertrag der Rebe",
+      "Er erhöht direkt den Alkoholgehalt des Weins",
+      "Er entfernt die Trauben von der Rebe",
+      "Er verhindert grundsätzlich alle Krankheiten"
     ],
 
     correct: 0,
+
+    explanation:
+      "Durch den Rebschnitt wird unter anderem das Wachstum der Rebe gesteuert und die Anzahl der späteren Trauben beeinflusst."
+  },	
+
+	
+  {
+    difficulty: "★★☆☆☆",
+
+    question:
+      "Warum sind viele Weinberge im Ahrtal in steilen Hanglagen angelegt?",
+
+    answers: [
+      "Damit die Reben möglichst wenig Wasser bekommen",
+      "Weil Weinreben ausschließlich an Hängen wachsen können",
+	  "Bessere Sonneneinstrahlung und günstige Wärmeverhältnisse",
+      "Damit die Trauben grundsätzlich weniger Zucker bilden"
+    ],
+
+    correct: 2,
 
     explanation:
       "Steile, gut ausgerichtete Hänge können eine intensive Sonneneinstrahlung ermöglichen und die Reife unterstützen."
@@ -1666,13 +1706,13 @@ const questions = [
       "Welche Rebsorte steckt hinter dem Namen „Pinot Noir“?",
 
     answers: [
-      "Spätburgunder",
       "Grauburgunder",
       "Weißburgunder",
-      "Frühburgunder"
+      "Frühburgunder",
+      "Spätburgunder"		
     ],
 
-    correct: 0,
+    correct: 3,
 
     explanation:
       "Spätburgunder ist die deutsche Bezeichnung für Pinot Noir."
@@ -1683,22 +1723,62 @@ const questions = [
     difficulty: "★★★☆☆",
 
     question:
-      "Welches deutsche Weinbaugebiet ist flächenmäßig das größte?",
+      "Was bedeutet „Terroir“ im Zusammenhang mit Wein?",
 
     answers: [
-      "Rheinhessen",
-      "Pfalz",
-      "Mosel",
-      "Ahr"
+      "Das Zusammenspiel von Boden, Klima, Lage und weiteren Standortfaktoren",
+      "Die Reifezeit des Weins im Holzfass",
+      "Die verwendete Flaschenform",
+      "Der Alkoholgehalt eines Weins"
     ],
 
     correct: 0,
+
+    explanation:
+      "Terroir beschreibt das Zusammenspiel verschiedener Standortfaktoren wie Boden, Klima, Topografie und Lage, die den Charakter eines Weins beeinflussen können."
+  },
+	
+	
+  {
+    difficulty: "★★★☆☆",
+
+    question:
+      "Welches deutsche Weinbaugebiet ist flächenmäßig das größte?",
+
+    answers: [
+      "Pfalz",
+      "Mosel",
+	  "Rheinhessen",
+      "Ahr"
+    ],
+
+    correct: 2,
 
     explanation:
       "Rheinhessen ist das flächenmäßig größte deutsche Qualitätsweinbaugebiet."
   },
 
 
+  {
+    difficulty: "★★★☆☆",
+
+    question:
+      "Welche Wirkung hat die Gärung bei der Herstellung von Wein?",
+
+    answers: [
+      "Säuren werden vollständig aus dem Most entfernt",
+      "Hefen wandeln Zucker in Alkohol und Kohlendioxid um",		
+      "Die Trauben werden durch Sauerstoff getrocknet",
+      "Der Wein erhält dadurch automatisch seine rote Farbe"
+    ],
+
+    correct: 1,
+
+    explanation:
+      "Bei der alkoholischen Gärung wandeln Hefen den in Traubenmost enthaltenen Zucker hauptsächlich in Alkohol und Kohlendioxid um."
+  },
+
+	
   {
     difficulty: "★★★★☆",
 
@@ -1726,18 +1806,38 @@ const questions = [
       "Was unterscheidet Spätburgunder und Frühburgunder am deutlichsten?",
 
     answers: [
-      "Frühburgunder reift früher als Spätburgunder",
       "Spätburgunder ist eine weiße Rebsorte",
       "Frühburgunder stammt ursprünglich aus Italien",
-      "Beide Sorten sind identisch"
+      "Beide Sorten sind identisch",
+	  "Frühburgunder reift früher als Spätburgunder"
     ],
 
-    correct: 0,
+    correct: 3,
 
     explanation:
       "Der entscheidende Unterschied liegt im Reifeverhalten: Frühburgunder reift früher."
   },
 
+
+  {
+    difficulty: "★★★★☆",
+
+    question:
+      "Warum werden Weinreben häufig an nach Süden ausgerichteten Hängen angebaut?",
+
+    answers: [
+      "Sie können dort besonders viel Sonnenlicht erhalten",
+      "Dort benötigen Reben grundsätzlich kein Wasser",
+      "Südhanglagen verhindern automatisch jeden Frost",
+      "Dort wachsen ausschließlich rote Rebsorten"
+    ],
+
+    correct: 0,
+
+    explanation:
+      "Nach Süden ausgerichtete Hänge können in der nördlichen Hemisphäre besonders viel Sonnenlicht erhalten und dadurch günstige Bedingungen für die Reife der Trauben schaffen."
+  },
+	
 
   {
     difficulty: "★★★★★",
@@ -1746,13 +1846,13 @@ const questions = [
       "Welche Kombination aus Weinbaugebiet und typischer Rebsorte passt am besten zusammen?",
 
     answers: [
-      "Ahr – Spätburgunder",
       "Franken – Tempranillo",
+      "Ahr – Spätburgunder",		
       "Mosel – Sangiovese",
       "Württemberg – Nebbiolo"
     ],
 
-    correct: 0,
+    correct: 1,
 
     explanation:
       "Spätburgunder prägt das Weinbaugebiet Ahr und ist wesentlich für dessen Ruf als deutsche Rotweinregion."
@@ -2858,7 +2958,7 @@ async function finishQuiz() {
 
 
   if (
-    finalScore === 10
+    finalScore === 15
   ) {
 
     trophy.textContent =
@@ -2879,7 +2979,7 @@ async function finishQuiz() {
   }
 
   else if (
-    finalScore >= 8
+    finalScore >= 12
   ) {
 
     trophy.textContent =
@@ -2898,7 +2998,7 @@ async function finishQuiz() {
   }
 
   else if (
-    finalScore >= 5
+    finalScore >= 8
   ) {
 
     trophy.textContent =
@@ -3322,7 +3422,7 @@ async function renderLeaderboard() {
         </div>
 
         <div class="points">
-          ${result.score}/10
+          ${result.score}/15
         </div>
 
       `;
