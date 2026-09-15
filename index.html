@@ -15,9 +15,14 @@
     content="#722f37"
   >
 
-  <title>
-    Ahrtal Wein-Wanderquiz 🍷
-  </title>
+  <title>Ahrtal Wein-Wanderquiz 🍷</title>
+
+
+  <!-- ============================================================
+       SUPABASE JAVASCRIPT CLIENT
+  ============================================================= -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
   <style>
@@ -34,19 +39,20 @@
 
       --green: #536b4d;
 
-      --correct: #2e7d52;
-      --wrong: #b84040;
-
       --text: #292323;
+
       --muted: #756b68;
+
+      --correct: #2e7d52;
+
+      --wrong: #b84040;
 
       --white: #ffffff;
 
       --border: #e6ddd7;
 
       --shadow:
-        0 15px 40px
-        rgba(60, 30, 30, 0.15);
+        0 15px 40px rgba(60, 30, 30, 0.15);
 
     }
 
@@ -77,8 +83,8 @@
       background:
 
         linear-gradient(
-          rgba(255,250,242,.93),
-          rgba(255,250,242,.97)
+          rgba(255,250,242,.90),
+          rgba(255,250,242,.96)
         ),
 
         radial-gradient(
@@ -160,9 +166,29 @@
     }
 
 
-    /* =========================================
-       TYPOGRAFIE
-    ========================================= */
+    /* ============================================================
+       STARTSEITE
+    ============================================================= */
+
+
+    .hero {
+
+      text-align: center;
+
+      max-width: 720px;
+
+      margin: auto;
+
+    }
+
+
+    .vine {
+
+      font-size: 48px;
+
+      margin-bottom: 10px;
+
+    }
 
 
     h1 {
@@ -199,66 +225,6 @@
     }
 
 
-    .small {
-
-      font-size: .88rem;
-
-      color: var(--muted);
-
-      line-height: 1.5;
-
-    }
-
-
-    /* =========================================
-       STARTSEITE
-    ========================================= */
-
-
-    .hero {
-
-      text-align: center;
-
-      max-width: 760px;
-
-      margin: auto;
-
-    }
-
-
-    .vine {
-
-      font-size: 48px;
-
-      margin-bottom: 10px;
-
-    }
-
-
-    .badge {
-
-      display: inline-block;
-
-      padding:
-        7px 14px;
-
-      border-radius: 99px;
-
-      background:
-        #f4e5d0;
-
-      color:
-        var(--wine-dark);
-
-      font-size: .9rem;
-
-      font-weight: bold;
-
-      margin-bottom: 18px;
-
-    }
-
-
     .subtitle {
 
       font-size: 1.25rem;
@@ -271,6 +237,27 @@
         22px auto 30px;
 
       max-width: 650px;
+
+    }
+
+
+    .badge {
+
+      display: inline-block;
+
+      padding: 7px 14px;
+
+      border-radius: 99px;
+
+      background: #f4e5d0;
+
+      color: var(--wine-dark);
+
+      font-size: .9rem;
+
+      font-weight: bold;
+
+      margin-bottom: 18px;
 
     }
 
@@ -291,8 +278,7 @@
 
     .instruction {
 
-      background:
-        #faf6f1;
+      background: #faf6f1;
 
       border-radius: 15px;
 
@@ -316,14 +302,15 @@
     }
 
 
-    input[type="text"] {
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
 
       width: 100%;
 
       max-width: 420px;
 
-      padding:
-        17px 20px;
+      padding: 17px 20px;
 
       border-radius: 14px;
 
@@ -342,7 +329,7 @@
     }
 
 
-    input[type="text"]:focus {
+    input:focus {
 
       border-color:
         var(--wine);
@@ -352,26 +339,6 @@
         rgba(114,47,55,.1);
 
     }
-
-
-    .error {
-
-      color:
-        var(--wrong);
-
-      font-weight: bold;
-
-      min-height: 24px;
-
-      margin:
-        4px 0 12px;
-
-    }
-
-
-    /* =========================================
-       BUTTONS
-    ========================================= */
 
 
     .btn {
@@ -405,7 +372,7 @@
     }
 
 
-    .btn:hover:not(:disabled) {
+    .btn:hover {
 
       background:
         var(--wine-dark);
@@ -448,21 +415,60 @@
     }
 
 
+    .btn.danger {
+
+      background:
+        var(--wrong);
+
+      color: white;
+
+    }
+
+
     .btn:disabled {
 
       opacity: .55;
 
-      cursor:
-        not-allowed;
+      cursor: not-allowed;
 
       transform: none;
 
     }
 
 
-    /* =========================================
+    .error {
+
+      color:
+        var(--wrong);
+
+      font-weight: bold;
+
+      min-height: 24px;
+
+      margin:
+        4px 0 12px;
+
+    }
+
+
+    .success {
+
+      color:
+        var(--correct);
+
+      font-weight: bold;
+
+      min-height: 24px;
+
+      margin:
+        10px 0;
+
+    }
+
+
+    /* ============================================================
        QUIZ
-    ========================================= */
+    ============================================================= */
 
 
     .quiz-card {
@@ -669,8 +675,7 @@
 
     .answer:disabled {
 
-      cursor:
-        default;
+      cursor: default;
 
     }
 
@@ -708,98 +713,9 @@
     }
 
 
-    /* =========================================
-       TIMER
-    ========================================= */
-
-
-    .timer-box {
-
-      display: none;
-
-      margin-top: 20px;
-
-      padding: 22px;
-
-      border-radius: 18px;
-
-      background:
-        #f5eee5;
-
-      text-align: center;
-
-      border:
-        1px solid
-        #eadbd0;
-
-    }
-
-
-    .timer-label {
-
-      color:
-        var(--muted);
-
-      font-size: .9rem;
-
-    }
-
-
-    .countdown {
-
-      font-size:
-        clamp(
-          2.3rem,
-          8vw,
-          3.5rem
-        );
-
-      font-weight: bold;
-
-      color:
-        var(--wine);
-
-      margin:
-        5px 0;
-
-      font-variant-numeric:
-        tabular-nums;
-
-    }
-
-
-    .timer-message {
-
-      color:
-        var(--muted);
-
-      line-height: 1.5;
-
-    }
-
-
-    .timer-unlocked {
-
-      background:
-        #edf8f1;
-
-      border-color:
-        #c8e6d3;
-
-    }
-
-
-    .timer-unlocked .countdown {
-
-      color:
-        var(--correct);
-
-    }
-
-
     .next-wrapper {
 
-      display: flex;
+      display: none;
 
       justify-content:
         flex-end;
@@ -809,16 +725,21 @@
     }
 
 
-    /* =========================================
-       RESULTAT
-    ========================================= */
+    .next-wrapper.show {
+      display: flex;
+    }
+
+
+    /* ============================================================
+       ERGEBNIS
+    ============================================================= */
 
 
     .result {
 
       text-align: center;
 
-      max-width: 780px;
+      max-width: 750px;
 
       margin: auto;
 
@@ -848,8 +769,7 @@
 
       font-weight: bold;
 
-      margin:
-        15px 0;
+      margin: 15px 0;
 
     }
 
@@ -882,9 +802,9 @@
     }
 
 
-    /* =========================================
+    /* ============================================================
        RANGLISTE
-    ========================================= */
+    ============================================================= */
 
 
     .leaderboard {
@@ -910,8 +830,6 @@
 
       margin-bottom: 12px;
 
-      line-height: 1.6;
-
     }
 
 
@@ -936,7 +854,7 @@
     }
 
 
-    .leaderboard-row:first-of-type {
+    .leaderboard-row:first-child {
 
       background:
         #fff8e9;
@@ -982,21 +900,6 @@
     }
 
 
-    .actions {
-
-      display: flex;
-
-      justify-content: center;
-
-      gap: 12px;
-
-      flex-wrap: wrap;
-
-      margin-top: 25px;
-
-    }
-
-
     .online-indicator {
 
       display: inline-flex;
@@ -1029,6 +932,46 @@
     }
 
 
+    .winner {
+
+      font-size: 1.1rem;
+
+      color:
+        var(--wine-dark);
+
+      margin: 15px 0;
+
+    }
+
+
+    .small {
+
+      font-size: .88rem;
+
+      color:
+        var(--muted);
+
+      line-height: 1.5;
+
+    }
+
+
+    .actions {
+
+      display: flex;
+
+      justify-content:
+        center;
+
+      gap: 12px;
+
+      flex-wrap: wrap;
+
+      margin-top: 25px;
+
+    }
+
+
     .footer {
 
       text-align: center;
@@ -1043,9 +986,143 @@
     }
 
 
-    /* =========================================
+    /* ============================================================
+       ADMIN
+    ============================================================= */
+
+
+    .admin-card {
+
+      max-width: 850px;
+
+      margin: auto;
+
+    }
+
+
+    .admin-header {
+
+      text-align: center;
+
+      margin-bottom: 30px;
+
+    }
+
+
+    .admin-icon {
+
+      font-size: 60px;
+
+      margin-bottom: 10px;
+
+    }
+
+
+    .admin-login {
+
+      text-align: center;
+
+      max-width: 450px;
+
+      margin: auto;
+
+    }
+
+
+    .admin-login input {
+
+      display: block;
+
+      margin-left: auto;
+
+      margin-right: auto;
+
+    }
+
+
+    .admin-title {
+
+      color:
+        var(--wine);
+
+      font-size: 1.8rem;
+
+      margin-bottom: 8px;
+
+    }
+
+
+    .admin-stat {
+
+      background:
+        #faf6f1;
+
+      border-radius: 15px;
+
+      padding: 18px;
+
+      text-align: center;
+
+      margin-bottom: 20px;
+
+      color:
+        var(--muted);
+
+    }
+
+
+    .admin-stat strong {
+
+      display: block;
+
+      color:
+        var(--wine);
+
+      font-size: 2rem;
+
+      margin-bottom: 4px;
+
+    }
+
+
+    .admin-danger-zone {
+
+      margin-top: 35px;
+
+      padding: 22px;
+
+      border-radius: 18px;
+
+      background:
+        #fff5f5;
+
+      border:
+        1px solid
+        #f0cccc;
+
+      text-align: center;
+
+    }
+
+
+    .admin-danger-zone h3 {
+
+      color:
+        var(--wrong);
+
+      margin-top: 0;
+
+    }
+
+
+    .hidden {
+      display: none !important;
+    }
+
+
+    /* ============================================================
        MOBILE
-    ========================================= */
+    ============================================================= */
 
 
     @media (max-width: 600px) {
@@ -1137,9 +1214,9 @@
 <body>
 
 
-<!-- =========================================================
+<!-- ============================================================
      STARTSEITE
-========================================================== -->
+============================================================= -->
 
 <section
   id="start-screen"
@@ -1167,9 +1244,8 @@
 
       <p class="subtitle">
 
-        Wie gut kennt ihr die Weine,
-        Rebsorten und Weinbaugebiete Deutschlands –
-        und natürlich das Ahrtal?
+        Wie gut kennt ihr die Weine, Rebsorten und
+        Weinbaugebiete Deutschlands – und natürlich das Ahrtal?
 
       </p>
 
@@ -1182,7 +1258,7 @@
             ❓
           </span>
 
-          10 Weinfragen
+          10 Fragen
 
         </div>
 
@@ -1190,10 +1266,10 @@
         <div class="instruction">
 
           <span class="instruction-icon">
-            ⏱️
+            🍷
           </span>
 
-          15 Minuten zwischen den Fragen
+          1 Punkt pro richtige Antwort
 
         </div>
 
@@ -1218,16 +1294,6 @@
       </p>
 
 
-      <p class="small">
-
-        Nach jeder beantworteten Frage habt ihr
-        15 Minuten Zeit für den nächsten Wanderabschnitt.
-        Der Countdown läuft auch weiter,
-        wenn ihr euer Handy sperrt.
-
-      </p>
-
-
       <div style="margin-top:30px;">
 
         <input
@@ -1246,9 +1312,8 @@
 
 
         <button
-          id="start-button"
           class="btn"
-          type="button"
+          onclick="startQuiz()"
         >
           🍷 Quiz starten
         </button>
@@ -1269,10 +1334,21 @@
       </div>
 
 
+      <div style="margin-top:22px;">
+
+        <button
+          class="btn secondary"
+          onclick="showAdminLogin()"
+        >
+          🔐 Admin-Bereich
+        </button>
+
+      </div>
+
+
       <div class="footer">
 
-        Viel Erfolg –
-        und immer schön auf dem Wanderweg bleiben! 🥾
+        Viel Erfolg – und immer schön auf dem Wanderweg bleiben! 🥾
 
       </div>
 
@@ -1284,9 +1360,9 @@
 
 
 
-<!-- =========================================================
+<!-- ============================================================
      QUIZ
-========================================================== -->
+============================================================= -->
 
 <section
   id="quiz-screen"
@@ -1296,7 +1372,6 @@
   <div class="container">
 
     <div class="card quiz-card">
-
 
       <div class="topbar">
 
@@ -1357,49 +1432,15 @@
 
 
       <div
-        class="timer-box"
-        id="timer-box"
+        class="next-wrapper"
+        id="next-wrapper"
       >
-
-        <div class="timer-label">
-
-          Nächste Frage verfügbar in
-
-        </div>
-
-
-        <div
-          class="countdown"
-          id="countdown"
-        >
-          15:00
-        </div>
-
-
-        <div
-          class="timer-message"
-          id="timer-message"
-        >
-
-          Zeit für einen schönen
-          Ahrtal-Wanderabschnitt! 🥾🍷
-
-        </div>
-
-      </div>
-
-
-      <div class="next-wrapper">
 
         <button
           class="btn"
-          id="next-button"
-          type="button"
-          disabled
+          onclick="nextQuestion()"
         >
-
-          🔒 Wartezeit läuft ...
-
+          Weiter →
         </button>
 
       </div>
@@ -1412,9 +1453,9 @@
 
 
 
-<!-- =========================================================
+<!-- ============================================================
      ERGEBNIS
-========================================================== -->
+============================================================= -->
 
 <section
   id="result-screen"
@@ -1424,7 +1465,6 @@
   <div class="container">
 
     <div class="card result">
-
 
       <div
         class="trophy"
@@ -1477,17 +1517,23 @@
 
         <button
           class="btn gold"
-          id="refresh-button"
-          type="button"
+          onclick="refreshLeaderboard()"
         >
           🔄 Rangliste aktualisieren
         </button>
 
 
         <button
+          class="btn"
+          onclick="restartQuiz()"
+        >
+          🔄 Nochmal spielen
+        </button>
+
+
+        <button
           class="btn secondary"
-          id="new-player-button"
-          type="button"
+          onclick="showStart()"
         >
           Neuer Spieler
         </button>
@@ -1495,7 +1541,10 @@
       </div>
 
 
-      <p class="small">
+      <p
+        class="small"
+        style="margin-top:25px;"
+      >
 
         Die Rangliste wird zentral gespeichert.
         Alle Teilnehmer sehen dieselben Ergebnisse.
@@ -1510,23 +1559,224 @@
 
 
 
+<!-- ============================================================
+     ADMIN LOGIN
+============================================================= -->
+
+<section
+  id="admin-login-screen"
+  class="screen"
+>
+
+  <div class="container">
+
+    <div class="card admin-card">
+
+      <div class="admin-login">
+
+        <div class="admin-icon">
+          🔐
+        </div>
+
+
+        <h1 class="admin-title">
+          Admin-Bereich
+        </h1>
+
+
+        <p class="small">
+          Anmeldung zur Verwaltung der Ahrtal-Weinrangliste
+        </p>
+
+
+        <div style="margin-top:30px;">
+
+          <input
+            id="admin-email"
+            type="email"
+            placeholder="Admin-E-Mail"
+            autocomplete="username"
+          >
+
+
+          <input
+            id="admin-password"
+            type="password"
+            placeholder="Passwort"
+            autocomplete="current-password"
+          >
+
+
+          <div
+            id="admin-login-error"
+            class="error"
+          ></div>
+
+
+          <button
+            id="admin-login-button"
+            class="btn"
+            onclick="adminLogin()"
+          >
+            🔐 Einloggen
+          </button>
+
+        </div>
+
+
+        <div style="margin-top:20px;">
+
+          <button
+            class="btn secondary"
+            onclick="showStart()"
+          >
+            ← Zurück
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- ============================================================
+     ADMIN BEREICH
+============================================================= -->
+
+<section
+  id="admin-screen"
+  class="screen"
+>
+
+  <div class="container">
+
+    <div class="card admin-card">
+
+      <div class="admin-header">
+
+        <div class="admin-icon">
+          🍷
+        </div>
+
+
+        <h1>
+          Admin-Dashboard
+        </h1>
+
+
+        <p class="small">
+          Verwaltung der Ahrtal-Weinrangliste
+        </p>
+
+      </div>
+
+
+      <div
+        class="admin-stat"
+        id="admin-stat"
+      >
+
+        <strong id="admin-result-count">
+          0
+        </strong>
+
+        gespeicherte Ergebnisse
+
+      </div>
+
+
+      <h2>
+        🏆 Aktuelle Rangliste
+      </h2>
+
+
+      <div
+        id="admin-leaderboard"
+        class="leaderboard"
+      ></div>
+
+
+      <div class="actions">
+
+        <button
+          class="btn gold"
+          onclick="adminRefreshLeaderboard()"
+        >
+          🔄 Rangliste aktualisieren
+        </button>
+
+      </div>
+
+
+      <div class="admin-danger-zone">
+
+        <h3>
+          ⚠️ Gefahrenzone
+        </h3>
+
+
+        <p class="small">
+
+          Hiermit werden <strong>alle</strong> gespeicherten
+          Quiz-Ergebnisse unwiderruflich gelöscht.
+
+        </p>
+
+
+        <button
+          class="btn danger"
+          onclick="resetLeaderboard()"
+        >
+          🗑️ GESAMTE RANGLISTE LÖSCHEN
+        </button>
+
+
+        <div
+          id="reset-status"
+          class="success"
+        ></div>
+
+      </div>
+
+
+      <div class="actions">
+
+        <button
+          class="btn secondary"
+          onclick="adminLogout()"
+        >
+          🚪 Abmelden
+        </button>
+
+
+        <button
+          class="btn secondary"
+          onclick="showStart()"
+        >
+          ← Startseite
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
 <script>
 
-
-/* =========================================================
-   SUPABASE KONFIGURATION
-========================================================= */
-
-
-/*
-  WICHTIG:
-
-  Hier KEIN /rest/v1/ anhängen.
-
-  Die URL lautet:
-
-  https://nakyyykewametdbrescz.supabase.co
-*/
+/* ============================================================
+   SUPABASE
+============================================================ */
 
 
 const SUPABASE_URL =
@@ -1541,34 +1791,42 @@ const SUPABASE_TABLE =
   "quiz_results";
 
 
-/* =========================================================
-   QUIZ-EINSTELLUNGEN
-========================================================= */
-
-
 /*
-  15 Minuten zwischen den Fragen.
+   WICHTIG:
 
-  Für einen Test kannst du hier vorübergehend
-  beispielsweise 30 * 1000 setzen.
+   Hier die E-Mail-Adresse des Supabase-Admin-Benutzers
+   eintragen.
 
-  Das wären dann 30 Sekunden.
+   Diese E-Mail muss unter:
+   Supabase → Authentication → Users
 
-  VOR DER WANDERUNG wieder auf 15 Minuten stellen!
+   angelegt worden sein.
 */
 
 
-const QUESTION_DELAY =
-  0.5 * 60 * 1000;
+const ADMIN_EMAIL =
+  "kai.niklaus@rwth-aachen.de";
 
 
-/* =========================================================
+/*
+   Supabase Client
+*/
+
+
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+  );
+
+
+
+/* ============================================================
    QUIZ-FRAGEN
-========================================================= */
+============================================================ */
 
 
 const questions = [
-
 
   {
     difficulty: "★☆☆☆☆",
@@ -1772,13 +2030,10 @@ const questions = [
 ];
 
 
-/* =========================================================
-   LOKALER QUIZ-STATUS
-========================================================= */
 
-
-const STORAGE_KEY =
-  "ahrtalWeinquizState_v1";
+/* ============================================================
+   SPIELVARIABLEN
+============================================================ */
 
 
 let currentQuestion = 0;
@@ -1789,126 +2044,22 @@ let playerName = "";
 
 let answered = false;
 
-let selectedAnswer = null;
-
-let nextQuestionAvailableAt = null;
-
-let countdownInterval = null;
 
 
-/* =========================================================
-   HILFSFUNKTIONEN
-========================================================= */
-
-
-function saveQuizState() {
-
-  const state = {
-
-    playerName:
-      playerName,
-
-    currentQuestion:
-      currentQuestion,
-
-    score:
-      score,
-
-    answered:
-      answered,
-
-    selectedAnswer:
-      selectedAnswer,
-
-    nextQuestionAvailableAt:
-      nextQuestionAvailableAt,
-
-    completed:
-      false
-
-  };
-
-
-  localStorage.setItem(
-
-    STORAGE_KEY,
-
-    JSON.stringify(state)
-
-  );
-
-}
-
-
-function loadQuizState() {
-
-  try {
-
-    const raw =
-      localStorage.getItem(
-        STORAGE_KEY
-      );
-
-
-    if (!raw) {
-
-      return null;
-
-    }
-
-
-    return JSON.parse(raw);
-
-  } catch (error) {
-
-    console.error(
-      "Quizstatus konnte nicht geladen werden:",
-      error
-    );
-
-    return null;
-
-  }
-
-}
-
-
-function clearQuizState() {
-
-  localStorage.removeItem(
-    STORAGE_KEY
-  );
-
-
-  nextQuestionAvailableAt =
-    null;
-
-
-  clearInterval(
-    countdownInterval
-  );
-
-}
-
-
-/* =========================================================
-   SCREEN WECHSEL
-========================================================= */
+/* ============================================================
+   SCREEN WECHSELN
+============================================================ */
 
 
 function showScreen(id) {
 
   document
     .querySelectorAll(".screen")
-    .forEach(
-      function(screen) {
+    .forEach(function(screen) {
 
-        screen.classList.remove(
-          "active"
-        );
+      screen.classList.remove("active");
 
-      }
-    );
+    });
 
 
   const target =
@@ -1917,27 +2068,23 @@ function showScreen(id) {
 
   if (target) {
 
-    target.classList.add(
-      "active"
-    );
+    target.classList.add("active");
 
   }
 
 
   window.scrollTo({
-
     top: 0,
-
     behavior: "smooth"
-
   });
 
 }
 
 
-/* =========================================================
+
+/* ============================================================
    QUIZ STARTEN
-========================================================= */
+============================================================ */
 
 
 function startQuiz() {
@@ -1972,15 +2119,7 @@ function startQuiz() {
   }
 
 
-  /*
-    Neues Quiz starten.
-
-    Ein eventuell vorhandener alter
-    Test wird dadurch bewusst gelöscht.
-  */
-
-
-  clearQuizState();
+  error.textContent = "";
 
 
   currentQuestion = 0;
@@ -1988,11 +2127,6 @@ function startQuiz() {
   score = 0;
 
   answered = false;
-
-  selectedAnswer = null;
-
-
-  saveQuizState();
 
 
   showScreen(
@@ -2005,9 +2139,10 @@ function startQuiz() {
 }
 
 
-/* =========================================================
+
+/* ============================================================
    FRAGE RENDERN
-========================================================= */
+============================================================ */
 
 
 function renderQuestion() {
@@ -2026,8 +2161,6 @@ function renderQuestion() {
 
 
   answered = false;
-
-  selectedAnswer = null;
 
 
   document.getElementById(
@@ -2057,8 +2190,8 @@ function renderQuestion() {
   ).style.width =
 
     (
-      (currentQuestion /
-      questions.length) *
+      currentQuestion /
+      questions.length *
       100
     ) + "%";
 
@@ -2085,7 +2218,6 @@ function renderQuestion() {
 
 
   q.answers.forEach(
-
     function(answer, index) {
 
       const button =
@@ -2094,16 +2226,15 @@ function renderQuestion() {
         );
 
 
-      button.type =
-        "button";
-
-
       button.className =
         "answer";
 
 
-      button.textContent =
+      button.type =
+        "button";
 
+
+      button.textContent =
         String.fromCharCode(
           65 + index
         ) +
@@ -2112,9 +2243,7 @@ function renderQuestion() {
 
 
       button.addEventListener(
-
         "click",
-
         function() {
 
           selectAnswer(
@@ -2123,7 +2252,6 @@ function renderQuestion() {
           );
 
         }
-
       );
 
 
@@ -2132,7 +2260,6 @@ function renderQuestion() {
       );
 
     }
-
   );
 
 
@@ -2145,136 +2272,21 @@ function renderQuestion() {
     );
 
 
-  resetTimerUI();
-
-
-  document.getElementById(
-    "next-button"
-  ).disabled = true;
-
-
-  document.getElementById(
-    "next-button"
-  ).textContent =
-
-    "🔒 Nächste Frage noch nicht verfügbar";
-
-
-  /*
-    Wenn für diese Frage bereits
-    ein Timer existiert, wiederherstellen.
-  */
-
-
-  const saved =
-    loadQuizState();
-
-
-  if (
-    saved &&
-    saved.currentQuestion ===
-    currentQuestion &&
-    saved.answered &&
-    saved.nextQuestionAvailableAt
-  ) {
-
-    answered = true;
-
-    selectedAnswer =
-      saved.selectedAnswer;
-
-    restoreAnsweredQuestion();
-
-  }
+  document
+    .getElementById(
+      "next-wrapper"
+    )
+    .classList.remove(
+      "show"
+    );
 
 }
 
 
-/* =========================================================
-   BEREITS BEANTWORTETE FRAGE WIEDERHERSTELLEN
-========================================================= */
 
-
-function restoreAnsweredQuestion() {
-
-  const q =
-    questions[currentQuestion];
-
-
-  const buttons =
-    document.querySelectorAll(
-      ".answer"
-    );
-
-
-  buttons.forEach(
-
-    function(button, index) {
-
-      button.disabled = true;
-
-
-      if (
-        index === q.correct
-      ) {
-
-        button.classList.add(
-          "correct"
-        );
-
-      }
-
-
-      if (
-        index === selectedAnswer &&
-        selectedAnswer !== q.correct
-      ) {
-
-        button.classList.add(
-          "wrong"
-        );
-
-      }
-
-    }
-
-  );
-
-
-  const explanation =
-    document.getElementById(
-      "explanation"
-    );
-
-
-  explanation.innerHTML =
-
-    "<strong>🍷 Wusstest du schon?</strong><br>" +
-    q.explanation;
-
-
-  explanation.classList.add(
-    "show"
-  );
-
-
-  nextQuestionAvailableAt =
-
-    loadQuizState()
-      .nextQuestionAvailableAt;
-
-
-  showTimer();
-
-
-  updateCountdown();
-
-}
-
-
-/* =========================================================
+/* ============================================================
    ANTWORT AUSWERTEN
-========================================================= */
+============================================================ */
 
 
 function selectAnswer(
@@ -2283,16 +2295,11 @@ function selectAnswer(
 ) {
 
   if (answered) {
-
     return;
-
   }
 
 
   answered = true;
-
-  selectedAnswer =
-    index;
 
 
   const q =
@@ -2306,14 +2313,11 @@ function selectAnswer(
 
 
   buttons.forEach(
-
     function(button) {
 
-      button.disabled =
-        true;
+      button.disabled = true;
 
     }
-
   );
 
 
@@ -2328,9 +2332,7 @@ function selectAnswer(
       "correct"
     );
 
-  }
-
-  else {
+  } else {
 
     clickedButton.classList.add(
       "wrong"
@@ -2370,9 +2372,10 @@ function selectAnswer(
 
 
   explanation.innerHTML =
-
     "<strong>🍷 Wusstest du schon?</strong><br>" +
-    q.explanation;
+    escapeHtml(
+      q.explanation
+    );
 
 
   explanation.classList.add(
@@ -2380,342 +2383,37 @@ function selectAnswer(
   );
 
 
-  /*
-    Die letzte Frage braucht keine
-    15 Minuten Wartezeit.
-  */
-
-
-  if (
-    currentQuestion ===
-    questions.length - 1
-  ) {
-
-    nextQuestionAvailableAt =
-      Date.now();
-
-
-    document.getElementById(
-      "next-button"
-    ).disabled = false;
-
-
-    document.getElementById(
-      "next-button"
-    ).textContent =
-      "🏆 Ergebnis anzeigen";
-
-
-    document.getElementById(
-      "progress-bar"
-    ).style.width =
-      "100%";
-
-
-    saveQuizState();
-
-    return;
-
-  }
-
-
-  /*
-    Für alle anderen Fragen:
-    15 Minuten starten.
-  */
-
-
-  startQuestionTimer();
-
-
-  saveQuizState();
-
-}
-
-
-/* =========================================================
-   TIMER STARTEN
-========================================================= */
-
-
-function startQuestionTimer() {
-
-  nextQuestionAvailableAt =
-
-    Date.now() +
-    QUESTION_DELAY;
-
-
-  saveQuizState();
-
-
-  showTimer();
-
-
-  updateCountdown();
-
-
-  clearInterval(
-    countdownInterval
-  );
-
-
-  countdownInterval =
-
-    setInterval(
-
-      updateCountdown,
-
-      1000
-
+  document
+    .getElementById(
+      "next-wrapper"
+    )
+    .classList.add(
+      "show"
     );
-
-}
-
-
-/* =========================================================
-   TIMER ANZEIGEN
-========================================================= */
-
-
-function showTimer() {
-
-  const timerBox =
-    document.getElementById(
-      "timer-box"
-    );
-
-
-  timerBox.style.display =
-    "block";
-
-
-  timerBox.classList.remove(
-    "timer-unlocked"
-  );
 
 
   document.getElementById(
-    "next-button"
-  ).disabled = true;
+    "progress-bar"
+  ).style.width =
+
+    (
+      (
+        currentQuestion + 1
+      ) /
+      questions.length *
+      100
+    ) + "%";
 
 }
 
 
-/* =========================================================
-   TIMER UI ZURÜCKSETZEN
-========================================================= */
 
-
-function resetTimerUI() {
-
-  const timerBox =
-    document.getElementById(
-      "timer-box"
-    );
-
-
-  const countdown =
-    document.getElementById(
-      "countdown"
-    );
-
-
-  const message =
-    document.getElementById(
-      "timer-message"
-    );
-
-
-  timerBox.style.display =
-    "none";
-
-
-  timerBox.classList.remove(
-    "timer-unlocked"
-  );
-
-
-  countdown.textContent =
-    "15:00";
-
-
-  message.textContent =
-
-    "Zeit für einen schönen " +
-    "Ahrtal-Wanderabschnitt! 🥾🍷";
-
-}
-
-
-/* =========================================================
-   COUNTDOWN
-========================================================= */
-
-
-function updateCountdown() {
-
-  if (
-    !nextQuestionAvailableAt
-  ) {
-
-    return;
-
-  }
-
-
-  const remaining =
-
-    nextQuestionAvailableAt -
-    Date.now();
-
-
-  if (
-    remaining <= 0
-  ) {
-
-    unlockNextQuestion();
-
-    return;
-
-  }
-
-
-  const totalSeconds =
-
-    Math.ceil(
-      remaining / 1000
-    );
-
-
-  const minutes =
-
-    Math.floor(
-      totalSeconds / 60
-    );
-
-
-  const seconds =
-
-    totalSeconds % 60;
-
-
-  const countdown =
-    document.getElementById(
-      "countdown"
-    );
-
-
-  countdown.textContent =
-
-    String(minutes)
-      .padStart(2, "0") +
-
-    ":" +
-
-    String(seconds)
-      .padStart(2, "0");
-
-}
-
-
-/* =========================================================
-   FRAGE FREISCHALTEN
-========================================================= */
-
-
-function unlockNextQuestion() {
-
-  clearInterval(
-    countdownInterval
-  );
-
-
-  const timerBox =
-    document.getElementById(
-      "timer-box"
-    );
-
-
-  const countdown =
-    document.getElementById(
-      "countdown"
-    );
-
-
-  const message =
-    document.getElementById(
-      "timer-message"
-    );
-
-
-  const nextButton =
-    document.getElementById(
-      "next-button"
-    );
-
-
-  timerBox.classList.add(
-    "timer-unlocked"
-  );
-
-
-  countdown.textContent =
-    "00:00";
-
-
-  message.textContent =
-
-    "Die nächste Weinfrage ist jetzt freigeschaltet! 🍷";
-
-
-  nextButton.disabled =
-    false;
-
-
-  nextButton.textContent =
-
-    currentQuestion ===
-    questions.length - 1
-
-      ? "🏆 Ergebnis anzeigen"
-
-      : "🍷 Nächste Frage";
-
-
-  nextQuestionAvailableAt =
-    Date.now();
-
-
-  saveQuizState();
-
-}
-
-
-/* =========================================================
+/* ============================================================
    NÄCHSTE FRAGE
-========================================================= */
+============================================================ */
 
 
 function nextQuestion() {
-
-  /*
-    Sicherheit:
-    Der Teilnehmer darf die Frage nicht
-    vor Ablauf der Wartezeit überspringen.
-  */
-
-
-  if (
-    nextQuestionAvailableAt &&
-    Date.now() <
-    nextQuestionAvailableAt
-  ) {
-
-    return;
-
-  }
-
 
   currentQuestion++;
 
@@ -2732,102 +2430,23 @@ function nextQuestion() {
   }
 
 
-  nextQuestionAvailableAt =
-    null;
-
-
-  answered = false;
-
-  selectedAnswer = null;
-
-
-  saveQuizState();
-
-
   renderQuestion();
 
 }
 
 
-/* =========================================================
-   QUIZ FORTSETZEN
-========================================================= */
 
-
-function resumeQuiz() {
-
-  const state =
-    loadQuizState();
-
-
-  if (
-    !state ||
-    !state.playerName ||
-    state.completed
-  ) {
-
-    return false;
-
-  }
-
-
-  playerName =
-    state.playerName;
-
-
-  currentQuestion =
-    state.currentQuestion || 0;
-
-
-  score =
-    state.score || 0;
-
-
-  answered =
-    state.answered || false;
-
-
-  selectedAnswer =
-    state.selectedAnswer;
-
-
-  nextQuestionAvailableAt =
-    state.nextQuestionAvailableAt;
-
-
-  showScreen(
-    "quiz-screen"
-  );
-
-
-  renderQuestion();
-
-
-  return true;
-
-}
-
-
-/* =========================================================
+/* ============================================================
    QUIZ BEENDET
-========================================================= */
+============================================================ */
 
 
 async function finishQuiz() {
 
-  clearInterval(
-    countdownInterval
-  );
-
-
-  const finalScore =
-    score;
-
-
   document.getElementById(
     "final-score"
   ).textContent =
-    finalScore;
+    score;
 
 
   const title =
@@ -2848,82 +2467,51 @@ async function finishQuiz() {
     );
 
 
-  if (
-    finalScore === 10
-  ) {
+  if (score === 10) {
 
-    trophy.textContent =
-      "👑";
-
+    trophy.textContent = "👑";
 
     title.textContent =
       "Ahrtal-Weinmeister!";
 
-
     message.textContent =
-
-      "Unglaublich! Du kennst dich " +
-      "mit deutschem Wein und dem Ahrtal " +
-      "hervorragend aus. Die nächste Runde " +
-      "geht auf dich! 🍷";
+      "Unglaublich! Du kennst dich mit deutschem Wein und dem Ahrtal hervorragend aus. Die nächste Runde geht auf dich! 🍷";
 
   }
 
-  else if (
-    finalScore >= 8
-  ) {
+  else if (score >= 8) {
 
-    trophy.textContent =
-      "🏆";
-
+    trophy.textContent = "🏆";
 
     title.textContent =
       "Weinexperte!";
 
-
     message.textContent =
-
-      "Starke Leistung! Du hast eindeutig " +
-      "mehr Weinwissen als der durchschnittliche Wanderer.";
+      "Starke Leistung! Du hast eindeutig mehr Weinwissen als der durchschnittliche Wanderer.";
 
   }
 
-  else if (
-    finalScore >= 5
-  ) {
+  else if (score >= 5) {
 
-    trophy.textContent =
-      "🍷";
-
+    trophy.textContent = "🍷";
 
     title.textContent =
       "Weinliebhaber!";
 
-
     message.textContent =
-
-      "Sehr ordentlich! Ein gutes Glas Wein " +
-      "kannst du definitiv von einer " +
-      "Traubensaftschorle unterscheiden.";
+      "Sehr ordentlich! Ein gutes Glas Wein kannst du definitiv von einer Traubensaftschorle unterscheiden.";
 
   }
 
   else {
 
-    trophy.textContent =
-      "🍇";
-
+    trophy.textContent = "🍇";
 
     title.textContent =
       "Weinwanderer!";
 
-
     message.textContent =
-
-      "Noch etwas Luft nach oben – aber " +
-      "keine Sorge: Bei einer Wanderung " +
-      "durchs Ahrtal gibt es reichlich " +
-      "Gelegenheit zum Lernen.";
+      "Noch etwas Luft nach oben – aber keine Sorge: Bei einer Wanderung durchs Ahrtal gibt es reichlich Gelegenheit zum Lernen.";
 
   }
 
@@ -2935,60 +2523,19 @@ async function finishQuiz() {
 
   document.getElementById(
     "leaderboard"
-  ).innerHTML =
+  ).innerHTML = `
 
-    `<div class="leaderboard-status">
+    <div class="leaderboard-status">
       🍷 Ergebnis wird gespeichert ...
-    </div>`;
+    </div>
 
-
-  /*
-    Ergebnis online speichern.
-  */
+  `;
 
 
   await uploadResultToSupabase(
-
     playerName,
-
-    finalScore
-
+    score
   );
-
-
-  /*
-    Quiz lokal als abgeschlossen markieren.
-  */
-
-
-  const state =
-    loadQuizState() || {};
-
-
-  state.completed =
-    true;
-
-
-  state.score =
-    finalScore;
-
-
-  state.playerName =
-    playerName;
-
-
-  localStorage.setItem(
-
-    STORAGE_KEY,
-
-    JSON.stringify(state)
-
-  );
-
-
-  /*
-    Rangliste laden.
-  */
 
 
   await renderLeaderboard();
@@ -2996,9 +2543,10 @@ async function finishQuiz() {
 }
 
 
-/* =========================================================
-   SUPABASE ERGEBNIS SPEICHERN
-========================================================= */
+
+/* ============================================================
+   ERGEBNIS SPEICHERN
+============================================================ */
 
 
 async function uploadResultToSupabase(
@@ -3008,89 +2556,44 @@ async function uploadResultToSupabase(
 
   try {
 
-    const response =
+    const {
+      error
+    } =
+      await supabaseClient
+        .from(
+          SUPABASE_TABLE
+        )
+        .insert({
 
-      await fetch(
+          name: name,
 
-        SUPABASE_URL +
-        "/rest/v1/" +
-        SUPABASE_TABLE,
+          score: points
 
-        {
-
-          method:
-            "POST",
-
-          headers: {
-
-            "apikey":
-              SUPABASE_ANON_KEY,
-
-            "Authorization":
-              "Bearer " +
-              SUPABASE_ANON_KEY,
-
-            "Content-Type":
-              "application/json",
-
-            "Prefer":
-              "return=minimal"
-
-          },
-
-          body:
-
-            JSON.stringify({
-
-              name:
-                name,
-
-              score:
-                points
-
-            })
-
-        }
-
-      );
+        });
 
 
-    if (
-      !response.ok
-    ) {
+    if (error) {
 
       console.error(
-
         "Supabase Fehler:",
-
-        await response.text()
-
+        error
       );
-
 
       return false;
 
     }
 
 
-    console.log(
-      "🍷 Ergebnis gespeichert."
-    );
-
-
     return true;
 
+  }
 
-  } catch (error) {
+  catch (error) {
 
     console.error(
-
       "Supabase Verbindungsfehler:",
-
       error
-
     );
-
 
     return false;
 
@@ -3099,83 +2602,69 @@ async function uploadResultToSupabase(
 }
 
 
-/* =========================================================
-   SUPABASE RANGLISTE LADEN
-========================================================= */
+
+/* ============================================================
+   RANGLISTE LADEN
+============================================================ */
 
 
 async function loadLeaderboardFromSupabase() {
 
   try {
 
-    const url =
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
 
-      SUPABASE_URL +
-      "/rest/v1/" +
-      SUPABASE_TABLE +
-      "?select=name,score,created_at" +
-      "&order=score.desc,created_at.asc" +
-      "&limit=50";
+        .from(
+          SUPABASE_TABLE
+        )
 
+        .select(
+          "name,score,created_at"
+        )
 
-    const response =
-
-      await fetch(
-
-        url,
-
-        {
-
-          method:
-            "GET",
-
-          headers: {
-
-            "apikey":
-              SUPABASE_ANON_KEY,
-
-            "Authorization":
-              "Bearer " +
-              SUPABASE_ANON_KEY
-
+        .order(
+          "score",
+          {
+            ascending: false
           }
+        )
 
-        }
+        .order(
+          "created_at",
+          {
+            ascending: true
+          }
+        )
 
-      );
+        .limit(20);
 
 
-    if (
-      !response.ok
-    ) {
+    if (error) {
 
       console.error(
-
         "Ranglistenfehler:",
-
-        await response.text()
-
+        error
       );
-
 
       return null;
 
     }
 
 
-    return await response.json();
+    return data;
 
+  }
 
-  } catch (error) {
+  catch (error) {
 
     console.error(
-
-      "Rangliste konnte nicht geladen werden:",
-
+      "Fehler beim Laden der Rangliste:",
       error
-
     );
-
 
     return null;
 
@@ -3184,9 +2673,10 @@ async function loadLeaderboardFromSupabase() {
 }
 
 
-/* =========================================================
-   RANGLISTE DARSTELLEN
-========================================================= */
+
+/* ============================================================
+   RANGLISTE RENDERN
+============================================================ */
 
 
 async function renderLeaderboard() {
@@ -3197,11 +2687,13 @@ async function renderLeaderboard() {
     );
 
 
-  container.innerHTML =
+  container.innerHTML = `
 
-    `<div class="leaderboard-status">
+    <div class="leaderboard-status">
       🍷 Rangliste wird geladen ...
-    </div>`;
+    </div>
+
+  `;
 
 
   const results =
@@ -3213,19 +2705,13 @@ async function renderLeaderboard() {
     !Array.isArray(results)
   ) {
 
-    container.innerHTML =
+    container.innerHTML = `
 
-      `<div class="leaderboard-status">
+      <div class="leaderboard-status">
+        ⚠️ Die Online-Rangliste konnte nicht geladen werden.
+      </div>
 
-        ⚠️ Die Online-Rangliste konnte
-        gerade nicht geladen werden.
-
-        <br><br>
-
-        Bitte prüfe die Internetverbindung
-        und versuche es erneut.
-
-      </div>`;
+    `;
 
     return;
 
@@ -3236,26 +2722,29 @@ async function renderLeaderboard() {
     results.length === 0
   ) {
 
-    container.innerHTML =
+    container.innerHTML = `
 
-      `<div class="leaderboard-status">
+      <div class="leaderboard-status">
         Noch keine Ergebnisse vorhanden.
-      </div>`;
+      </div>
+
+    `;
 
     return;
 
   }
 
 
-  container.innerHTML =
+  container.innerHTML = `
 
-    `<div class="leaderboard-status">
+    <div class="leaderboard-status">
       🟢 Live-Rangliste
-    </div>`;
+    </div>
+
+  `;
 
 
   results.forEach(
-
     function(result, index) {
 
       const row =
@@ -3271,30 +2760,21 @@ async function renderLeaderboard() {
       let medal = "";
 
 
-      if (
-        index === 0
-      ) {
+      if (index === 0) {
 
-        medal =
-          "🥇";
+        medal = "🥇";
 
       }
 
-      else if (
-        index === 1
-      ) {
+      else if (index === 1) {
 
-        medal =
-          "🥈";
+        medal = "🥈";
 
       }
 
-      else if (
-        index === 2
-      ) {
+      else if (index === 2) {
 
-        medal =
-          "🥉";
+        medal = "🥉";
 
       }
 
@@ -3302,10 +2782,7 @@ async function renderLeaderboard() {
       row.innerHTML = `
 
         <div class="place">
-          ${
-            medal ||
-            (index + 1) + "."
-          }
+          ${medal || (index + 1) + "."}
         </div>
 
         <div class="player-name">
@@ -3313,7 +2790,7 @@ async function renderLeaderboard() {
         </div>
 
         <div class="points">
-          ${result.score}/10
+          ${Number(result.score)}/10
         </div>
 
       `;
@@ -3324,49 +2801,28 @@ async function renderLeaderboard() {
       );
 
     }
-
   );
 
 }
 
 
-/* =========================================================
+
+/* ============================================================
    RANGLISTE AKTUALISIEREN
-========================================================= */
+============================================================ */
 
 
 async function refreshLeaderboard() {
 
-  const button =
-    document.getElementById(
-      "refresh-button"
-    );
-
-
-  button.disabled =
-    true;
-
-
-  button.textContent =
-    "⏳ Wird geladen ...";
-
-
   await renderLeaderboard();
-
-
-  button.disabled =
-    false;
-
-
-  button.textContent =
-    "🔄 Rangliste aktualisieren";
 
 }
 
 
-/* =========================================================
-   HTML SICHER AUSGEBEN
-========================================================= */
+
+/* ============================================================
+   HTML ABSICHERN
+============================================================ */
 
 
 function escapeHtml(text) {
@@ -3378,7 +2834,7 @@ function escapeHtml(text) {
 
 
   div.textContent =
-    text;
+    text ?? "";
 
 
   return div.innerHTML;
@@ -3386,42 +2842,50 @@ function escapeHtml(text) {
 }
 
 
-/* =========================================================
-   NEUES QUIZ / NEUER SPIELER
-========================================================= */
+
+/* ============================================================
+   QUIZ NEU STARTEN
+============================================================ */
 
 
-function newPlayer() {
+function restartQuiz() {
 
-  clearQuizState();
+  currentQuestion = 0;
 
+  score = 0;
 
-  playerName =
-    "";
-
-  currentQuestion =
-    0;
-
-  score =
-    0;
-
-  answered =
-    false;
-
-  selectedAnswer =
-    null;
+  answered = false;
 
 
-  document.getElementById(
-    "player-name"
-  ).value =
-    "";
+  showScreen(
+    "quiz-screen"
+  );
 
 
-  document.getElementById(
-    "name-error"
-  ).textContent =
-    "";
+  renderQuestion();
+
+}
+
+
+
+/* ============================================================
+   STARTSEITE
+============================================================ */
+
+
+function showStart() {
+
+  const input =
+    document.getElementById(
+      "player-name"
+    );
+
+
+  if (input) {
+
+    input.value = "";
+
+  }
 
 
   showScreen(
@@ -3431,228 +2895,74 @@ function newPlayer() {
 }
 
 
-/* =========================================================
-   SUPABASE VERBINDUNG TESTEN
-========================================================= */
+
+/* ============================================================
+   ADMIN LOGIN ÖFFNEN
+============================================================ */
 
 
-async function testSupabaseConnection() {
+function showAdminLogin() {
 
-  try {
-
-    const results =
-      await loadLeaderboardFromSupabase();
-
-
-    if (
-      results !== null
-    ) {
-
-      const status =
-        document.getElementById(
-          "connection-status"
-        );
-
-
-      if (status) {
-
-        status.style.display =
-          "inline-flex";
-
-      }
-
-
-      console.log(
-        "🍷 Supabase-Verbindung funktioniert."
-      );
-
-    }
-
-  } catch (error) {
-
-    console.error(
-      "Supabase-Test fehlgeschlagen:",
-      error
+  const email =
+    document.getElementById(
+      "admin-email"
     );
 
+
+  const password =
+    document.getElementById(
+      "admin-password"
+    );
+
+
+  const error =
+    document.getElementById(
+      "admin-login-error"
+    );
+
+
+  if (email) {
+
+    email.value =
+      ADMIN_EMAIL;
+
   }
+
+
+  if (password) {
+
+    password.value = "";
+
+  }
+
+
+  if (error) {
+
+    error.textContent = "";
+
+  }
+
+
+  showScreen(
+    "admin-login-screen"
+  );
 
 }
 
 
-/* =========================================================
-   INITIALISIERUNG
-========================================================= */
 
+/* ============================================================
+   ADMIN LOGIN
+============================================================ */
 
-document.addEventListener(
 
-  "DOMContentLoaded",
+async function adminLogin() {
 
-  function() {
+  const email =
+    document.getElementById(
+      "admin-email"
+    ).value.trim();
 
 
-    /*
-      Startbutton
-    */
-
-
-    document
-      .getElementById(
-        "start-button"
-      )
-      .addEventListener(
-
-        "click",
-
-        startQuiz
-
-      );
-
-
-    /*
-      Nächste Frage
-    */
-
-
-    document
-      .getElementById(
-        "next-button"
-      )
-      .addEventListener(
-
-        "click",
-
-        nextQuestion
-
-      );
-
-
-    /*
-      Rangliste aktualisieren
-    */
-
-
-    document
-      .getElementById(
-        "refresh-button"
-      )
-      .addEventListener(
-
-        "click",
-
-        refreshLeaderboard
-
-      );
-
-
-    /*
-      Neuer Spieler
-    */
-
-
-    document
-      .getElementById(
-        "new-player-button"
-      )
-      .addEventListener(
-
-        "click",
-
-        newPlayer
-
-      );
-
-
-    /*
-      Enter-Taste im Namensfeld
-    */
-
-
-    document
-      .getElementById(
-        "player-name"
-      )
-      .addEventListener(
-
-        "keydown",
-
-        function(event) {
-
-          if (
-            event.key === "Enter"
-          ) {
-
-            startQuiz();
-
-          }
-
-        }
-
-      );
-
-
-    /*
-      Prüfen, ob ein Quiz
-      bereits begonnen wurde.
-    */
-
-
-    const state =
-      loadQuizState();
-
-
-    if (
-      state &&
-      state.playerName &&
-      !state.completed
-    ) {
-
-      /*
-        Vorhandenes Quiz fortsetzen.
-      */
-
-
-      const resume =
-        confirm(
-
-          "Du hast bereits ein begonnenes " +
-          "Ahrtal-Weinquiz. Möchtest du " +
-          "dort weitermachen?"
-
-        );
-
-
-      if (resume) {
-
-        resumeQuiz();
-
-      }
-
-      else {
-
-        clearQuizState();
-
-      }
-
-    }
-
-
-    /*
-      Supabase testen.
-    */
-
-
-    testSupabaseConnection();
-
-
-  }
-
-);
-
-
-</script>
-
-</body>
-
-</html>
+  const password =
+    document.get
