@@ -1193,7 +1193,7 @@
             ⏱️
           </span>
 
-          15 Minuten zwischen den Fragen
+          10 Minuten zwischen den Fragen
 
         </div>
 
@@ -1221,7 +1221,7 @@
       <p class="small">
 
         Nach jeder beantworteten Frage habt ihr
-        15 Minuten Zeit für den nächsten Wanderabschnitt.
+        10 Minuten Zeit für den nächsten Wanderabschnitt.
         Der Countdown läuft auch weiter,
         wenn ihr euer Handy sperrt.
 
@@ -1381,7 +1381,7 @@
           class="countdown"
           id="countdown"
         >
-          15:00
+          10:00
         </div>
 
 
@@ -1556,19 +1556,19 @@ const SUPABASE_TABLE =
 
 
 /*
-  15 Minuten zwischen den Fragen.
+  10 Minuten zwischen den Fragen.
 
   Für einen Test kannst du hier vorübergehend
   beispielsweise 30 * 1000 setzen.
 
   Das wären dann 30 Sekunden.
 
-  VOR DER WANDERUNG wieder auf 15 Minuten stellen!
+  VOR DER WANDERUNG wieder auf 10 Minuten stellen!
 */
 
 
 const QUESTION_DELAY =
-  1 * 1 * 1000;
+  10 * 60 * 1000;
 
 
 /* =========================================================
@@ -2491,7 +2491,7 @@ function selectAnswer(
 
   /*
     Die letzte Frage braucht keine
-    15 Minuten Wartezeit.
+    10 Minuten Wartezeit.
   */
 
 
@@ -2530,7 +2530,7 @@ function selectAnswer(
 
   /*
     Für alle anderen Fragen:
-    15 Minuten starten.
+    10 Minuten starten.
   */
 
 
@@ -2646,7 +2646,7 @@ function resetTimerUI() {
 
 
   countdown.textContent =
-    "15:00";
+    "10:00";
 
 
   message.textContent =
@@ -3056,13 +3056,22 @@ async function finishQuiz() {
   */
 
 
-  await uploadResultToSupabase(
+  const saved = await uploadResultToSupabase(
+  playerName,
+  finalScore
+);
 
-    playerName,
+if (!saved) {
+  document.getElementById("leaderboard").innerHTML = `
+    <div class="leaderboard-status">
+      ⚠️ Dein Ergebnis (${finalScore}/15) konnte
+      nicht gespeichert werden.
+      Bitte prüfe die Supabase-Einstellungen.
+    </div>
+  `;
 
-    finalScore
-
-  );
+  return;
+}
 
 
   /*
